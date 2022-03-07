@@ -1,0 +1,23 @@
+  <div class="row">
+      <div class="col-sm-9 custom-margin">
+        <div class="candidate-manager">
+          <div class="empoyer-accoun-box">
+            <div class="empoyer-accoun-nav">
+              <ul>
+                <li routerLinkActive="active"><a routerLink="job-post">Job Post </a></li>
+                <li routerLinkActive="active"><a routerLink="manage-job-post">Manage Posted Job</a></li>
+                <li routerLinkActive="active"><a routerLink="edit-job-post">Edit Posted Job</a></li>
+                <li routerLinkActive="active"><a routerLink="candidate-manager">Candidate Manager</a></li>
+                <li routerLinkActive="active"><a routerLink="matching-profile">Matching Profile</a></li>
+              </ul>
+            </div>
+            <app-spinner></app-spinner>
+            <router-outlet></router-outlet>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"><img src='./assets/img/add3.jpg' class="img-responsive"></div>
+        </div>
+      </div>
+    </div>

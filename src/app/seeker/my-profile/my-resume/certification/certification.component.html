@@ -1,0 +1,73 @@
+<!-- <section class="col-sm-8" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+  </div>
+  <div class="creat-resume-right" style="padding:10px 25px;">
+  <div class="creat-resume-box">
+    <div class="row" style="padding: 0px;">
+      <div class="creat-resume-right"> -->
+        <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+          <div class="language-form-right" style="padding: 0px;">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Certificate</label>
+                  <input type="text" class="form-control" id="certName" name="certName" [(ngModel)]="certificate.certName" placeholder="e.g. Hadoop">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Date</label>
+                  <div class="clearfix"></div>
+                  <select class="form-control certficiati0n-form  dateinput" name="certMonth" id="certMonth" style="height: 42px;"
+                          [(ngModel)]="certificate.certMonth" 
+                          (change)="onMonthChange($event.target.value)">
+                    <option value="">Month</option>
+                    <option *ngFor="let month of graduateMonth">{{month.graduateMonth}}</option>
+                   
+                  </select>
+                  <select class="form-control certficiati0n-form2  dateinput" name="certYear" id="certYear" style="height: 42px;"
+                          [(ngModel)]="certificate.certYear" 
+                          (change)="onYearChange($event.target.value)">
+                    <option value="0">Year</option>
+                    <option *ngFor="let year of graduateYear">{{year.graduateYear}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <table  *ngIf="certificateList.length>0" border="1">
+                <thead>
+                  <tr>
+                    <th>Certificate</th>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let certificate of certificateList" (click)="RowSelected(certificate);" style="cursor: pointer;"> 
+                    <td>{{certificate.certName}}</td>
+                    <td>{{certificate.certMonth}}</td>
+                    <td>{{certificate.certYear}}</td>
+                    <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                  </tr>
+                </tbody>
+                </table>
+          </div>
+          <br>
+            <br>
+            <button type="submit" class="btn btn_form3" *ngIf="isAdd">Add certificate</button>
+            <button type="submit" class="btn btn_form3" *ngIf="isUpdate">Update certificate</button>
+            <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+          </div>
+        </form>
+      <!-- </div>
+    </div>
+  </div>
+</div>
+</section> -->

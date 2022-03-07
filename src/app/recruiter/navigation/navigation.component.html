@@ -1,0 +1,138 @@
+<div class="col-sm-3">
+	<div class="job-seeker-left">
+		<div class="job-seker-img"><img [src]="profileUrl" class="img-responsive"></div>
+		<div style="padding: 30px 0px;">
+			<div class="text-name">
+				<h3>{{profile.firstName}} {{profile.lastName}} </h3>
+				<!-- <div class="icon-box-edit"><a attr.data-toggle="modal" attr.data-target="'#profile-edit'">
+					<i class="fas fa-pen"></i></a>
+				</div> -->
+
+				<!-- <div class="icon-box-edit"><a style="cursor:pointer" (click)="openModal()">
+						<i class="fas fa-pen"></i></a>
+				</div> -->
+				<div class="clearfix"></div><br>
+				<h3 style="color: #626161; font-size: 18px;">{{profile.designation}}<br><br>{{profile.companyName}} </h3>
+			</div>
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top"><a class="mail"><strong>Email:</strong>{{profile.email}}</a>
+				<div class="clearfix"></div>
+				<a class="verify"><i class="fas fa-exclamation"></i><span
+						style="color: #ff9f52; border-bottom: 1px solid #ff9f52">Verify Now </span></a>
+				<div class="icon-box-edit"><a><i class="fas fa-pen"></i></a></div>
+
+			</div>
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top" style="margin-top: 15px;"><a  class="mail"><strong>Ph:</strong>  {{profile.phoneNumber}}</a>
+				<div class="clearfix"></div>
+				<!-- <a class="verify-green"><i class="fas fa-check"></i><span
+						style="color: #349e39; border-bottom: 1px solid #349e39">Verified </span></a>
+				<div class="icon-box-edit"><a><i class="fas fa-pen"></i></a></div> -->
+
+			</div>
+
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top" style="margin-top: 15px;"><a class="mail"><strong>Profile Progress</strong></a>
+				<div class="clearfix"></div>
+        <div class="progress md-progress progress-height">
+          <div class="progress-bar" 
+               role="progressbar" 
+               [ngStyle]="{'width':profile.profileCompletion+'%'}" 
+               aria-valuenow="25" 
+               aria-valuemin="0" 
+               aria-valuemax="100">
+               {{profile.profileCompletion}}%
+          </div>
+      </div>
+			</div>
+		</div>
+		<div class="employerleft">
+			<div class="profile-nav-box">
+				<ul class="profile-nav">
+					<li routerLinkActive="active"><a routerLink="/reqem/home">Home</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/my-account">My Acccount</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/my-lising">My Listing</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/auto-match-profile">Auto Match Profile</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/search-candidate">Search Candidate</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/pricing">Pricing</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/interview-schedule">Interview Schedule</a></li>
+					<li routerLinkActive="active"><a routerLink="/reqem/interview-status">Interview Status</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+<div class="profile-popup">
+    <div class="modal backdrop" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="onCloseHandled()">&times;</button>
+            <h4 class="modal-title">Profile</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="profile-box">
+                  <img src="./assets/img/job-seeker.png">
+                  <div class="profile-uplod">
+                    <div class="form-group">
+                      <label>File: </label>
+                      <input type="text" class="form-control" id="upload" placeholder="e.g. computer/file/self">
+                      <div class="clearfix"></div>
+                      <button type="button" class="btn btn_form5" style="margin-top: 0px">
+                        <i class="fas fa-upload"></i> Upload
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row profile-edit-form">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="firstName" 
+                              name="firstName"
+                              [(ngModel)]="profile.firstName"
+                              placeholder="e.g. Daniel">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="lastName" 
+                              name="lastName"
+                              [(ngModel)]="profile.lastName"
+                              placeholder="e.g. Wiiliams">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Company</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="company" 
+                              name="companyName"
+                              [(ngModel)]="profile.companyName"
+                              placeholder="e.g. Daniel">
+                    </div>
+                    <div class="col-sm-12">
+                      <button type="submit" class="btn btn_form5 pull-right">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</form> -->

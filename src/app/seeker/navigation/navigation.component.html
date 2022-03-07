@@ -1,0 +1,185 @@
+<div lass="col-sm-3" >
+	<div class="job-seeker-left">
+		<div class="job-seker-img"><img [src]="profileUrl" class="img-responsive" style="width:100%"></div>
+		<div style="padding: 30px 0px;">
+			<div class="text-name">
+				<h3> {{profile.firstName}} {{profile.lastName}}</h3>
+				<!-- <div class="icon-box-edit"><a attr.data-toggle="modal" attr.data-target="'#profile-edit'">
+					<i class="fas fa-pen"></i></a>
+				</div> -->
+
+				<!-- <div class="icon-box-edit"><a style="cursor:pointer" (click)="openModal()">
+						<i class="fas fa-pen"></i></a>
+				</div> -->
+				<div class="clearfix"></div>
+				<h3 style="color: #626161; font-size: 18px;">{{profile.designation}}<br><br>{{profile.companyName}} </h3>
+			</div>
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top"><a class="mail"><strong>Email:</strong>{{profile.email}}</a>
+				<div class="clearfix"></div>
+				<a class="verify"><i class="fas fa-exclamation"></i><span
+						style="color: #ff9f52; border-bottom: 1px solid #ff9f52">Verify Now </span></a>
+				<div class="icon-box-edit"><a><i class="fas fa-pen"></i></a></div>
+
+			</div>
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top" style="margin-top: 15px;"><a  class="mail"><strong>Ph:</strong> {{profile.personalInfo.phoneNo}} </a>
+				<div class="clearfix"></div>	
+			</div>
+			<div class="clearfix"></div>
+			<div class="text-name text-neme-top" style="margin-top: 15px;"><a class="mail"><strong>Profile Progress</strong></a>
+				<div class="clearfix"></div>
+        <div class="progress md-progress progress-height col-sm-10">
+          <div class="progress-bar" 
+               role="progressbar" 
+               [ngStyle]="{'width':'25%'}" 
+               aria-valuenow="25" 
+               aria-valuemin="0" 
+               aria-valuemax="100">
+          </div>
+      </div>
+      <div class="col-sm-1">          
+      25%
+      <!-- {{profile.profileCompletion}}% -->
+      </div>
+      <div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="employerleft">
+			<div class="profile-nav-box" style="margin-top: -22px;">
+				<ul class="profile-nav">
+          <li routerLinkActive="active"><a routerLink="/seeqem/matching-job">Matching Jobs</a></li>
+          <!-- <li routerLinkActive="active"><a routerLink="/seeqem/my-profile">My Profile</a></li> -->
+          <!-- <li>
+            <div class="btn-group" appDropdown>
+              <a routerLinkActive="active" routerLink="/seeqem/my-profile">My Profile</a>
+              <ul class="dropdown-menu">
+                  <li  routerLinkActive="active"><a routerLink="professional-summary">Professional Summary</a></li>
+                  <li  routerLinkActive="active"><a routerLink="experience">Experience</a></li>
+                  <li  routerLinkActive="active"><a routerLink="education">Education</a></li>
+              </ul>
+            </div>
+          </li> -->
+         <li><a class="dropdown-btn" routerLink="/seeqem/my-profile"  (click)="showMenu()">My Profile
+          <span *ngIf="!showprofilemenu" class="glyphicon glyphicon-menu-down"></span>
+          <span *ngIf="showprofilemenu" class="glyphicon glyphicon-menu-up"></span>
+        </a>
+          <!-- <a class="dropdown-btn" (click)="togg('besics');">Besics</a>  -->
+          <!--<div *ngIf="dropdowns['besics']"> -->
+            <ul *ngIf="showprofilemenu" class="submenu">
+              <li routerLinkActive="active"><a routerLink="personal-info">Personal Info</a> <img src="assets/img/tick.png" style="width: 24px;" *ngIf="pi"></li>
+              <li routerLinkActive="active"><a routerLink="professional-summary">Professional Summary</a><img src="assets/img/tick.png" *ngIf="ps"></li>
+              <li routerLinkActive="active"><a routerLink="experience">Experience</a><img src="assets/img/tick.png" *ngIf="ex"></li>
+              <li routerLinkActive="active"><a routerLink="education">Education</a><img src="assets/img/tick.png" *ngIf="ed"></li>
+              <li routerLinkActive="active"><a routerLink="skills">Skills</a><img src="assets/img/tick.png" *ngIf="ss"></li>
+              <li routerLinkActive="active"><a routerLink="training">Training</a><img src="assets/img/tick.png" *ngIf="tn"></li>
+              <li routerLinkActive="active"><a routerLink="certificate">Certification</a><img src="assets/img/tick.png" *ngIf="ca"></li>
+              <li routerLinkActive="active"><a routerLink="awards">Awards</a><img src="assets/img/tick.png" *ngIf="ad"></li>
+              <li routerLinkActive="active"><a routerLink="language">Language</a><img src="assets/img/tick.png" *ngIf="lg"></li>
+              <li routerLinkActive="active"><a routerLink="contact-details">Contact Details</a><img src="assets/img/tick.png" *ngIf="cd"></li>
+              <li routerLinkActive="active"><a routerLink="other-details">Other Details</a><img src="assets/img/tick.png" *ngIf="od"></li>
+              <li routerLinkActive="active"><a routerLink="r-and-d">Review and Download</a><img src="assets/img/tick.png" *ngIf="rd"></li>
+            </ul>
+          <!-- </div> -->
+  
+      
+         </li>
+					<li routerLinkActive="active"><a routerLink="/seeqem/to-do">To Do</a></li>
+					<li routerLinkActive="active"><a routerLink="/seeqem/settings">Settings</a></li>
+					<li routerLinkActive="active"><a routerLink="/seeqem/my-applications">My Applications</a></li>
+					<li routerLinkActive="active"><a routerLink="/seeqem/block-companies">Block Companies</a></li>
+					<li routerLinkActive="active"><a routerLink="/seeqem/msg-box">Msg Box</a></li>
+				</ul>
+      </div>
+		</div>
+	</div>
+</div>
+
+<!-- <ul *ngIf="!isProfileMainPage">
+    <li routerLinkActive="active"><a routerLink="personal-info">Personal Info</a> <img src="assets/img/tick.png" style="width: 24px;" *ngIf="pi"></li>
+    <li routerLinkActive="active"><a routerLink="professional-summary">Professional Summary</a><img src="assets/img/tick.png" *ngIf="ps"></li>
+    <li routerLinkActive="active"><a routerLink="experience">Experience</a><img src="assets/img/tick.png" *ngIf="ex"></li>
+    <li routerLinkActive="active"><a routerLink="education">Education</a><img src="assets/img/tick.png" *ngIf="ed"></li>
+    <li routerLinkActive="active"><a routerLink="skills">Skills</a><img src="assets/img/tick.png" *ngIf="ss"></li>
+    <li routerLinkActive="active"><a routerLink="training">Training</a><img src="assets/img/tick.png" *ngIf="tn"></li>
+    <li routerLinkActive="active"><a routerLink="certificate">Certification</a><img src="assets/img/tick.png" *ngIf="ca"></li>
+    <li routerLinkActive="active"><a routerLink="awards">Awards</a><img src="assets/img/tick.png" *ngIf="ad"></li>
+    <li routerLinkActive="active"><a routerLink="language">Language</a><img src="assets/img/tick.png" *ngIf="lg"></li>
+    <li routerLinkActive="active"><a routerLink="contact-details">Contact Details</a><img src="assets/img/tick.png" *ngIf="cd"></li>
+    <li routerLinkActive="active"><a routerLink="other-details">Other Details</a><img src="assets/img/tick.png" *ngIf="od"></li>
+    <li routerLinkActive="active"><a routerLink="r-and-d">Review and Download</a><img src="assets/img/tick.png" *ngIf="rd"></li>
+</ul> -->
+
+<!-- <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+<div class="profile-popup">
+    <div class="modal backdrop" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="onCloseHandled()">&times;</button>
+            <h4 class="modal-title">Profile</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="profile-box">
+                  <img src="./assets/img/job-seeker.png">
+                  <div class="profile-uplod">
+                    <div class="form-group">
+                      <label>File: </label>
+                      <input type="text" class="form-control" id="upload" placeholder="e.g. computer/file/self">
+                      <div class="clearfix"></div>
+                      <button type="button" class="btn btn_form5" style="margin-top: 0px">
+                        <i class="fas fa-upload"></i> Upload
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row profile-edit-form">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="firstName" 
+                              name="firstName"
+                              [(ngModel)]="profile.firstName"
+                              placeholder="e.g. Daniel">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="lastName" 
+                              name="lastName"
+                              [(ngModel)]="profile.lastName"
+                              placeholder="e.g. Wiiliams">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Company</label>
+                      <input type="text" 
+                              class="form-control" 
+                              id="company" 
+                              name="companyName"
+                              [(ngModel)]="profile.companyName"
+                              placeholder="e.g. Daniel">
+                    </div>
+                    <div class="col-sm-12">
+                      <button type="submit" class="btn btn_form5 pull-right">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</form> -->

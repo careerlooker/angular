@@ -1,0 +1,119 @@
+<div class="border-newwww">
+  <div class="candidate-form">
+    <h4>Search Posted Jobs</h4>
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="form-group">
+          <label>From</label>
+          <input type="date" 
+                  class="form-control" 
+                  id="from"
+                  [(ngModel)]="search.from">
+          <img src="./assets/img/calender.png">
+        </div>
+      </div>
+
+      <div class="col-sm-5">
+        <div class="form-group">
+          <label>To</label>
+          <input type="date" 
+                  class="form-control" 
+                  id="to"
+                  [(ngModel)]="search.to">
+          <img src="./assets/img/calender.png">
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <button type="button" class="btn btn_form3" (click)="searchJob(search)">Search</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="manage-job-post-2">
+    <div class="candidate-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="titlle_job">Job Title</th>
+            <th>Status</th>
+            <th>Matching Profile(S)</th>
+          </tr>
+        </thead>
+        <tbody style="border: 0px">
+          <tr class="border-manage" *ngFor="let jobItem of postedJobList">
+            <td class="officve-admin">
+              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.id)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">{{jobItem.jobTitle}}<br><span>Posted On: {{jobItem.createDate|date:'yyyy-MM-dd h:mm:ss'}} Expiry Date:
+                  {{jobItem.validity}}</span>
+                <div class="clearfix"></div>
+                <div class="button-managepost">
+                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob(jobItem.id)">Delete</button>
+                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.id)">Copy</button>
+                </div>
+              </div>
+            </td>
+            <td class="greennnn">{{jobItem.jobStatus===3?'Active':'Non Active'}}</td>
+            <td>0</td>
+          </tr>
+          <!-- <tr class="border-manage">
+            <td class="officve-admin">
+              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
+                  31/12/2018</span>
+                <div class="clearfix"></div>
+                <div class="button-managepost">
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
+                </div>
+              </div>
+            </td>
+            <td class="greennnn">Active</td>
+            <td>0</td>
+
+          </tr>
+          <tr class="border-manage">
+            <td class="officve-admin">
+              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
+                  31/12/2018</span>
+                <div class="clearfix"></div>
+                <div class="button-managepost">
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
+                </div>
+              </div>
+            </td>
+            <td class="greennnn">Active</td>
+            <td>0</td>
+
+          </tr>
+          <tr class="border-manage">
+            <td class="officve-admin">
+              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
+                  31/12/2018</span>
+                <div class="clearfix"></div>
+                <div class="button-managepost">
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
+                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
+                </div>
+              </div>
+            </td>
+            <td class="greennnn">Active</td>
+            <td>0</td>
+
+          </tr> -->
+        </tbody>
+      </table>
+      <div class="left_arrow">
+        <ul>
+          <li><a><i class="fas fa-chevron-left" (click)="previousPage()" disabled="paging"></i></a></li>
+          <li><a><i class="fas fa-chevron-right" (click)="nextPage()" disabled="paging"></i></a></li>
+        </ul>
+      </div>
+      <br><br>
+      
+    </div>
+  </div>
+</div>

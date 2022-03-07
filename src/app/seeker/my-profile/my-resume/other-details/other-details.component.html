@@ -1,0 +1,116 @@
+<!-- <section id="language" class="col-sm-8" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">My Resume</h4>
+      </div>
+    </div>
+  </div>
+  <div class="creat-resume-right" style="padding:10px 25px;">
+    <div class="creat-resume-box">
+      <div class="col-sm-12" style="padding: 0px;">
+        <div class="creat-resume-right"> -->
+          <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+            <div class="language-form-right" style="padding: 0px;">
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Current Job Type</label>
+                    <!-- <input type="text" class="form-control" name="currentJobType" [(ngModel)]="otherDetails.currentJobType" list="currentJobType"
+                      (change)="onCurrentJobTypeSelect($event.target.value)" required />
+                    <datalist id="currentJobType">
+                      <option [value]=""></option>
+                      <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
+                    </datalist> -->
+
+                    <select class="form-control certficiati0n-form" name="currentJobType" id="currentJobType"
+                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.currentJobType"
+                      (change)="onCurrentJobTypeSelect($event.target.value)">
+                      <option value="">Current Job Type</option>
+                      <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Employement Type </label>
+                    <div class="clearfix"></div>
+                    <!-- <input type="text" class="form-control" name="employementType" [(ngModel)]="otherDetails.employementType" list="employementType"
+                      (change)="onEmployementTypeSelect($event.target.value)" required />
+                    <datalist id="employementType">
+                      <option [value]=""></option>
+                      <option *ngFor="let et of employementType">{{et.employementType}}</option>
+                    </datalist> -->
+
+                    <select class="form-control certficiati0n-form" name="employementType" id="employementType"
+                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.employementType"
+                      (change)="onEmployementTypeSelect($event.target.value)">
+                      <option value="">Employement Type</option>
+                      <option *ngFor="let et of employementType">{{et.employementType}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="language-form-right" style="padding: 0px;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Willing To Relocate</label>
+                      <!-- <input type="text" class="form-control" name="willingToRelocate"
+                        [(ngModel)]="otherDetails.willingToRelocate" list="willingToRelocate"
+                        (change)="onWillingToRelocateSelect($event.target.value)" required />
+                      <datalist id="willingToRelocate">
+                        <option [value]=""></option>
+                        <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
+                      </datalist> -->
+
+                      <select class="form-control certficiati0n-form" name="willingToRelocate" id="willingToRelocate"
+                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.willingToRelocate"
+                      (change)="onWillingToRelocateSelect($event.target.value)">
+                      <option value="">Employement Type</option>
+                      <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label> Notice Period in Days</label>
+                      <div class="clearfix"></div>
+                      <!-- <input type="text" class="form-control" name="noticePeriob"
+                        [(ngModel)]="otherDetails.noticePeriod" list="noticePeriob"
+                        (change)="onNoticePeriobSelect($event.target.value)" required />
+                      <datalist id="noticePeriob">
+                        <option [value]=""></option>
+                        <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
+                      </datalist> -->
+
+                      <select class="form-control certficiati0n-form" name="noticePeriob" id="noticePeriob"
+                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.noticePeriod"
+                      (change)="onNoticePeriobSelect($event.target.value)">
+                      <option value="">Notice Period in Days</option>
+                      <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
+                    </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Visa Status</label>
+                      <textarea class="form-control" rows="5" id="visaStatus" name="visaStatus"
+                        [(ngModel)]="otherDetails.visaStatus" required>Write Your Message</textarea>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn_form4">Save & Next</button>
+              </div>
+            </div>
+          </form>
+        <!-- </div>
+      </div>
+    </div>
+  </div>
+</section> -->

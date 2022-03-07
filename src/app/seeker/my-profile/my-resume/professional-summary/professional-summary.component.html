@@ -1,0 +1,24 @@
+<!-- <section class="row" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+
+  </div>
+  <div class="creat-resume-right" style="padding:10px 25px;">
+    <div class="creat-resume-box"> -->
+        <form  #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+        <div class="col-sm-12" style="padding: 0px;">
+            <div lass="col-sm-8">
+              <h4>*Tips: A resume summary is a short, snappy introducton highlighting your career progress achievements and skill set</h4><br>
+                  <app-text-editor [description]="jobSeekerModel.profSummary.summary"></app-text-editor>
+              <br>
+              <button type="submit" class="btn btn_form4">Save &amp; Next</button>
+            </div>
+        </div>
+        </form>
+  <!-- </div>
+  </div>
+</section> -->

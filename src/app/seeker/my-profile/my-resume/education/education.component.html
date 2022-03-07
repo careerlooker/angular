@@ -1,0 +1,158 @@
+<!-- <section class="col-sm-8" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+  </div>
+  <div class="creat-resume-right" style="padding:10px 25px;">
+    <div class="creat-resume-box">
+      <div class="col-sm-12" style="padding: 0px;">
+        <div class="creat-resume-right"> -->
+          <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+            <div class="language-form-right" style="padding: 0px;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>College/University</label>
+                    <input type="text" class="form-control" id="college" name="college" [(ngModel)]="education.college" placeholder="e.g. st-wilson-555-0145">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Degree</label>
+                    <div class="clearfix"></div>
+                    <select class="form-control" name="marital" style=" height: 42px;" [(ngModel)]="education.degree" (change)="onDegreeChange($event.target.value)">
+                      <option value="">Select a degree</option>
+                      <option *ngFor="let edu of qualificationList">{{edu.qualName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6 col-xs-6">
+                      <div class="form-group">
+                        <label>Country</label>
+                        <input type="text"
+                        class="form-control" 
+                        id="country"
+                        name="country"
+                        placeholder="Select Country"
+                        [(ngModel)]="education.country" 
+                        list="countryName"
+                        (change)="onCountrySelect($event.target.value)" required/>
+                       <datalist id="countryName">
+                           <option [value]=""></option>
+                           <option  *ngFor="let c of countryList">{{c.name}}</option>
+                       </datalist>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                          <label>State</label>
+                          <input type="text"
+                            class="form-control" 
+                            name="state"
+                            placeholder="Select State"
+                            (change)="onStateSelect($event.target.value)"
+                            [(ngModel)]="education.state" 
+                            list="stateName" required/>
+                            <datalist id="stateName">
+                                <option [value]=""></option>
+                                <option *ngFor="let c of stateList">{{c.name}}</option>
+                            </datalist>
+                      </div>
+                    </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6 col-xs-6">
+                      <div class="form-group">
+                          <label>City</label>
+                          <input   type="text"
+                                   class="form-control" 
+                                   name="city"
+                                   placeholder="Select City"
+                                   [(ngModel)]="education.city" 
+                                   list="cityName" required/>
+                                   <datalist id="cityName">
+                                       <option [value]=""></option>
+                                       <option *ngFor="let c of cityList">{{c.name}}</option>
+                                   </datalist>
+                      </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Graduate Month & year</label>
+                    <div class="clearfix"></div>
+                    <select class="form-control certficiati0n-form  dateinput" name="graduateMonth" id="graduateMonth" style=" height: 42px;" 
+                            [(ngModel)]="education.graduateMonth" 
+                            (change)="onMonthChange($event.target.value)">
+                      <option value="">Month</option>
+                      <option *ngFor="let month of graduateMonth">{{month.graduateMonth}}</option>
+                    </select>
+                    
+                    <select class="form-control certficiati0n-form2  dateinput" name="graduateYear" id="graduateYear" style="  height: 42px;" 
+                            [(ngModel)]="education.graduateYear" 
+                            (change)="onYearChange($event.target.value)">
+                      <option value="0">Year</option>
+                      <option *ngFor="let year of graduateYear">{{year.graduateYear}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group" style="margin-top: 30px;">
+                    <label class="checkbox-inline" style=" padding:7px 0px; color: #9c9898"> Till date</label><input
+                      type="checkbox" id="tillDate" name="tillDate" value="Yes"
+                      style=" float: left; margin: 0px;"
+                      [(ngModel)]="education.tillDate" 
+                      (click)="onTillDate($event.target.checked)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <table  *ngIf="educationList.length>0" border="1">
+                    <thead>
+                      <tr>
+                        <th>College</th>
+                        <th>Degree</th>
+                        <th>Graduate <br/>Month &amp; Year</th>
+                        <th>City, Country</th>
+                        <th>Till Date</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let education of educationList" (click)="RowSelected(education);" style="cursor: pointer;"> 
+                        <td>{{education.college}}</td>
+                        <td>{{education.degree}}</td>
+                        <td>{{education.graduateMonth}}<br/> {{education.graduateYear}}</td>
+                        <td>{{education.city}}, <br/> {{education.country}}</td>
+                        <td>{{education.tillDate==true?'Yes':'No'}}</td>
+                        <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                      </tr>
+                    </tbody>
+                    </table>
+              </div>
+              <br>
+              <div style="clear:both"></div>
+              <div class="row">
+                <div class="col-sm-6  col-xs-6"> 
+                  <button type="submit" class="btn btn_form3" style="margin-top: 0px" *ngIf="isAdd">Add Degree</button>
+                  <button type="submit" class="btn btn_form4" style="margin-top: 0px" *ngIf="isUpdate">Update Degree</button>
+                </div>
+                <div class="col-sm-6 col-xs-6"> <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+                </div>
+                <div class="clearfix"></div><br><br>
+              </div>
+            </div>
+          </form>
+<!-- 
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

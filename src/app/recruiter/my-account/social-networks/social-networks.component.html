@@ -1,0 +1,47 @@
+<form #form="ngForm" (ngSubmit)="updateSocialNetwork(form)" novalidate>
+  <div class="empoyer-accoun-form">
+  <h4>Social Networks</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fab fa-google-plus-square"></i></span>
+        <input type="text" 
+                class="form-control" 
+                name="google"
+                id="google"
+                [(ngModel)]="socialNetwork.googlePlus"
+                placeholder="Google+">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+        <input type="text" 
+                class="form-control" 
+                id="linkedin" 
+                name="linkedin"
+                [(ngModel)]="socialNetwork.linkedIn"
+                placeholder="Linkedin">
+      </div>
+    </div>
+  </div><br>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fab fa-facebook-square"></i></span>
+        <input type="text" 
+                class="form-control" 
+                id="facebook"
+                name="facebook" 
+                [(ngModel)]="socialNetwork.facebook"
+                placeholder="Facebook">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn_form5 pull-right" style="margin-top: 0px">Update Social Network</button>
+    </div>
+  </div>
+</div>
+</form>

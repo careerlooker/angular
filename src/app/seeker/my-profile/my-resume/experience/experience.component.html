@@ -1,0 +1,199 @@
+<!-- <section class="row" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+  </div>
+  <div class="creat-resume-right" style="padding:10px 0px;">
+    <div class="creat-resume-box">
+      <div class="col-sm-12" style="padding: 0px;">
+        <div class="creat-resume-right" style="padding-top: 0px;"> -->
+          <h4 class="block_head2">*Tips: List your work experience, from the most recent to the oldest.</h4>
+          <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+            <div class="language-form-right" style="padding: 0px;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Employer</label>
+                    <input type="text" class="form-control" id="employerName" name="employerName" placeholder="e.g. Johan" [(ngModel)]="experience.employerName" required>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" class="form-control" id="role" name="role" [(ngModel)]="experience.role" placeholder="e.g. Williams" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Country</label>
+                    <input type="text"
+                    class="form-control" 
+                    id="country"
+                    name="country"
+                    placeholder="Select Country"
+                    [(ngModel)]="experience.country" 
+                    list="countryName"
+                    (change)="onCountrySelect($event.target.value)" required/>
+                   <datalist id="countryName">
+                       <option [value]=""></option>
+                       <option  *ngFor="let c of countryList">{{c.name}}</option>
+                   </datalist>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>State</label>
+                    <input   type="text"
+                      class="form-control" 
+                      name="state"
+                      placeholder="Select State"
+                      (change)="onStateSelect($event.target.value)"
+                      [(ngModel)]="experience.state" 
+                      list="stateName" required/>
+                      <datalist id="stateName">
+                          <option [value]=""></option>
+                          <option *ngFor="let c of stateList">{{c.name}}</option>
+                      </datalist>
+                </div>
+              </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label>City</label>
+                          <input   type="text"
+                                   class="form-control" 
+                                   name="city"
+                                   placeholder="Select City"
+                                   [(ngModel)]="experience.city" 
+                                   list="cityName" required/>
+                                   <datalist id="cityName">
+                                       <option [value]=""></option>
+                                       <option *ngFor="let c of cityList">{{c.name}}</option>
+                                   </datalist>
+                      </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Joining Month</label>
+                          <div class="clearfix"></div>
+                          <select class="form-control certficiati0n-form" name="joiningMonth" id="joiningMonth" style=" height: 42px;" (change)="onJoiningMonthChange($event.target.value)" 
+                          [(ngModel)]="experience.joiningMonth">
+                            <option value="">Month</option>
+                            <option *ngFor="let month of joiningMonth">{{month.joiningMonth}}</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Joining Year</label>
+                      <div class="clearfix"></div>
+                      <select class="form-control certficiati0n-form2" name="joiningYear" id="joiningYear" style=" height: 42px;" (change)="onJoiningYearChange($event.target.value)" 
+                            [(ngModel)]="experience.joiningYear">
+                        <option value="">Year</option>
+                        <option *ngFor="let year of joiningYear">{{year.joiningYear}}</option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Resigning Month</label>
+                        <div class="clearfix"></div>
+                        <select class="form-control certficiati0n-form" name="resigningMonth" id="resigningMonth" style=" height: 42px;" 
+                              (change)="onResigningMonthChange($event.target.value)" 
+                              [(ngModel)]="experience.resigningMonth">
+                          <option value="">Month</option>
+                          <option *ngFor="let month of resigningMonth">{{month.resigningMonth}}</option>
+                         
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Resigning Year</label>
+                        <div class="clearfix"></div>
+                        <select class="form-control certficiati0n-form2" name="resigningYear" id="resigningYear" style="  height: 42px;" (change)="onResigningYearChange($event.target.value)" 
+                        [(ngModel)]="experience.resigningYear">
+                            <option value="">Year</option>
+                            <option *ngFor="let year of resigningYear">{{year.resigningYear}}</option>
+                          </select>
+                      </div>
+                </div>
+              </div>
+
+
+              <div class="row">                   
+                  <div align="center" style="width: 100%"><div class="form-group">
+                   <label style=" padding:7px 0px; color: #9c9898">
+                     <input type="checkbox" id="presentCompany"
+                            name="presentCompany" 
+                            value="Yes" 
+                            style=" margin: 0px; height: inherit"
+                            [(ngModel)]="experience.presentCompany" 
+                            (click)="onPresentCompany($event.target.checked)"> I Presently Work Here</label>
+                  </div></div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label>Responsibilities</label>
+                    <app-text-editor [description]="experience.responsibilities"></app-text-editor>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <table  *ngIf="experienceList.length>0">
+                    <thead>
+                      <tr>
+                        <th>Company</th>
+                        <th>Role</th>
+                        <th>Joining Month &amp Year</th>
+                        <th>Resigning Month &amp Year</th>
+                        <th>Responsibilities</th>
+                        <th>Present Company</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let experience of experienceList" (click)="RowSelected(experience);" style="cursor: pointer;"> 
+                        <td>{{experience.employerName}}</td>
+                        <td>{{experience.role}}</td>
+                        <td>{{experience.joiningMonth}} {{experience.joiningYear}}</td>
+                        <td>{{experience.resigningMonth}} {{experience.resigningYear}}</td>
+                        <td>{{experience.responsibilities}}</td>
+                        <td>{{experience.presentCompany==1?'Yes':'No'}}</td>
+                        <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                      </tr>
+                    </tbody>
+                    </table>
+              </div><br>
+              <div class="row">
+                  <div class="col-sm-6 col-xs-6">
+                    <button type="submit" class="btn btn_form3 pull-left" *ngIf="isAdd">Add New Company</button>
+                    <button type="submit" class="btn btn_form3 pull-left" *ngIf="isUpdate">Update Company</button>
+                  </div>
+
+                  <div class="col-sm-6 col-xs-6">
+                    <button type="button" class="btn btn_form4" (click)="nextPage()">Next</button>
+                  </div>
+              </div>
+            </div>
+          </form>
+        <!-- </div>
+      </div>
+    </div>
+  </div>
+</section> -->

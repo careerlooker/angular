@@ -1,0 +1,26 @@
+
+<form #form="ngForm" (ngSubmit)="updateNotification(form)" novalidate>
+<div class="empoyer-accoun-form">
+  <div class="checkbox">
+    <label><input type="checkbox" name="notificationStatus" [(ngModel)]="notificationStatus" (click)="notificationsStatus($event.target.checked)"><span style="color: #908f8f">Enable Email Notifications</span></label>
+  </div><br>
+  <div class="checkbox">
+    <label><input type="checkbox"  name="notiMatchingProfile" [(ngModel)]="notification.notiMatchingProfile" (click)="notiMatchingProfile($event.target.checked)"><span>Alert me when matching profile found</span></label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="notiAccExpired" [(ngModel)]="notification.notiAccExpired" (click)="notiAccExpired($event.target.checked)"><span>Alert me when my account is getting
+        expired</span></label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="notiJobExpired" [(ngModel)]="notification.notiJobExpired" (click)="notiJobExpired($event.target.checked)"><span>Alert me when job is expired</span></label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="notiJobPosted"  [(ngModel)]="notification.notiJobPosted" (click)="notiJobPosted($event.target.checked)"><span>Alert when job is posted</span></label>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn_form5 pull-right" style="margin-top: 0px">Update Notifications</button>
+    </div>
+  </div>
+</div>
+</form> 

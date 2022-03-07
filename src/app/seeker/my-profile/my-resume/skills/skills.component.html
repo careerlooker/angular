@@ -1,0 +1,91 @@
+<!-- <section class="col-sm-8" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+  </div>
+  
+  <div class="creat-resume-right" style="padding:10px 25px;">
+    <div class="creat-resume-box">
+      <div class="col-sm-12" style="padding: 0px;">
+        <div class="creat-resume-right"> -->
+          <form  #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="language-form-right">
+                  <div class="form-group">
+                    <label>Skill</label>
+                    <ng-multiselect-dropdown 
+                          name="KeySkill"
+                          [data]="keySkillsDropdownList"
+                          [(ngModel)]="selectedskills"
+                          [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>     
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="star-form-box">
+                  <div class="star">
+                    <label>Rating</label>
+                    <star-rating-comp  [starType]="'icon'" [rating]="5"></star-rating-comp>
+                    <div>                      
+                      <span class="fa fa-star starchecked"></span>
+                      <span class="fa fa-star starchecked"></span>
+                      <span class="fa fa-star starchecked"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                    </div>
+                  </div>
+                  <div class="star-form">
+                    <div class="form-group">
+                      <label>Description <span>(Optional)</span></label>
+                      <input type="text" class="form-control" id="skillDescrioption" name="skillDescrioption" [(ngModel)]="skills.skillDescrioption" placeholder="e.g. Advance">
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>  
+              <div class="row">
+                <table  *ngIf="skillList.length>0" border="1">
+                  <thead>
+                    <tr>
+                      <th>Skill</th>
+                      <th>Ratings</th>
+                      <th>Description</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let skill of skillList" (click)="RowSelected(skill);" style="cursor: pointer;"> 
+                      <td>{{skill.skill}}</td>
+                      <td>{{skill.ratings}}</td>
+                      <td>{{skill.skillDescrioption}}</td>
+                      <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                    </tr>
+                  </tbody>
+                  </table>
+            </div>
+            <div class="clearfix"></div><br><br>
+            <div style="clear:both"></div>
+              <div class="row">
+                <div class="col-sm-6 col-xs-6"> 
+                  <button type="submit" class="btn btn_form3" *ngIf="isAdd">Add Skills</button>
+                  <button type="submit" class="btn btn_form3" *ngIf="isUpdate">Update Skills</button>
+                </div>
+                <div class="col-sm-6 col-xs-6"> 
+                  <button type="button" class="btn btn_form4" style="float: right" (click)="nextPage()">Next</button>
+                </div>
+                <div class="clearfix"></div><br><br>
+              </div>
+          </form>
+        <!-- </div>
+      </div>
+    </div>
+  </div>
+</section> -->

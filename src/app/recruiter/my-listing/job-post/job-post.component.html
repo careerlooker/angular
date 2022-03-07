@@ -1,0 +1,342 @@
+<div class="empoyer-accoun-form">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <h4><strong>Job Details</strong></h4>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label>Job Title</label>
+        <input type="text" 
+                class="form-control" 
+                id="jobTitle"
+                name="jobTitle"
+                [(ngModel)]="jobPosting.jobTitle"
+                required>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label>Key Skills</label>
+        <ng-multiselect-dropdown 
+                          name="KeySkill"
+                          [data]="keySkillsDropdownList"
+                          [(ngModel)]="selectedskills"
+                          [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>           
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-6">
+      <div class="form-group">
+          <label>Country</label>
+          <!-- <input   type="text"
+                   class="form-control" 
+                   id="countryname"
+                   name="countryname"
+                   placeholder="Select Country"
+                   list="countryName"
+                   [(ngModel)]="countryname"
+                   (change)="onCountrySelect($event.target.value)"
+                   ngModel
+                   required/>
+                  <datalist id="countryName">
+                      <option [value]=""></option>
+                      <option  *ngFor="let c of countryList">{{c.name}}</option>
+                  </datalist>  -->
+                  <ng-multiselect-dropdown 
+                  name="countryname"
+                  [data]="countryList"
+                  [(ngModel)]="selectedcountry"
+                  [settings]="singleDropdownSettings"
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
+       </div>
+    </div>
+    <div class="col-sm-8 col-xs-6">
+      <div class="form-group">
+      <label>City</label>
+      <ng-multiselect-dropdown 
+                          name="cityname"
+                          [data]="cityDropdownList"
+                          [(ngModel)]="selectedcities"
+                          [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+  </div>
+
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4 col-xs-6">
+     <div class="form-group">
+      <label>Zip Code</label>
+      <input type="text" 
+              class="form-control" 
+              id="zipCode" 
+              name="zipCode"
+              [(ngModel)]="jobPosting.zipCode"
+              required>
+    </div>
+  </div>
+</div>
+
+  <hr>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Annual CTC</label>
+        <input type="text" 
+              class="form-control" 
+              id="annualCtc" 
+              name="annualCtc"
+              [(ngModel)]="jobPosting.annualCtc"
+              required>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label> Min. Experience</label>
+        <input   type="text"
+                  class="form-control" 
+                  name="ExpMin"
+                  [(ngModel)]="jobPosting.expMin"
+                  list="expMin" 
+                  (change)="onMinExpSelect($event.target.value)" 
+                  required/>
+        <datalist id="expMin">
+            <option [value]=""></option>
+            <option *ngFor="let em of expMin">{{em.minExp}}</option>
+        </datalist>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Max. Experience</label>
+        <input   type="text"
+                  class="form-control" 
+                  name="ExpMax"
+                  list="expMax" 
+                  [(ngModel)]="jobPosting.expMax"
+                  (change)="onMaxExpSelect($event.target.value)" 
+                  required/>
+        <datalist id="expMax">
+            <option [value]=""></option>
+            <option *ngFor="let em of expMax">{{em.maxExp}}</option>
+        </datalist>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Functional Area</label>
+        <input    type="text"
+                  class="form-control" 
+                  name="funcArea"
+                  list="functionalAreaList" 
+                  [(ngModel)]="jobPosting.functionArea"
+                  (change)="onFunAreaSelect($event.target.value)" 
+                  required/>
+        <datalist id="functionalAreaList">
+            <option [value]=""></option>
+            <option *ngFor="let em of functionalAreaList">{{em.name}}</option>
+        </datalist>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Industry</label>
+        <input    type="text"
+                  class="form-control" 
+                  name="industry"
+                  [(ngModel)]="jobPosting.industry"
+                  list="industryList" 
+                  (change)="onIndustrySelect($event.target.value)" 
+                  required/>
+         <datalist id="industryList">
+            <option [value]=""></option>
+            <option *ngFor="let em of industryList">{{em.industryName}}</option>
+        </datalist>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Gender</label>
+        <input  type="text"
+                class="form-control" 
+                name="gender"
+                [(ngModel)]="jobPosting.gender"
+                list="gender" 
+                (change)="onGenderSelect($event.target.value)" 
+                required/>
+<datalist id="gender">
+  <option [value]=""></option>
+  <option *ngFor="let em of gender">{{em.gender}}</option>
+</datalist>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>No. of vacancies</label>
+        <input type="text"
+               class="form-control" 
+               name="noOfVacancy"
+               [(ngModel)]="jobPosting.noOfVacancies"
+              required/>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Job Type</label>
+        <input    type="text"
+                  class="form-control" 
+                  name="jobType"
+                  [(ngModel)]="jobPosting.jobType"
+                  list="jobType" 
+                  (change)="onjobTypeSelect($event.target.value)" 
+                  required/>
+          <datalist id="jobType">
+              <option [value]=""></option>
+              <option *ngFor="let em of jobType">{{em.jobType}}</option>
+        </datalist>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Qualification</label>
+        <input    type="text"
+                  class="form-control" 
+                  name="qualification"
+                  list="qualificationList" 
+                  [(ngModel)]="jobPosting.qualification"
+                  (change)="onQualificationSelect($event.target.value)" 
+                  required/>
+          <datalist id="qualificationList">
+              <option [value]=""></option>
+              <option *ngFor="let em of qualificationList">{{em.qualName}}</option>
+        </datalist>
+
+      </div>
+    </div>
+  </div>
+  <hr>
+  <h4><strong>Interview</strong></h4><br>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>WalkInDate</label>
+        <input type="date" 
+               class="form-control" 
+               id="WalkInDate"
+               name="WalkInDate"
+                [(ngModel)]="jobPosting.walkIn"
+                required
+               >
+
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Walk-in Time</label>
+        <input type="time" 
+               class="form-control" 
+               id="WalkInTime" 
+               name="WalkInTime"
+               [(ngModel)]="jobPosting.walkinTime"
+               required
+               >
+
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Valid Until</label>
+        <input type="date" 
+                class="form-control" 
+                id="validityUntil" 
+                name="validityUntil"
+                [(ngModel)]="jobPosting.validity"
+                required>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Contact Name</label>
+        <input type="text" 
+                class="form-control" 
+                id="contactPerson"
+                name="contactPerson"
+                [(ngModel)]="jobPosting.contactPerson">
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Contact number</label>
+        <input type="text" 
+                class="form-control" 
+                id="contactNumber"
+                name="contactNumber"
+                [(ngModel)]="jobPosting.contactNumber">
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label style=" padding:0px; color: #7c7b7b; font-weight: 500"> Show Above contact to job Seeker: 
+          <input type="radio" 
+                  name="contactVisibility" 
+                  style="margin: 0px; height: inherit"
+                  value="No"
+                  [(ngModel)]="jobPosting.contactVisibility"> No
+          <input type="radio" 
+                  name="contactVisibility" 
+                  style="margin: 0px; height: inherit"
+                  value="Yes"
+                  [(ngModel)]="jobPosting.contactVisibility">Yes 
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- <h4><strong>Job Description</strong></h4>
+  <div class="row">
+    <app-text-editor [jobDescription]="jobPosting.jobDescription"></app-text-editor>
+  </div>
+  <h4><strong>About Company</strong></h4>
+  <div class="row">
+    <app-text-editor [jobDescription]="jobPosting.aboutCompany"></app-text-editor>
+  </div> -->
+  <div class="row">
+    <div class="edit-button">
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onReset()">Reset</button>
+      <button *ngIf="jobId!=0" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,2)">Update</button>
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,3)">Save &amp; Publish</button>
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,1)">Save</button>
+    </div>
+  </div>
+</form>
+</div>

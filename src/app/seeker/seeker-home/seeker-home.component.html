@@ -1,0 +1,57 @@
+<app-header></app-header> 
+
+<!-- <div *ngIf="isMyProfilePage">
+  <section id="featured" class="pinside30">
+    <div class="container">
+      <div class="col-sm-3">
+        <app-seeker-navigation></app-seeker-navigation>
+      </div>
+      <div class="col-sm-9">
+        <router-outlet></router-outlet>
+      </div>
+        
+    </div>
+  </section>
+  <app-profile-popup></app-profile-popup>
+</div> -->
+
+<div >
+  <section id="featured" class="pinside30">
+<!--   
+    <div class="container" *ngIf="!isMyProfilePage">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 class="head-title-side">Create your own Resume</h4>
+        </div>
+      </div>
+    </div> -->
+      
+    <div lass="container">
+       
+      <div class="row box">
+        <div class="col-sm-4">
+          <div class="creat-resume-left">
+            <app-seeker-navigation></app-seeker-navigation>
+          </div>
+          <br><br><br><br>
+        </div>
+  
+        <div class="col-sm-8" style="padding:0px">
+          <div class="creat-resume-right" [ngClass]="{'creat-resume-box' : isMyProfilePage}">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  
+    <div class="clearfix"></div><br><br>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12"><img src="assets/img/add3.jpg" class="img-responsive"></div>
+      </div>
+    </div> 
+    
+  </section>
+  
+</div>

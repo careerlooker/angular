@@ -1,0 +1,153 @@
+<form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate >
+    <div class="empoyer-accoun-form">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" 
+                            class="form-control" 
+                            name="firstName"
+                            id="firstName" 
+                            [(ngModel)]="userProfile.firstName"
+                            placeholder="e.g. Daniel">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" 
+                            class="form-control"
+                            name="lastName"
+                            id="lastName" 
+                            [(ngModel)]="userProfile.lastName"
+                           placeholder="e.g. Williams">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" 
+                            class="form-control" 
+                            name="companyName"
+                            id="companyName" 
+                            [(ngModel)]="userProfile.companyName"
+                            placeholder="e.g. CTC Offer">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Designation</label>
+                    <input type="text" 
+                            class="form-control" 
+                            name="designation"
+                            id="designation" 
+                            [(ngModel)]="userProfile.designation"
+                            placeholder="e.g. Sr. HR">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    <input   type="text"
+                             class="form-control" 
+                             id="country"
+                             name="country"
+                             placeholder="Select Country"
+                             [(ngModel)]="countryname" 
+                             list="countryName"
+                             (change)="onCountrySelect($event.target.value)"/>
+                            <datalist id="countryName">
+                                <option [value]=""></option>
+                                <option  *ngFor="let c of countryList">{{c.name}}</option>
+                            </datalist>
+
+                           
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                       <input   type="text"
+                                class="form-control" 
+                                name="state"
+                                placeholder="Select State"
+                                (change)="onStateSelect($event.target.value)"
+                                [(ngModel)]="statename" 
+                                list="stateName"/>
+                                <datalist id="stateName">
+                                    <option [value]=""></option>
+                                    <option *ngFor="let c of stateList">{{c.name}}</option>
+                                </datalist>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                       <input   type="text"
+                                class="form-control" 
+                                name="city"
+                                placeholder="Select City"
+                                [(ngModel)]="cityname" list="cityName" required/>
+                                <datalist id="cityName">
+                                    <option [value]=""></option>
+                                    <option *ngFor="let c of cityList">{{c.name}}</option>
+                                </datalist>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Website URL</label>
+                    <input type="text" 
+                            class="form-control" 
+                            id="websiteUrl" 
+                            name="websiteUrl"
+                            placeholder="e.g. www.WEBSITENAME.com"
+                           [(ngModel)]="userProfile.websiteUrl">
+                </div>
+            </div>
+        </div>
+         <!-- <div class="row">
+            <div class="col-sm-6">
+                <div class="profile-uplod">
+                    <div class="form-group">
+                        <label>File: </label>
+                       <input type="file" 
+                                class="form-control" 
+                                name="recruiterPic"
+                                id="recruiterPic" 
+                                placeholder="e.g. computer/file/self"
+                                [(ngModel)]="userProfile.recruiterPic"> 
+                        
+                               <div class="clearfix"></div>
+
+                        <button type="button" class="btn btn_form5" style="margin-top: 0px"> <i
+                                class="fas fa-upload"></i> Upload Your Photo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <img src='./assets/img/profile.png' class="img-responsive">
+            </div>
+        </div><br> -->
+        
+        <app-file-upload [imgUrl]="imgUrl"></app-file-upload>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" 
+                        class="btn btn_form5 pull-right" 
+                        style="margin-top: 0px">Update Setting
+               </button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+

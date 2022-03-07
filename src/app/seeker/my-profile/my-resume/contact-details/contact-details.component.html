@@ -1,0 +1,156 @@
+<!-- <section id="language" class="col-sm-8"  style="padding: 0px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 class="head-title-side">Create your own Resume</h4>
+        </div>
+      </div>
+    </div>
+    <div class="creat-resume-right" style="padding:10px 25px;">
+      <div class="creat-resume-box">
+        <div class="col-sm-12" style="padding: 0px;">
+          <div class="creat-resume-right"> -->
+            <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+              <div class="language-form-right" style="padding: 0px;">
+               <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                             class="form-control" 
+                             id="mediaName" 
+                             name="mediaName" 
+                             [(ngModel)]="contactDetails.mediaName"
+                             placeholder="Gmail,LinkedIn,Facebook etc.." 
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="mediaId" 
+                              name="mediaId" 
+                              placeholder="Provide your media id"
+                              [(ngModel)]="contactDetails.mediaId"
+                              required>
+                    </div>
+                  </div>
+                </div>
+                 <!-- <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="linkedin" 
+                              name="linkedin" 
+                              placeholder="Linked In" 
+                              [(ngModel)]="contactDetails.mediaName"
+                              readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="linkedin" 
+                              name="linkedin" 
+                              placeholder="Provide Linked Id"
+                              [(ngModel)]="contactDetails.mediaId">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="skype" 
+                              name="skype" 
+                              placeholder="Skype" 
+                              readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="skype" 
+                              name="skype" 
+                              placeholder="Provide Skype Id"
+                              [(ngModel)]="contactDetails.mediaId">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="otherSocialMedia" 
+                              name="otherSocialMedia" 
+                              placeholder="Other Social Media" 
+                              readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" 
+                              class="form-control" 
+                              id="otherSocialMedia" 
+                              name="otherSocialMedia" 
+                              placeholder="Provide Other Social Media Id"
+                              [(ngModel)]="contactDetails.mediaId">
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row"  *ngFor="let field of fieldArray; let i = index">
+                      <div class="col-sm-6">
+                          <div class="form-group">
+                               <label for="mediaName[{{i}}]" name="mediaName[{{i}}]">{{field.mediaName}}</label> 
+                              <input [(ngModel)]="field.mediaName" class="form-control" type="text" name="mediaName_{{i}}" [attr.name]="i" placeholder="{{field.mediaName}}" readonly>
+                       
+                          </div>
+                      </div>
+                      <div class="col-sm-6">
+                          <div class="form-group">
+                             <input [(ngModel)]="field.mediaId" class="form-control" type="text" name="mediaId_{{i}}" [attr.name]="i" placeholder="{{field.mediaName}}">
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <table  *ngIf="contactDetailsList.length>0" border="1">
+                        <thead>
+                          <tr>
+                            <th>Media Name</th>
+                            <th>Media Id</th>
+                     <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let cd of contactDetailsList" (click)="RowSelected(cd);" style="cursor: pointer;"> 
+                            <td>{{cd.mediaName}}</td>
+                            <td>{{cd.mediaId}}</td>
+                            <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                          </tr>
+                        </tbody>
+                        </table>
+                  </div><br>
+                <br>
+                <div class="row">
+                  <div class="col-sm-6 col-xs-6"> 
+                    <button type="submit" class="btn btn_form5" style="margin-top: 0px" *ngIf="isAdd" [disabled]="!form.valid"> Add Media </button>
+                    <button type="submit" class="btn btn_form3 pull-left" *ngIf="isUpdate">Update Media</button>
+                    <!-- <button type="button" class="btn btn_form5" style="margin-top: 0px;margin-right: 20px;" (click)="Remove()" *ngIf="fieldArray.length>4"> Remove</button> -->
+                  </div>
+                  <div class="col-sm-6 col-xs-6"> 
+                    <button type="button" class="btn btn_form4" (click)="nextPage()"> Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+<!-- 
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->

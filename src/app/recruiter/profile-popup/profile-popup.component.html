@@ -1,0 +1,56 @@
+<div class="profile-popup">
+    <div class="modal backdrop" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="onCloseHandled()">&times;</button>
+            <h4 class="modal-title">Profile</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="profile-box">
+                  <img src="./assets/img/job-seeker.png">
+                  <div class="profile-uplod">
+                    <div class="form-group">
+                      <label>File: </label>
+                      <input type="email" class="form-control" id="email" placeholder="e.g. computer/file/self">
+                      <div class="clearfix"></div>
+                      <button type="submit" class="btn btn_form5" style="margin-top: 0px">
+                        <i class="fas fa-upload"></i> Upload
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row profile-edit-form">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="email" class="form-control" id="email" placeholder="e.g. Daniel">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="email" class="form-control" id="email" placeholder="e.g. Wiiliams">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Company</label>
+                      <input type="email" class="form-control" id="email" placeholder="e.g. Daniel">
+                    </div>
+                    <div class="col-sm-12">
+                      <button type="submit" class="btn btn_form5 pull-right">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal !-->
+  </div>

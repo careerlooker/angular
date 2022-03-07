@@ -1,0 +1,47 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+<div class="empoyer-accoun-form">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>Current Password*</label>
+        <input type="password" 
+                class="form-control" 
+                id="currentPwd" 
+                name="currentPwd" 
+                [(ngModel)]="updateAccount.currentPwd">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>New Password*</label>
+        <input type="password" 
+                class="form-control" 
+                id="newPwd" 
+                name="newPwd"
+                [(ngModel)]="updateAccount.newPwd">
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>Confirm New Password*</label>
+        <input type="password" 
+                class="form-control" 
+                id="confirmPwd"
+                name="confirmPwd"
+                [(ngModel)]="updateAccount.confirmPwd">
+      </div>
+    </div>
+
+
+  </div>
+  <div align="right">
+    <button type="submit" 
+            class="btn btn_form5" 
+            style="margin-top: 0px">Update Password
+    </button>
+   </div>
+</div>
+</form>

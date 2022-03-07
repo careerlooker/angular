@@ -1,0 +1,14 @@
+
+    .progress-bar{
+        background:#ff9934;
+        font-size: 20px;
+        height: 30px;
+        padding-top: 5px;
+      }
+    
+      .progress-height{
+        height: 30px;
+        background:wheat;
+        border-radius: 15px;
+      }
+      

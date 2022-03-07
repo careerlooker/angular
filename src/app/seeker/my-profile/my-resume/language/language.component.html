@@ -1,0 +1,78 @@
+<!-- <section class="col-sm-8" style="padding: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="head-title-side">Create your own Resume</h4>
+      </div>
+    </div>
+  </div>
+  <div class="creat-resume-box">
+    <div class="col-sm-12" style="padding: 0px;">
+      <div class="creat-resume-right"> -->
+        <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="language-form-right">
+                <div class="form-group">
+                  <label>Language</label>
+                  <input type="text" class="form-control" [(ngModel)]="language.langName" id="langName" name="langName" placeholder="e.g. English" required>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="star-form-box">
+                <div class="star">
+                  <label>Rating</label>
+                  <div>
+                  <span class="fa fa-star starchecked"></span>
+                  <span class="fa fa-star starchecked"></span>
+                  <span class="fa fa-star starchecked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  </div>
+              
+                </div>
+                <div class="star-form">
+                  <div class="form-group">
+                    <label>Descriptional <span>(Optional)</span></label>
+                    <input type="text" class="form-control" id="langDesc" name="langDesc" [(ngModel)]="language.langDesc" placeholder="e.g. English">
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="row">
+            <table  *ngIf="languageList.length>0" border="1">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  <th>Ratings</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let language of languageList" (click)="RowSelected(language);" style="cursor: pointer;"> 
+                  <td>{{language.langName}}</td>
+                  <td>{{language.ratings}}</td>
+                  <td>{{language.langDesc}}</td>
+                  <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                </tr>
+              </tbody>
+              </table>
+        </div><br>
+          <div class="row">
+            <div class="col-sm-6 col-xs-6">
+              <button type="submit" class="btn btn_form3" *ngIf="isAdd">Add Language</button> 
+              <button type="submit" class="btn btn_form3"  *ngIf="isUpdate">Update Language</button> 
+            </div>
+            <div class="col-sm-6 col-xs-6"> 
+              <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+            </div>
+          </div>
+        </form>
+      <!-- </div>
+    </div>
+  </div>
+</section> -->
