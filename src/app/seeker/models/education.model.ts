@@ -1,7 +1,7 @@
 import { BaseModel } from './base.model';
 
 export class EducationModel extends BaseModel{
-    eduId:number;
+eduId:number;
 college: string;
 degree: string;
 country: string;

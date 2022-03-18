@@ -14,8 +14,14 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.firstName" id="firstName" name="firstName" placeholder="e.g. Johan" required>
-                  </div>
+                    <input type="text" 
+                            class="form-control"
+                            [(ngModel)]="jobSeekerModel.personalInfo.firstName" 
+                            id="firstName" 
+                            name="firstName" 
+                            placeholder="e.g. Johan" 
+                            required> 
+                          </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -86,7 +92,7 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Zip Code</label>
-                    <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.zipCode" id="zipCode" name="zipCode" placeholder="e.g. 60185" required>
+                    <input type="number" class="form-control" pattern="^[1-9][0-9]{5}$" [(ngModel)]="jobSeekerModel.personalInfo.zipCode" id="zipCode" name="zipCode" placeholder="e.g. 60185" required>
                   </div>
                 </div>
               </div>
@@ -95,14 +101,14 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Email</label>
-                    <input type="email" class="form-control"  [(ngModel)]="jobSeekerModel.email" id="email" name="email" placeholder="e.g. john_wiilams@gmail.com" required>
+                    <input type="email" class="form-control" readonly disabled  [(ngModel)]="jobSeekerModel.email" id="email" name="email" placeholder="e.g. john_wiilams@gmail.com" required>
                   </div>
                 </div>
 
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Phone </label>
-                    <input type="number" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.phoneNo" id="phoneNo" name="phoneNo" placeholder="e.g. 202-555-0145" required>
+                    <input type="tel"  pattern="^[7-9][0-9]{9}$" maxlength="10" minlength="10" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.phoneNo" id="phoneNo" name="phoneNo" placeholder="e.g. 202-555-0145" required>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SeekerModel } from 'src/app/seeker/models/seeker.model';
+import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { NgForm } from '@angular/forms';
 import { SeekerService } from 'src/app/seeker/seeker-services/seeker.service';
 import { ToastrService } from 'ngx-toastr';

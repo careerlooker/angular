@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UpdateAccountModel } from '../recruiter/my-account/models/update-account.model';
 import { JobSeekerModel } from '../seeker/models/job-seeker-model';
-import { SeekerModel } from '../seeker/models/seeker.model';
+import { PersonalInfo } from '../seeker/models/personal-info.model';
 
 @Component({
   selector: 'app-signup',
@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
       }
       this.jobSeekerModel.email= this.signupModel.email;
       this.jobSeekerModel.password=this.signupModel.password;
-      this.jobSeekerModel.personalInfo=new SeekerModel();
+      this.jobSeekerModel.personalInfo=new PersonalInfo();
       this.jobSeekerModel.personalInfo.firstName=this.signupModel.firstName;
       this.jobSeekerModel.personalInfo.lastName=this.signupModel.lastName;
       this.jobSeekerModel.personalInfo.phoneNo=this.signupModel.phoneNumber;

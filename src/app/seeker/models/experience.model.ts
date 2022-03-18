@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 
-export class ExperienceModel extends BaseModel{
+export class ExperienceModel{
     expid:number;
     employerName: string;
     role:string;
@@ -11,6 +11,6 @@ export class ExperienceModel extends BaseModel{
     joiningMonth: string;
     resigningYear: number;
     resigningMonth: string;
-   // responsibilities: string;
+    responsibilities: string;
     presentEmployer: number
 }

@@ -17,7 +17,13 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Employer</label>
-                    <input type="text" class="form-control" id="employerName" name="employerName" placeholder="e.g. Johan" [(ngModel)]="experience.employerName" required>
+                    <input type="text" 
+                            class="form-control" 
+                            id="employerName" 
+                            name="employerName" 
+                            placeholder="e.g. Johan" 
+                            [(ngModel)]="experience.employerName" 
+                            required>
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -31,18 +37,18 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Country</label>
-                    <input type="text"
-                    class="form-control" 
-                    id="country"
-                    name="country"
-                    placeholder="Select Country"
-                    [(ngModel)]="experience.country" 
-                    list="countryName"
-                    (change)="onCountrySelect($event.target.value)" required/>
-                   <datalist id="countryName">
-                       <option [value]=""></option>
-                       <option  *ngFor="let c of countryList">{{c.name}}</option>
-                   </datalist>
+                    <input   type="text"
+                               class="form-control" 
+                               id="country"
+                               name="country"
+                               placeholder="Select Country"
+                               [(ngModel)]="countryname" 
+                               list="countryName"
+                               (change)="onCountrySelect($event.target.value)" required/>
+                              <datalist id="countryName">
+                                  <option [value]=""></option>
+                                  <option  *ngFor="let c of countryList">{{c.name}}</option>
+                              </datalist>
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -85,8 +91,12 @@
                         <div class="form-group">
                           <label>Joining Month</label>
                           <div class="clearfix"></div>
-                          <select class="form-control certficiati0n-form" name="joiningMonth" id="joiningMonth" style=" height: 42px;" (change)="onJoiningMonthChange($event.target.value)" 
-                          [(ngModel)]="experience.joiningMonth">
+                          <select class="form-control certficiati0n-form"
+                                   name="joiningMonth" 
+                                   id="joiningMonth"
+                                   style=" height: 42px;" 
+                                   (change)="onJoiningMonthChange($event.target.value)" 
+                                  [(ngModel)]="experience.joiningMonth" required>
                             <option value="">Month</option>
                             <option *ngFor="let month of joiningMonth">{{month.joiningMonth}}</option>
                           </select>
@@ -96,8 +106,12 @@
                     <div class="form-group">
                       <label>Joining Year</label>
                       <div class="clearfix"></div>
-                      <select class="form-control certficiati0n-form2" name="joiningYear" id="joiningYear" style=" height: 42px;" (change)="onJoiningYearChange($event.target.value)" 
-                            [(ngModel)]="experience.joiningYear">
+                      <select class="form-control certficiati0n-form2"
+                              name="joiningYear" 
+                              id="joiningYear" 
+                              style=" height: 42px;" 
+                              (change)="onJoiningYearChange($event.target.value)" 
+                              [(ngModel)]="experience.joiningYear" required>
                         <option value="">Year</option>
                         <option *ngFor="let year of joiningYear">{{year.joiningYear}}</option>
                       </select>
@@ -109,9 +123,12 @@
                       <div class="form-group">
                         <label>Resigning Month</label>
                         <div class="clearfix"></div>
-                        <select class="form-control certficiati0n-form" name="resigningMonth" id="resigningMonth" style=" height: 42px;" 
-                              (change)="onResigningMonthChange($event.target.value)" 
-                              [(ngModel)]="experience.resigningMonth">
+                        <select class="form-control certficiati0n-form"
+                                 name="resigningMonth" 
+                                 id="resigningMonth" 
+                                 style=" height: 42px;" 
+                                 (change)="onResigningMonthChange($event.target.value)" 
+                                 [(ngModel)]="experience.resigningMonth" required>
                           <option value="">Month</option>
                           <option *ngFor="let month of resigningMonth">{{month.resigningMonth}}</option>
                          
@@ -122,8 +139,12 @@
                       <div class="form-group">
                         <label>Resigning Year</label>
                         <div class="clearfix"></div>
-                        <select class="form-control certficiati0n-form2" name="resigningYear" id="resigningYear" style="  height: 42px;" (change)="onResigningYearChange($event.target.value)" 
-                        [(ngModel)]="experience.resigningYear">
+                        <select class="form-control certficiati0n-form2"
+                                 name="resigningYear" 
+                                 id="resigningYear" 
+                                 style="  height: 42px;" 
+                                 (change)="onResigningYearChange($event.target.value)" 
+                                 [(ngModel)]="experience.resigningYear" required>
                             <option value="">Year</option>
                             <option *ngFor="let year of resigningYear">{{year.resigningYear}}</option>
                           </select>
@@ -149,19 +170,20 @@
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label>Responsibilities</label>
-                    <app-text-editor [description]="experience.responsibilities"></app-text-editor>
+                    <!-- <app-text-editor [description]="experience.responsibilities"></app-text-editor> -->
                   </div>
                 </div>
               </div>
 
               <div class="row">
-                  <table  *ngIf="experienceList.length>0">
+                  <!-- <table  *ngIf="experienceList.length>0"> -->
+                    <table>
                     <thead>
                       <tr>
                         <th>Company</th>
                         <th>Role</th>
-                        <th>Joining Month &amp Year</th>
-                        <th>Resigning Month &amp Year</th>
+                        <th>Joining Month And Year</th>
+                        <th>Resigning Month And Year</th>
                         <th>Responsibilities</th>
                         <th>Present Company</th>
                         <th></th>

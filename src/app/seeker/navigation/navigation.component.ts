@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
-import { SeekerModel } from '../models/seeker.model';
+import { PersonalInfo } from '../models/personal-info.model';
 import { SeekerService } from '../seeker-services/seeker.service';
 import { Router } from '@angular/router';
 import { JobSeekerModel } from '../models/job-seeker-model';
@@ -44,6 +44,7 @@ export class SeekerNavigationComponent  {
    rd: boolean=false;
    ad: boolean=false;
    constructor(private seekerService: SeekerService, private toastr: ToastrService, private router: Router) {
+     this.profile.personalInfo=new PersonalInfo();
       if(this.router.url == '/seeqem/matching-job'){
         this.isProfileMainPage = true;
       }else{

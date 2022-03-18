@@ -22,9 +22,9 @@ export class ValidatePhoneNumberDirective  implements Validator{
     //  return {'defaultSelect':true}
     //}
     //else{
-      if(str.length!=8 )
+      if(str.length!=10 )
       return  {'defaultSelect':true}
-      if(str.length==8)
+      if(str.length==10)
       return  null
       }          
   //}
@@ -38,7 +38,7 @@ export class ValidatePhoneNumberDirective  implements Validator{
      // if (firstTwo !== "91" && firstTwo.length === 2) {
         //this.elementRef.nativeElement.value="";                   
       //}else
-       if(str.length!=8){
+       if(str.length!=10){
         this.elementRef.nativeElement.value="";      
       }
       else {   

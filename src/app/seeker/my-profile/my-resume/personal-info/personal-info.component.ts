@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SeekerModel } from 'src/app/seeker/models/seeker.model';
+import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
 import { CityModel } from 'src/app/shared/models/city.model';
@@ -11,6 +11,16 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { environment } from 'src/environments/environment';
+import { AwardsModel } from 'src/app/seeker/models/awards.model';
+import { BlockCompanies } from 'src/app/seeker/models/block-companies.model';
+import { CertificateModel } from 'src/app/seeker/models/certificate.model';
+import { ContactDetailsModel } from 'src/app/seeker/models/contact-details.model';
+import { EducationModel } from 'src/app/seeker/models/education.model';
+import { LanguageModel } from 'src/app/seeker/models/language.model';
+import { TrainingModel } from 'src/app/seeker/models/training.model';
+import { SkillsModel } from 'src/app/seeker/models/skills.model';
+import { OthersDetails } from 'src/app/seeker/models/others-details.model';
+import { professionalSummary } from 'src/app/seeker/models/professional-summary';
 
 
 
@@ -45,7 +55,17 @@ export class PersonalInfoComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit() {
-    this.jobSeekerModel.personalInfo=new SeekerModel();
+    this.jobSeekerModel.personalInfo=new PersonalInfo();
+    this.jobSeekerModel.awards=new Array<AwardsModel>();
+    this.jobSeekerModel.blockCompanies=new Array<BlockCompanies>();
+    this.jobSeekerModel.certification=new Array<CertificateModel>();
+    this.jobSeekerModel.contactDetails=new Array<ContactDetailsModel>();
+    this.jobSeekerModel.education=new Array<EducationModel>();
+    this.jobSeekerModel.language=new Array<LanguageModel>();
+    this.jobSeekerModel.training=new Array<TrainingModel>();
+    this.jobSeekerModel.skills=new Array<SkillsModel>();
+    this.jobSeekerModel.otherDetails=new OthersDetails();
+    this.jobSeekerModel.profSummary=new professionalSummary();
     this.getSeeker();
   }
 
@@ -70,7 +90,7 @@ export class PersonalInfoComponent implements OnInit {
   getCountries() {
     this.sharedService.getAllCountries().subscribe((countries: Array<CountriesModel>) => {
       this.countryList = countries;
-      if (Object.keys(this.jobSeekerModel.personalInfo).length > 0 && this.jobSeekerModel.personalInfo.country) {
+      if (Object.keys(this.jobSeekerModel.personalInfo).length > 0 && this.jobSeekerModel.personalInfo.country.length>0) {
         this.countryname = this.countryList.filter(x => x.name === this.jobSeekerModel.personalInfo.country)[0].name;
         this.onCountrySelect(this.countryname);
       }
@@ -78,10 +98,16 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   onCountrySelect(name: string) {
+    if(name==="" || name===undefined){
+      this.statename='';
+      this.cityname=''; 
+      this.cityList=[];
+      this.stateList=[];
+    }else{
     let id = this.countryList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
-      if(Object.keys(this.stateList).length>0 && this.jobSeekerModel.personalInfo.state){
+      if(Object.keys(this.stateList).length>0 && this.jobSeekerModel.personalInfo.state.length>0){
         this.statename=this.stateList.filter(x=>x.name===this.jobSeekerModel.personalInfo.state)[0].name
         this.onStateSelect(this.statename);
       }else{
@@ -89,7 +115,12 @@ export class PersonalInfoComponent implements OnInit {
       }
     });
   }
+  }
   onStateSelect(name: string) {
+    if(name==="" || name===undefined){
+      this.cityname='';
+      this.cityList=[];
+    }else{
     let id = this.stateList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
@@ -98,7 +129,8 @@ export class PersonalInfoComponent implements OnInit {
       }else{
         this.cityname='';
       }
-    })
+    });
+  }
   }
 
   onFileSelected(event:any){
@@ -142,17 +174,17 @@ export class PersonalInfoComponent implements OnInit {
    }
 
    onSubmit(form:NgForm){
-      //if(form.valid){
+     if(form.valid){
        
         this.jobSeekerModel.personalInfo.firstName=form.value.firstName;
         this.jobSeekerModel.personalInfo.lastName=form.value.lastName;
         this.jobSeekerModel.personalInfo.address=form.value.address;
         this.jobSeekerModel.personalInfo.phoneNo=form.value.phoneNo;
         //this.jobSeekerModel.personalInfo.photo=this.selectedFile.name;
-        //this.jobSeekerModel.personalInfo.country=form.value.country;
-        //this.jobSeekerModel.personalInfo.state=form.value.state;
-        //this.jobSeekerModel.personalInfo.city=form.value.city;
-        this.jobSeekerModel.personalInfo.zipCode=form.value.zip;
+        this.jobSeekerModel.personalInfo.country=form.value.country;
+        this.jobSeekerModel.personalInfo.state=form.value.state;
+        this.jobSeekerModel.personalInfo.city=form.value.city;
+        this.jobSeekerModel.personalInfo.zipCode=form.value.zipCode;
       
         this.seekerrService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
           this.toastr.success(JSON.parse(result).message)
@@ -164,6 +196,6 @@ export class PersonalInfoComponent implements OnInit {
           this.toastr.error(err.message);
           console.log(err);
         }) 
-     // }
+     }
    }
 }

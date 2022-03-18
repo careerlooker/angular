@@ -42,7 +42,7 @@ export class ProfessionalSummaryComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
-    if(form.valid){
+    if(form.valid && this.textEditorComponent.description){
     this.jobSeekerModel.profSummary.summary=this.textEditorComponent.description
     this.jobSeekerModel.email=this.email;
     this.seekerService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{

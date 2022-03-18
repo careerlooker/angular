@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SeekerModel } from 'src/app/seeker/models/seeker.model';
+import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
@@ -12,6 +12,8 @@ import { ExperienceModel } from 'src/app/seeker/models/experience.model';
 import { NgForm } from '@angular/forms';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import { BaseModel } from 'src/app/shared/models/base.model';
+import { JobOperationModel } from 'src/app/recruiter/my-listing/models/job-operation.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-experience',
@@ -21,14 +23,14 @@ import { BaseModel } from 'src/app/shared/models/base.model';
 export class ExperienceComponent extends BaseModel implements OnInit {
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   experience:ExperienceModel=new ExperienceModel();
-  experienceList:Array<ExperienceModel>=new Array<ExperienceModel>();
-
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
     private router:Router) { super()}
 
   ngOnInit() {
+    this.jobSeekerModel.experience= new Array<ExperienceModel>();
     this.getExperienceList();
     this.getCountries();
   //  this.experience.responsibilities='';
@@ -41,8 +43,8 @@ export class ExperienceComponent extends BaseModel implements OnInit {
       this.sekId=+localStorage.getItem('seekId');
       this.seekerService.getExperienceList(this.sekId).subscribe((result: Array<ExperienceModel>) => {
         if(result!=null){
-        this.experienceList = result;
-        if(this.experienceList.length>0)
+          this.jobSeekerModel.experience = result;
+        if( this.jobSeekerModel.experience.length>0)
         this.seekerService.tickSubject.next('ex');
       }
       },(err: HttpErrorResponse) => {
@@ -103,7 +105,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   }
 
   RowSelected(experience:ExperienceModel){
-    this.experience=this.experienceList.filter(x=>x.id==experience.id)[0];
+    this.experience= this.jobSeekerModel.experience.filter(x=>x.expid==experience.expid)[0];
     this.isUpdate = true;
     this.isAdd = false;
     this.actionType='edit';
@@ -112,11 +114,12 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   onSubmit(form:NgForm){
     if(form.valid){
     //  this.experience.responsibilities=this.textEditorComponent.description
-      this.experience.sekId=this.sekId;
+     // this.experience.sekId=this.sekId;
      // this.experience.presentCompany=form.value.presentCompany==true?1:0;
-      let expList=new Array<ExperienceModel>();
-      expList.push(this.experience)
-      this.seekerService.saveExperience(expList, this.actionType).subscribe((result:any)=>{
+     this.jobSeekerModel.id=this.sekId;
+     this.jobSeekerModel.email=this.email;
+     this.jobSeekerModel.experience.push(this.experience)
+      this.seekerService.saveExperience(this.jobSeekerModel, this.actionType).subscribe((result:any)=>{
         this.toastr.success(JSON.parse(result).message);
         this.getExperienceList();
         this.isUpdate = false;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { SeekerModel } from '../models/seeker.model';
+import { PersonalInfo } from '../models/personal-info.model';
 import { environment } from 'src/environments/environment';
 import { ExperienceModel } from '../models/experience.model';
 import { EducationModel } from '../models/education.model';
@@ -18,10 +18,10 @@ import { JobSeekerModel } from '../models/job-seeker-model';
 })
 export class SeekerService {
 
-    private messageSource = new BehaviorSubject<SeekerModel>(new SeekerModel);
+    private messageSource = new BehaviorSubject<PersonalInfo>(new PersonalInfo);
     currentMessage = this.messageSource.asObservable();
 
-    profileSubject:Subject<SeekerModel>=new Subject<SeekerModel>();
+    profileSubject:Subject<PersonalInfo>=new Subject<PersonalInfo>();
     profileMessage=this.profileSubject.asObservable();
 
     tickSubject:Subject<string>=new Subject<string>();
@@ -33,15 +33,15 @@ export class SeekerService {
         return this.httpClient.post<JobSeekerModel>(environment.baseUrl +'co-api/seeker/login/',{email:email});
     }
 
-    updateSeekerProfile(seekerProfile: JobSeekerModel): Observable<any> {
-        return this.httpClient.patch<any>(environment.baseUrl + 'co-api/seeker/register', seekerProfile, { responseType: 'text' as 'json' })
+    updateSeekerProfile(jobSeekerModel: JobSeekerModel): Observable<any> {
+        return this.httpClient.patch<any>(environment.baseUrl + 'co-api/seeker/register', jobSeekerModel, { responseType: 'text' as 'json' })
     }
 
-    saveExperience(experience:Array<ExperienceModel>,actionType:string):Observable<any>{
+    saveExperience(jobSeekerModel: JobSeekerModel,actionType:string):Observable<any>{
         if(actionType=='add'){
-            return this.httpClient.post<any>(environment.baseUrl + 'co-api/seeker/employer', experience, { responseType: 'text' as 'json' });
+            return this.httpClient.post<any>(environment.baseUrl + 'co-api/seeker/employer', jobSeekerModel, { responseType: 'text' as 'json' });
         }else{
-            return this.httpClient.patch<any>(environment.baseUrl + 'co-api/seeker/employer', experience, { responseType: 'text' as 'json' });   
+            return this.httpClient.patch<any>(environment.baseUrl + 'co-api/seeker/employer', jobSeekerModel, { responseType: 'text' as 'json' });   
         }
     }
 
