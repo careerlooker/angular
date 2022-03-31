@@ -4,8 +4,8 @@ import { SeekerService } from 'src/app/seeker/seeker-services/seeker.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AwardsModel } from 'src/app/seeker/models/awards.model';
 import { LanguageModel } from 'src/app/seeker/models/language.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-language',
@@ -13,6 +13,7 @@ import { LanguageModel } from 'src/app/seeker/models/language.model';
   styleUrls: ['./language.component.css']
 })
 export class LanguageComponent extends BaseModel implements OnInit {
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel();
     language:LanguageModel=new LanguageModel();
     languageList:Array<LanguageModel>=new Array<LanguageModel>();
 
@@ -36,7 +37,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
         this.language.sekId=this.sekId;
         let langList=new Array<LanguageModel>();
         langList.push(this.language);
-        this.seekerService.saveLanguage(langList,this.actionType).subscribe((result:any)=>{
+        this.seekerService.saveLanguage(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
           this.toastr.success(result.message);
           this.getLanguageList();
           this.isAdd=true;
@@ -54,8 +55,8 @@ export class LanguageComponent extends BaseModel implements OnInit {
     }
   
     getLanguageList(){
-      this.seekerService.getLanguageList(this.sekId).subscribe((result:Array<LanguageModel>)=>{
-        this.languageList=result;
+      this.seekerService.getLanguageList(this.email).subscribe((result:JobSeekerModel)=>{
+        this.jobSeekerModel=result;
         if(this.languageList.length>0){
           this.seekerService.tickSubject.next('lg');
         }

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LanguageModel } from 'src/app/seeker/models/language.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-contact-details',
@@ -13,6 +14,7 @@ import { LanguageModel } from 'src/app/seeker/models/language.model';
   styleUrls: ['./contact-details.component.css']
 })
 export class ContactDetailsComponent extends BaseModel implements OnInit {
+  jobSeekerModel:JobSeekerModel=new  JobSeekerModel();
   contactDetails:ContactDetailsModel=new ContactDetailsModel();
   contactDetailsList:Array<ContactDetailsModel>=new Array<ContactDetailsModel>();
   // addCout1:number=0;
@@ -84,7 +86,7 @@ constructor(private seekerService:SeekerService,
     //   contList.push(this.contactDetails);
     // }
 
-      this.seekerService.saveContactDetails(contList,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveContactDetails(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getContactDetailsList();
         this.isAdd=true;
@@ -102,8 +104,8 @@ constructor(private seekerService:SeekerService,
   }
 
   getContactDetailsList(){
-    this.seekerService.getContactDetailsList(this.sekId).subscribe((result:Array<ContactDetailsModel>)=>{
-      this.contactDetailsList=result;
+    this.seekerService.getContactDetailsList(this.email).subscribe((result:JobSeekerModel)=>{
+      this.jobSeekerModel=result;
       if(this.contactDetailsList.length>0){
         this.seekerService.tickSubject.next('cd');
       }

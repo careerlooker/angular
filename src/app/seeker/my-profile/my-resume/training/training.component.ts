@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JobOperationModel } from 'src/app/recruiter/my-listing/models/job-operation.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-training',
@@ -12,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./training.component.css']
 })
 export class TrainingComponent extends BaseModel implements OnInit {
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   training:TrainingModel=new TrainingModel();
   trainingList:Array<TrainingModel>=new Array<TrainingModel>();
   constructor(private seekerService:SeekerService,
@@ -44,7 +47,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
       let tranList=new Array<TrainingModel>();
       tranList.push(this.training);
 
-      this.seekerService.saveTraining(tranList,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveTraining(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getTraningList();
         this.isAdd=true;
@@ -62,9 +65,9 @@ export class TrainingComponent extends BaseModel implements OnInit {
   }
 
   getTraningList(){
-    this.seekerService.getTrainingList(this.sekId).subscribe((result:Array<TrainingModel>)=>{
-      this.trainingList=result;
-      if(this.trainingList.length>0){
+    this.seekerService.getTrainingList(this.email).subscribe((result:JobSeekerModel)=>{
+      this.jobSeekerModel=result;
+      if(this.jobSeekerModel.training.length>0){
         this.seekerService.tickSubject.next('tn');
       }
     })

@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BaseModel } from 'src/app/shared/models/base.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-education',
@@ -23,7 +24,8 @@ export class EducationComponent extends BaseModel implements OnInit {
   educationList: Array<EducationModel> = new Array<EducationModel>()
   qualificationList: Array<QualificationModel> = new Array<QualificationModel>()
   education: EducationModel = new EducationModel();
- 
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel(); 
+  tillDate:number;
 
   constructor(private recruiterService: RecruiterService,
     private sharedService: SharedService,
@@ -36,9 +38,10 @@ export class EducationComponent extends BaseModel implements OnInit {
     this.getCountries();
     this.getEducationList();
     this.actionType='add';
-    
+    this.isAdd=true;
+    this.isDelete=true;
     this.education.graduateMonth = "";
-    this.education.graduateYear = 0;
+   // this.education.graduateYear = "";
   }
 
   getQualification() {
@@ -51,11 +54,11 @@ export class EducationComponent extends BaseModel implements OnInit {
     this.education.graduateMonth = month;
   }
   onYearChange(year: number) {
-   // this.education.graduateYear = year;
+    this.education.graduateYear = year;
   }
 
   onTillDate(value: any) {
-  //  this.education.tillDate = value == true ? 1 : 0;
+   this.tillDate = value == true ? 1 : 0;
   }
 
   getCountries() {
@@ -97,45 +100,82 @@ export class EducationComponent extends BaseModel implements OnInit {
     this.education.degree = degree;
   }
 
-  RowSelected(education: EducationModel) {
-   this.education= this.educationList.filter(x=>x.id==education.id)[0];
+  UpdateEducation(){
+    const targetIdx = this.jobSeekerModel.education.map(item => item.eduId).indexOf(this.education.eduId);
+    this.education.tillDate=this.tillDate;
+    this.jobSeekerModel.education[targetIdx] = this.education;
+    this.isDelete=true;
+  }
+  editEducation(education:EducationModel){
+    this.education= this.jobSeekerModel.education.filter(x=>x.eduId==education.eduId)[0];
     this.isUpdate = true;
     this.isAdd = false;
     this.actionType='edit';
+    this.isDelete=false;
   }
-  onSubmit(form: NgForm) {
+  deleteEducation(education:EducationModel){
+    const targetIdx = this.jobSeekerModel.education.map(item => item.eduId).indexOf(education.eduId);
+    this.jobSeekerModel.education.splice(targetIdx,1)
+  }
+  AddEducation(form: NgForm) {
     if (form.valid) {
-      let eduList=new Array<EducationModel>();
-     // this.education.tillDate=form.value.tillDate==true?1:0
-      this.education.sekId=+localStorage.getItem('seekId')
-      eduList.push(this.education);
-      this.seekerService.saveEducation(eduList,this.actionType).subscribe((result: any) => {
+      this.education.tillDate=form.value.tillDate==true?1:0
+      if(this.jobSeekerModel.education.length>0){
+        if(this.jobSeekerModel.experience.filter(x=>x.expid!==this.education.eduId)&& this.actionType=='add'){
+         let maxId = this.jobSeekerModel.experience.reduce((max, character) => (character.expid > max ? character.expid : max),
+         this.jobSeekerModel.education[0].eduId);
+        // const ids = this.jobSeekerModel.education.map(object => {
+        //   return object.eduId;
+        // });
+        // const maxIds = Math.max.apply(null,ids);
+        this.education.eduId=maxId+1;
+        }
+       }else{
+        this.education.eduId=1;
+       }
+      //  this.jobSeekerModel.education.forEach(x=>{
+      //    if(x.tillDate==1 && this.education.tillDate==1){
+      //         this.isChecked=true;
+      //    }
+      //    else{
+      //      this.isChecked=false;
+      //    }
+      //  })
+      //  if(!this.isChecked){
+      //  this.jobSeekerModel.education.push(this.education)
+      //  } 
+      this.jobSeekerModel.education.push(this.education)
+    }
+  }
+
+  saveAndNext(){
+    this.seekerService.saveEducation(this.jobSeekerModel,this.actionType).subscribe((result: any) => {
+      if(result){
         this.toastr.success(JSON.parse(result).message)
         this.education=new EducationModel();
         this.getEducationList();
         this.isUpdate = false;
         this.isAdd = true;
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
-        console.log(err);
-      }) 
-    }
+        this.router.navigate(['/seeqem/my-profile/skills']) 
+      }
+    
+    },(err: HttpErrorResponse) => {
+      this.toastr.error(err.message);
+      console.log(err);
+    }) 
+
   }
 
   getEducationList(){
-    this.sekId=+localStorage.getItem('seekId');
-    this.seekerService.getEducationList(this.sekId).subscribe((result:Array<EducationModel>)=>{
-      this.educationList=result;
-      if(this.educationList.length>0){
+    this.email=localStorage.getItem('email');
+    this.seekerService.getEducationList(this.email).subscribe((result:JobSeekerModel)=>{
+      this.jobSeekerModel=result;
+      if(this.jobSeekerModel.education.length>0){
       this.seekerService.tickSubject.next('ed');
       }
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
       console.log(err);
     }) 
-  }
-
-  nextPage(){
-    this.router.navigate(['/seeqem/my-profile/skills'])
   }
 }

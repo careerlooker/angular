@@ -7,9 +7,9 @@ export class ExperienceModel{
     country: string;
     state: string;
     city: string;
-    joiningYear: number;
+    joiningYear: string;
     joiningMonth: string;
-    resigningYear: number;
+    resigningYear:string;
     resigningMonth: string;
     responsibilities: string;
     presentEmployer: number

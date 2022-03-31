@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { AwardsModel } from 'src/app/seeker/models/awards.model';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { AwardsModel } from 'src/app/seeker/models/awards.model';
   styleUrls: ['./awards.component.css']
 })
 export class AwardsComponent extends BaseModel implements OnInit {
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   awards:AwardsModel=new AwardsModel();
   awardsList:Array<AwardsModel>=new Array<AwardsModel>();
   
@@ -64,8 +66,8 @@ export class AwardsComponent extends BaseModel implements OnInit {
     }
   
     getawardsList(){
-      this.seekerService.getawardsList(this.sekId).subscribe((result:Array<AwardsModel>)=>{
-        this.awardsList=result;
+      this.seekerService.getawardsList(this.sekId).subscribe((result:JobSeekerModel)=>{
+        this.jobSeekerModel=result;
         if(this.awardsList.length>0){
           this.seekerService.tickSubject.next('ad');
         }

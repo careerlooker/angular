@@ -10,20 +10,26 @@
     <div class="creat-resume-box">
       <div class="col-sm-12" style="padding: 0px;">
         <div class="creat-resume-right"> -->
-          <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+          <form #form=ngForm  (keydown.enter)="$event.preventDefault()" novalidate>
             <div class="language-form-right" style="padding: 0px;">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>College/University</label>
-                    <input type="text" class="form-control" id="college" name="college" [(ngModel)]="education.college" placeholder="e.g. st-wilson-555-0145">
+                    <input type="text" 
+                          class="form-control" 
+                          id="college" 
+                          name="college" 
+                          [(ngModel)]="education.college" 
+                          placeholder="e.g. st-wilson-555-0145"
+                          required>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Degree</label>
                     <div class="clearfix"></div>
-                    <select class="form-control" name="marital" style=" height: 42px;" [(ngModel)]="education.degree" (change)="onDegreeChange($event.target.value)">
+                    <select class="form-control" name="marital" style=" height: 42px;" [(ngModel)]="education.degree" (change)="onDegreeChange($event.target.value)" required>
                       <option value="">Select a degree</option>
                       <option *ngFor="let edu of qualificationList">{{edu.qualName}}</option>
                     </select>
@@ -85,19 +91,27 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label>Graduate Month & year</label>
+                    <label>Graduate Month</label>
                     <div class="clearfix"></div>
-                    <select class="form-control certficiati0n-form  dateinput" name="graduateMonth" id="graduateMonth" style=" height: 42px;" 
+                    <select class="form-control certficiati0n-form  dateinput" 
+                            name="graduateMonth"
+                            id="graduateMonth" 
+                            style=" height: 42px;" 
                             [(ngModel)]="education.graduateMonth" 
-                            (change)="onMonthChange($event.target.value)">
+                            (change)="onMonthChange($event.target.value)"
+                            required>
                       <option value="">Month</option>
                       <option *ngFor="let month of graduateMonth">{{month.graduateMonth}}</option>
                     </select>
-                    
-                    <select class="form-control certficiati0n-form2  dateinput" name="graduateYear" id="graduateYear" style="  height: 42px;" 
+                    <label>Graduate Year</label>
+                    <select class="form-control certficiati0n-form2 dateinput" 
+                            name="graduateYear" 
+                            id="graduateYear" 
+                            style="  height: 42px;" 
                             [(ngModel)]="education.graduateYear" 
-                            (change)="onYearChange($event.target.value)">
-                      <option value="0">Year</option>
+                            (change)="onYearChange($event.target.value)"
+                            required>
+                      <option value="">Year</option>
                       <option *ngFor="let year of graduateYear">{{year.graduateYear}}</option>
                     </select>
                   </div>
@@ -109,12 +123,15 @@
                       style=" float: left; margin: 0px;"
                       [(ngModel)]="education.tillDate" 
                       (click)="onTillDate($event.target.checked)">
+                      <span *ngIf="isChecked">
+                        <div style="color: red;">You can only select one education as till date</div>
+                      </span>
                   </div>
                 </div>
               </div>
 
               <div class="row">
-                  <table  *ngIf="educationList.length>0" border="1">
+                  <table  *ngIf="jobSeekerModel.education.length>0" border="1">
                     <thead>
                       <tr>
                         <th>College</th>
@@ -126,13 +143,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let education of educationList" (click)="RowSelected(education);" style="cursor: pointer;"> 
+                      <tr *ngFor="let education of jobSeekerModel.education" style="cursor: pointer;"> 
                         <td>{{education.college}}</td>
                         <td>{{education.degree}}</td>
                         <td>{{education.graduateMonth}}<br/> {{education.graduateYear}}</td>
                         <td>{{education.city}}, <br/> {{education.country}}</td>
                         <td>{{education.tillDate==true?'Yes':'No'}}</td>
-                        <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                        <td>
+                          <button class="btn btn_form3" (click)="editEducation(education);">Edit</button>&nbsp;
+                          <button class="btn btn_form3" (click)="deleteEducation(education)" *ngIf="isDelete">Delete</button>
+                        </td>
                       </tr>
                     </tbody>
                     </table>
@@ -141,10 +161,10 @@
               <div style="clear:both"></div>
               <div class="row">
                 <div class="col-sm-6  col-xs-6"> 
-                  <button type="submit" class="btn btn_form3" style="margin-top: 0px" *ngIf="isAdd">Add Degree</button>
-                  <button type="submit" class="btn btn_form4" style="margin-top: 0px" *ngIf="isUpdate">Update Degree</button>
+                  <button type="button" class="btn btn_form3" style="margin-top: 0px" *ngIf="isAdd" (click)="AddEducation(form)">Add Degree</button>
+                  <button type="button" class="btn btn_form4" style="margin-top: 0px" *ngIf="isUpdate" (click)="UpdateEducation()">Update Degree</button>
                 </div>
-                <div class="col-sm-6 col-xs-6"> <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+                <div class="col-sm-6 col-xs-6"> <button type="button" class="btn btn_form4" *ngIf="isDelete" (click)="saveAndNext()">Save & Next</button>
                 </div>
                 <div class="clearfix"></div><br><br>
               </div>

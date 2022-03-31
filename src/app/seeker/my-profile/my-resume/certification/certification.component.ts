@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { NgForm } from '@angular/forms';
+import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 
 @Component({
   selector: 'app-certification',
@@ -12,6 +13,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./certification.component.css']
 })
 export class CertificationComponent extends BaseModel implements OnInit {
+  jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   certificate:CertificateModel=new CertificateModel();
   certificateList:Array<CertificateModel>=new Array<CertificateModel>();
   
@@ -45,7 +47,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
         let certList=new Array<CertificateModel>();
         certList.push(this.certificate);
   
-        this.seekerService.saveCertificate(certList,this.actionType).subscribe((result:any)=>{
+        this.seekerService.saveCertificate(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
           this.toastr.success(result.message);
           this.getCertificateList();
           this.isAdd=true;
@@ -63,8 +65,8 @@ export class CertificationComponent extends BaseModel implements OnInit {
     }
   
     getCertificateList(){
-      this.seekerService.getCertificateList(this.sekId).subscribe((result:Array<CertificateModel>)=>{
-        this.certificateList=result;
+      this.seekerService.getCertificateList(this.email).subscribe((result:JobSeekerModel)=>{
+        this.jobSeekerModel=result;
         if(this.certificateList.length>0){
           this.seekerService.tickSubject.next('ca');
         }

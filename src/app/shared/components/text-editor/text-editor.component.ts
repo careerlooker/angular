@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output,EventEmitter,Input } from '@angular/core';
+import { Component, Output,EventEmitter,Input } from '@angular/core';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 import { NgForm } from '@angular/forms';
 
@@ -44,7 +44,7 @@ export class TextEditorComponent {
   };
 
   public iframe: object = { enable: true };
-  public height: number = 300;
+  public height: number = 100;
   public width:number=700;
 
 

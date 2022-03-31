@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
@@ -12,8 +11,8 @@ import { ExperienceModel } from 'src/app/seeker/models/experience.model';
 import { NgForm } from '@angular/forms';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import { BaseModel } from 'src/app/shared/models/base.model';
-import { JobOperationModel } from 'src/app/recruiter/my-listing/models/job-operation.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-experience',
@@ -24,6 +23,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   experience:ExperienceModel=new ExperienceModel();
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
+
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
@@ -31,9 +31,13 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   ngOnInit() {
     this.jobSeekerModel.experience= new Array<ExperienceModel>();
+    console.log('hideForm: '+this.hideForm)
+    this.experience.responsibilities='';
+    this.isAdd=true;
+    this.isDelete=true;
     this.getExperienceList();
     this.getCountries();
-  //  this.experience.responsibilities='';
+  
      this.actionType='add'
   }
 
@@ -41,9 +45,10 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.email=localStorage.getItem('email');
     if (this.email != null) {
       this.sekId=+localStorage.getItem('seekId');
-      this.seekerService.getExperienceList(this.sekId).subscribe((result: Array<ExperienceModel>) => {
+      this.seekerService.getExperienceList(this.email).subscribe((result: JobSeekerModel) => {
         if(result!=null){
-          this.jobSeekerModel.experience = result;
+          this.jobSeekerModel = result;
+
         if( this.jobSeekerModel.experience.length>0)
         this.seekerService.tickSubject.next('ex');
       }
@@ -94,45 +99,108 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.experience.resigningMonth=month;
   }
   onJoiningYearChange(year){
+    if(this.experience.resigningYear!=undefined)
+    {
+      let joinYear=+this.joiningYear.find(x=>x.joiningYear=year).joiningYear;
+      if(joinYear<=+this.experience.resigningYear)
+      {
+        this.experience.joiningYear=year;
+      }
+      else{
+      this.toastr.error('Joining year should not be greater than resigning year');
+      this.experience.joiningYear=null;
+    }
+  }
+  else{
     this.experience.joiningYear=year;
   }
+  }
   onResigningYearChange(year){
+    if(this.experience.resigningYear!=undefined)
+    { 
+      let resignYear=+this.resigningYear.find(x=>x.resigningYear==year).resigningYear;
+      let joiningYear=+this.experience.joiningYear;
+      if(resignYear>=joiningYear)
+      {
+        this.experience.resigningYear=year;
+      }
+      else
+      {
+        this.experience.resigningYear='';
+        this.toastr.error('Resigning year should be greater than joining year');
+      }
+  }
+  else{
     this.experience.resigningYear=year;
   }
+}
 
   onPresentCompany(value:any){
-   // this.experience.presentCompany=value==true?1:0;
+   this.experience.presentEmployer=value==true?1:0;
   }
 
-  RowSelected(experience:ExperienceModel){
+  updateCompany(experience:ExperienceModel){
     this.experience= this.jobSeekerModel.experience.filter(x=>x.expid==experience.expid)[0];
     this.isUpdate = true;
     this.isAdd = false;
     this.actionType='edit';
+    this.isDelete=false;
   }
 
-  onSubmit(form:NgForm){
+
+  addNewCompany (form:NgForm){
     if(form.valid){
-    //  this.experience.responsibilities=this.textEditorComponent.description
-     // this.experience.sekId=this.sekId;
-     // this.experience.presentCompany=form.value.presentCompany==true?1:0;
-     this.jobSeekerModel.id=this.sekId;
-     this.jobSeekerModel.email=this.email;
-     this.jobSeekerModel.experience.push(this.experience)
-      this.seekerService.saveExperience(this.jobSeekerModel, this.actionType).subscribe((result:any)=>{
-        this.toastr.success(JSON.parse(result).message);
-        this.getExperienceList();
-        this.isUpdate = false;
-        this.isAdd = true;
-        this.experience=new ExperienceModel();
-      //  this.experience.responsibilities='';
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
-        console.log(err);
-      }) 
+    this.experience.responsibilities=this.textEditorComponent.description
+    this.isAdd=true;
+    this.isUpdate=false;
+      this.experience.presentEmployer=form.value.presentEmployer==true?1:0;
+      this.jobSeekerModel.email=this.email;
+       if(this.jobSeekerModel.experience.length>0){
+        if(this.jobSeekerModel.experience.filter(x=>x.expid!==this.experience.expid)){
+        let maxId = this.jobSeekerModel.experience.reduce((max, character) => (character.expid > max ? character.expid : max),
+        this.jobSeekerModel.experience[0].expid);
+        this.experience.expid=maxId+1;
+        }
+       }else{
+        this.experience.expid=1;
+       }
+       this.jobSeekerModel.experience.forEach(x=>{
+         if(x.presentEmployer==1 && this.experience.presentEmployer==1){
+              this.isChecked=true;
+         }
+         else{
+           this.isChecked=false;
+         }
+       })
+       if(!this.isChecked){
+       this.jobSeekerModel.experience.push(this.experience)
+       } 
     }
   }
+  UpdateCompany(){
+    const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(this.experience.expid);
+    this.experience.responsibilities=this.textEditorComponent.description;
+    this.jobSeekerModel.experience[targetIdx] = this.experience;
+    this.isDelete=true;
+  }
+  deleteCompany(experience:ExperienceModel){
+    const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(experience.expid);
+    this.jobSeekerModel.experience.splice(targetIdx,1)
+  }
   nextPage(){
-    this.router.navigate(['/seeqem/my-profile/education']);
+    this.seekerService.saveExperience(this.jobSeekerModel, this.actionType).subscribe((result:any)=>{
+      if(result){
+      this.toastr.success(JSON.parse(result).message);
+      this.getExperienceList();
+      this.isUpdate = false;
+      this.isAdd = true;
+      this.experience=new ExperienceModel();
+      this.experience.responsibilities='';
+        this.router.navigate(['/seeqem/my-profile/education']);
+      }
+    },(err: HttpErrorResponse) => {
+      this.toastr.error(err.message);
+      console.log(err);
+    }) 
   }
 }

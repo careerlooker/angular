@@ -8,6 +8,6 @@ country: string;
 state: string;
 city: string;
 graduateMonth: string;
-graduateYear: 0;
-tillDate: 0;
+graduateYear: number;
+tillDate: number;
 }

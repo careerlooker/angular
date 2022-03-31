@@ -1,7 +1,6 @@
 import { CountriesModel } from './countries.model';
 import { CityModel } from './city.model';
 import { StatesModel } from './states.model';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export class BaseModel {
     actionType: string;
@@ -13,9 +12,12 @@ export class BaseModel {
     cityname: string;
     email: string;
     sekId: number;
-
-    isAdd: boolean = true;
+    isChecked:boolean=false;
+    isAdd: boolean = false;
     isUpdate: boolean = false;
+    isDelete:boolean=false;
+    hideForm:boolean=false;
+    hideFormButton:boolean=true;
 
     joiningMonth = [{ "joiningMonth": "January" }, { "joiningMonth": "February" }, { "joiningMonth": "March" }, { "joiningMonth": "April" }, { "joiningMonth": "May" }, { "joiningMonth": "June" },
     { "joiningMonth": "July" }, { "joiningMonth": "August" }, { "joiningMonth": "September" }, { "joiningMonth": "October" }, { "joiningMonth": "November" }, { "joiningMonth": "December" }];
