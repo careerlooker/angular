@@ -40,7 +40,7 @@ import { RecruiterNavigationComponent } from './recruiter/navigation/navigation.
     RecruiterNavigationComponent,
     ProfilePopupComponent,
     SeekerHomeComponent,
-    SeekerNavigationComponent
+    SeekerNavigationComponent,
   
     
  

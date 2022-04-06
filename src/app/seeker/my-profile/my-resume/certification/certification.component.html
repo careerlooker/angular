@@ -10,37 +10,53 @@
   <div class="creat-resume-box">
     <div class="row" style="padding: 0px;">
       <div class="creat-resume-right"> -->
-        <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+        <form #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
           <div class="language-form-right" style="padding: 0px;">
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>Certificate</label>
-                  <input type="text" class="form-control" id="certName" name="certName" [(ngModel)]="certificate.certName" placeholder="e.g. Hadoop">
+                  <input type="text" 
+                          class="form-control" 
+                          id="certName" 
+                          name="certName" 
+                          [(ngModel)]="certificate.certName" 
+                          placeholder="e.g. Hadoop"
+                          required>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label> Date</label>
+                  <label> Month</label>
                   <div class="clearfix"></div>
-                  <select class="form-control certficiati0n-form  dateinput" name="certMonth" id="certMonth" style="height: 42px;"
+                  <select class="form-control certficiati0n-form  dateinput"
+                           name="certMonth" 
+                           id="certMonth" 
+                           style="height: 42px;"
                           [(ngModel)]="certificate.certMonth" 
-                          (change)="onMonthChange($event.target.value)">
+                          (change)="onMonthChange($event.target.value)"
+                          required>
                     <option value="">Month</option>
                     <option *ngFor="let month of graduateMonth">{{month.graduateMonth}}</option>
                    
                   </select>
-                  <select class="form-control certficiati0n-form2  dateinput" name="certYear" id="certYear" style="height: 42px;"
+        
+                  <label> Year</label>
+                  <select class="form-control certficiati0n-form2  dateinput" 
+                          name="certYear" 
+                          id="certYear" 
+                          style="height: 42px;"
                           [(ngModel)]="certificate.certYear" 
-                          (change)="onYearChange($event.target.value)">
-                    <option value="0">Year</option>
+                          (change)="onYearChange($event.target.value)"
+                          required>
+                    <option value="">Year</option>
                     <option *ngFor="let year of graduateYear">{{year.graduateYear}}</option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="row">
-              <table  *ngIf="certificateList.length>0" border="1">
+              <table  *ngIf="jobSeekerModel.certification.length>0">
                 <thead>
                   <tr>
                     <th>Certificate</th>
@@ -50,20 +66,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let certificate of certificateList" (click)="RowSelected(certificate);" style="cursor: pointer;"> 
+                  <tr *ngFor="let certificate of jobSeekerModel.certification" style="cursor: pointer;"> 
                     <td>{{certificate.certName}}</td>
                     <td>{{certificate.certMonth}}</td>
                     <td>{{certificate.certYear}}</td>
-                    <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                    <td>
+                      <button class="btn btn_form3" (click)="edit(training)">Edit</button>&nbsp;
+                      <button class="btn btn_form3" (click)="delete(training)">Delete</button>
+                    </td>
                   </tr>
                 </tbody>
                 </table>
           </div>
           <br>
             <br>
-            <button type="submit" class="btn btn_form3" *ngIf="isAdd">Add certificate</button>
-            <button type="submit" class="btn btn_form3" *ngIf="isUpdate">Update certificate</button>
-            <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+            <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Certificate</button>
+            <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Certificate</button>
+            <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
           </div>
         </form>
       <!-- </div>

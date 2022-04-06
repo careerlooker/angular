@@ -31,7 +31,6 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   ngOnInit() {
     this.jobSeekerModel.experience= new Array<ExperienceModel>();
-    console.log('hideForm: '+this.hideForm)
     this.experience.responsibilities='';
     this.isAdd=true;
     this.isDelete=true;
@@ -44,7 +43,6 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   getExperienceList(){
     this.email=localStorage.getItem('email');
     if (this.email != null) {
-      this.sekId=+localStorage.getItem('seekId');
       this.seekerService.getExperienceList(this.email).subscribe((result: JobSeekerModel) => {
         if(result!=null){
           this.jobSeekerModel = result;

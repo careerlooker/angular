@@ -10,7 +10,7 @@
       <div class="creat-resume-box">
         <div class="col-sm-12" style="padding: 0px;">
           <div class="creat-resume-right"> -->
-            <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+            <form #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
               <div class="language-form-right" style="padding: 0px;">
                <div class="row">
                   <div class="col-sm-6">
@@ -118,7 +118,7 @@
                       </div>
                     </div> -->
                     <div class="row">
-                      <table  *ngIf="contactDetailsList.length>0" border="1">
+                      <table  *ngIf="jobSeekerModel.contactDetails.length>0">
                         <thead>
                           <tr>
                             <th>Media Name</th>
@@ -127,10 +127,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let cd of contactDetailsList" (click)="RowSelected(cd);" style="cursor: pointer;"> 
+                          <tr *ngFor="let cd of jobSeekerModel.contactDetails" style="cursor: pointer;"> 
                             <td>{{cd.mediaName}}</td>
                             <td>{{cd.mediaId}}</td>
-                            <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                            <td>
+                              <button class="btn btn_form3" (click)="edit(cd)">Edit</button>&nbsp;
+                              <button class="btn btn_form3" (click)="delete(cd)">Delete</button>
+                            </td>
                           </tr>
                         </tbody>
                         </table>
@@ -138,12 +141,12 @@
                 <br>
                 <div class="row">
                   <div class="col-sm-6 col-xs-6"> 
-                    <button type="submit" class="btn btn_form5" style="margin-top: 0px" *ngIf="isAdd" [disabled]="!form.valid"> Add Media </button>
-                    <button type="submit" class="btn btn_form3 pull-left" *ngIf="isUpdate">Update Media</button>
-                    <!-- <button type="button" class="btn btn_form5" style="margin-top: 0px;margin-right: 20px;" (click)="Remove()" *ngIf="fieldArray.length>4"> Remove</button> -->
+                    <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Contact Details</button>
+                    <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Contact Details</button>
+                    
                   </div>
                   <div class="col-sm-6 col-xs-6"> 
-                    <button type="button" class="btn btn_form4" (click)="nextPage()"> Next</button>
+                    <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
                   </div>
                 </div>
               </div>

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { PersonalInfo } from '../models/personal-info.model';
 import { environment } from 'src/environments/environment';
-import { AwardsModel } from '../models/awards.model';
 import { JobSeekerModel } from '../models/job-seeker-model';
 
 @Injectable({
@@ -74,7 +73,7 @@ export class SeekerService {
         }
     }
       getTrainingList(email: string): Observable<JobSeekerModel>{
-        return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/' + email)
+        return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/'+ email)
     }
 
    
@@ -90,14 +89,14 @@ export class SeekerService {
     }
 
   
-    saveAwards(awards:Array<AwardsModel>,actionType:string): Observable<JobSeekerModel> {
+    saveAwards(jobSeekerModel:JobSeekerModel,actionType:string): Observable<JobSeekerModel> {
         if(actionType='add'){
-            return this.httpClient.patch<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register',awards);
+            return this.httpClient.patch<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register',jobSeekerModel);
         }else{
-            return this.httpClient.patch<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register',awards);
+            return this.httpClient.patch<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register',jobSeekerModel);
         }
     }
-    getawardsList(email: number): Observable<JobSeekerModel>{
+    getawardsList(email: string): Observable<JobSeekerModel>{
         return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/' + email)
     }
 

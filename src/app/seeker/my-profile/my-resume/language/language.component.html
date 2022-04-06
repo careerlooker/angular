@@ -15,7 +15,13 @@
               <div class="language-form-right">
                 <div class="form-group">
                   <label>Language</label>
-                  <input type="text" class="form-control" [(ngModel)]="language.langName" id="langName" name="langName" placeholder="e.g. English" required>
+                  <input type="text" 
+                          class="form-control" 
+                          [(ngModel)]="language.langName" 
+                          id="langName" 
+                          name="langName" 
+                          placeholder="e.g. English" 
+                          required>
                 </div>
               </div>
             </div>
@@ -35,7 +41,13 @@
                 <div class="star-form">
                   <div class="form-group">
                     <label>Descriptional <span>(Optional)</span></label>
-                    <input type="text" class="form-control" id="langDesc" name="langDesc" [(ngModel)]="language.langDesc" placeholder="e.g. English">
+                    <input type="text" 
+                            class="form-control" 
+                            id="langDesc" 
+                            name="langDesc" 
+                            [(ngModel)]="language.langDesc" 
+                            placeholder="e.g. English"
+                            required>
                   </div>
                 </div>
               </div>
@@ -43,7 +55,7 @@
             </div>
           </div>
           <div class="row">
-            <table  *ngIf="languageList.length>0" border="1">
+            <table  *ngIf="jobSeekerModel.language.length>0">
               <thead>
                 <tr>
                   <th>Language</th>
@@ -53,22 +65,26 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let language of languageList" (click)="RowSelected(language);" style="cursor: pointer;"> 
+                <tr *ngFor="let language of jobSeekerModel.language" style="cursor: pointer;"> 
                   <td>{{language.langName}}</td>
                   <td>{{language.ratings}}</td>
                   <td>{{language.langDesc}}</td>
-                  <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                  <td>
+                    <button class="btn btn_form3" (click)="edit(language)">Edit</button>&nbsp;
+                    <button class="btn btn_form3" (click)="delete(language)">Delete</button>
+                  </td>
                 </tr>
               </tbody>
               </table>
         </div><br>
           <div class="row">
             <div class="col-sm-6 col-xs-6">
-              <button type="submit" class="btn btn_form3" *ngIf="isAdd">Add Language</button> 
-              <button type="submit" class="btn btn_form3"  *ngIf="isUpdate">Update Language</button> 
+              <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Awards</button>
+              <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Awards</button>
+             
             </div>
             <div class="col-sm-6 col-xs-6"> 
-              <button type="submit" class="btn btn_form4" (click)="nextPage()">Next</button>
+              <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
             </div>
           </div>
         </form>

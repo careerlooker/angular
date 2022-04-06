@@ -34,6 +34,7 @@ export class EducationComponent extends BaseModel implements OnInit {
     private router:Router) { super()}
 
   ngOnInit() {
+    this.jobSeekerModel.education=new Array<EducationModel>();
     this.getQualification();
     this.getCountries();
     this.getEducationList();

@@ -1,5 +1,6 @@
 table {
     width:100%;
+    border:1px;
   }
   table, th, td {
     border: 1px solid black;
@@ -18,4 +19,12 @@ table {
   table#t01 th {
     background-color: black;
     color: white;
+  }
+
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; 
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; 
   }

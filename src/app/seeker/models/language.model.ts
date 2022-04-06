@@ -4,5 +4,8 @@ export class LanguageModel extends BaseModel{
     langName: string;
     rating: number;
     langDesc: string;
-    ratingId: number;
+    langId: number;
 }
+
+
+

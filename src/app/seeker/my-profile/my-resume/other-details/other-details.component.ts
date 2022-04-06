@@ -9,14 +9,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { OthersDetails } from 'src/app/seeker/models/others-details.model';
 
+
 @Component({
   selector: 'app-other-details',
   templateUrl: './other-details.component.html',
   styleUrls: ['./other-details.component.css']
 })
 export class OtherDetailsComponent implements OnInit {
-  currentJobType=[{"currentJobType":"Full Time"},{"currentJobType":"Part Time"},{"currentJobType":"Contractual"}];   
-  employementType=[{"employementType":"Full Time"},{"employementType":"Part Time"},{"employementType":"Contractual"}];   
+  currentJobType=[{"currentJobType":"Permanent"},{"currentJobType":"Part Time"},{"currentJobType":"Contractual"}];   
+  employementType=[{"Id":1,"employementType":"Full Time"},{"Id":2,"employementType":"Part Time"},{"Id":3,"employementType":"Contractual"}];   
   willingToRelocate=[{"willingToRelocate":"Yes"},{"willingToRelocate":"No"}];
   noticePeriob=[{"noticePeriob":15 },{"noticePeriob":30},{"noticePeriob":45},{"noticePeriob":60}, {"noticePeriob":75},{"noticePeriob":90}]; 
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();

@@ -17,11 +17,12 @@ import { ValidatePhoneNumberDirective } from '../directives/validate-phone-numbe
 import { SpinnerComponent } from '../components/spinner/spinner.component';
 import { FileUploadComponent } from '../components/file-upload/file-upload.component';
 import { DropdownDirective } from '../directives/app-dropdown.directive';
-import { RatingModule } from 'ng-starrating';
+import { RatingModule, StarRatingComponent } from 'ng-starrating';
 
 @NgModule({
     declarations:[
         TextEditorComponent,
+    
         SpinnerComponent,
         CopyPasteOnlyNumbersDirective,
         DateOfBirthRangeDirective,
@@ -47,6 +48,7 @@ import { RatingModule } from 'ng-starrating';
     ],
     exports:[
         TextEditorComponent,
+       
         SpinnerComponent,
         CopyPasteOnlyNumbersDirective,
         DateOfBirthRangeDirective,

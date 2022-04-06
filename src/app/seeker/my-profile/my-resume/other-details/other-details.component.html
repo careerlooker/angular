@@ -24,9 +24,13 @@
                       <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
                     </datalist> -->
 
-                    <select class="form-control certficiati0n-form" name="currentJobType" id="currentJobType"
-                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.currentJobType"
-                      (change)="onCurrentJobTypeSelect($event.target.value)">
+                    <select class="form-control certficiati0n-form" 
+                            name="jobType" 
+                            id="jobType"
+                            style="height: 42px;"
+                             [(ngModel)]="jobSeekerModel.otherDetails.currentJobType"
+                            (change)="onCurrentJobTypeSelect($event.target.value)"
+                            required>
                       <option value="">Current Job Type</option>
                       <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
                     </select>
@@ -44,9 +48,13 @@
                       <option *ngFor="let et of employementType">{{et.employementType}}</option>
                     </datalist> -->
 
-                    <select class="form-control certficiati0n-form" name="employementType" id="employementType"
-                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.employementType"
-                      (change)="onEmployementTypeSelect($event.target.value)">
+                    <select class="form-control certficiati0n-form" 
+                            name="employementType" 
+                            id="employementType"
+                            style="height: 42px;" 
+                            [(ngModel)]="jobSeekerModel.otherDetails.employementType"
+                            (change)="onEmployementTypeSelect($event.target.value)"
+                            required>
                       <option value="">Employement Type</option>
                       <option *ngFor="let et of employementType">{{et.employementType}}</option>
                     </select>
@@ -66,10 +74,14 @@
                         <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
                       </datalist> -->
 
-                      <select class="form-control certficiati0n-form" name="willingToRelocate" id="willingToRelocate"
-                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.willingToRelocate"
-                      (change)="onWillingToRelocateSelect($event.target.value)">
-                      <option value="">Employement Type</option>
+                      <select class="form-control certficiati0n-form" 
+                              name="willingToRelocate" 
+                              id="willingToRelocate"
+                              style="height: 42px;" 
+                              [(ngModel)]="jobSeekerModel.otherDetails.willingToRelocate"
+                              (change)="onWillingToRelocateSelect($event.target.value)"
+                              required>
+                      <option value="">Willing To Relocate</option>
                       <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
                     </select>
                     </div>
@@ -86,10 +98,14 @@
                         <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
                       </datalist> -->
 
-                      <select class="form-control certficiati0n-form" name="noticePeriob" id="noticePeriob"
-                      style="height: 42px;" [(ngModel)]="jobSeekerModel.otherDetails.noticePeriod"
-                      (change)="onNoticePeriobSelect($event.target.value)">
-                      <option value="">Notice Period in Days</option>
+                      <select class="form-control certficiati0n-form" 
+                              name="noticePeriob" 
+                              id="noticePeriob"
+                              style="height: 42px;" 
+                              [(ngModel)]="jobSeekerModel.otherDetails.noticePeriod"
+                              (change)="onNoticePeriobSelect($event.target.value)"
+                              required>
+                      <option value=""> Notice Period in Days</option>
                       <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
                     </select>
                     </div>
@@ -100,7 +116,7 @@
                     <div class="form-group">
                       <label>Visa Status</label>
                       <textarea class="form-control" rows="5" id="visaStatus" name="visaStatus"
-                        [(ngModel)]="otherDetails.visaStatus" required>Write Your Message</textarea>
+                        [(ngModel)]="jobSeekerModel.otherDetails.visaStatus" required>Write Your Message</textarea> 
                     </div>
                   </div>
                 </div>
