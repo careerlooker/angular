@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { SeekerService } from 'src/app/seeker/seeker-services/seeker.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
 import { LanguageModel } from 'src/app/seeker/models/language.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StarRating } from 'src/app/seeker/models/start-rating.model';
+import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-language',
@@ -14,9 +16,17 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./language.component.css']
 })
 export class LanguageComponent extends BaseModel implements OnInit {
+  @ViewChild(StarRatingComponent) starRatingComponent: StarRatingComponent;
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
     language:LanguageModel=new LanguageModel();
-
+    item:StarRating;
+    items: StarRating[] = [
+      { 'id': 0, 'rating': 3, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' },
+      { 'id': 1, 'rating': 1, 'contact': 'Morgan Mccarthy', 'company': 'CENTREXIN' },
+      { 'id': 2, 'rating': 2, 'contact': 'Brady Craft', 'company': 'JIMBIES' },
+      { 'id': 3, 'rating': 5, 'contact': 'Alvarado Roman', 'company': 'TERRAGO' },
+      { 'id': 4, 'rating': 4, 'contact': 'Clark Daugherty', 'company': 'ISOTRONIC' }
+    ];
   constructor(private seekerService:SeekerService,
     private toastr:ToastrService,
     private router:Router) {
@@ -38,6 +48,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
     }
     edit(language:LanguageModel){
       this.language= this.jobSeekerModel.language.filter(x=>x.langId==language.langId)[0];
+      this.starRatingComponent.rating=this.language.rating;
       this.isUpdate = true;
       this.isAdd = false;
       this.actionType='edit';
@@ -49,7 +60,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
     }
     add(form:NgForm){
       if(form.valid){
-        if(this.jobSeekerModel.language.length>0){
+        if(this.jobSeekerModel.language){
           if(this.jobSeekerModel.language.filter(x=>x.langId!==this.language.langId)&& this.actionType=='add'){
            let maxId = this.jobSeekerModel.language.reduce((max, character) => (character.langId > max ? character.langId : max),
            this.jobSeekerModel.language[0].langId);
@@ -57,6 +68,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
           }
          }else{
           this.language.langId=1;
+          this.jobSeekerModel.language=[];
          }
         this.jobSeekerModel.language.push(this.language);
       }
@@ -66,13 +78,14 @@ export class LanguageComponent extends BaseModel implements OnInit {
       this.email=localStorage.getItem('email');
       this.seekerService.getLanguageList(this.email).subscribe((result:JobSeekerModel)=>{
         this.jobSeekerModel=result;
-        if(this.jobSeekerModel.language.length>0){
+        if(this.jobSeekerModel.language){
           this.seekerService.tickSubject.next('lg');
+          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
         }
       })
     }
     nextPage(){
-      this.seekerService.saveLanguage(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveLanguage(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getLanguageList();
         this.isAdd=true;
@@ -85,5 +98,13 @@ export class LanguageComponent extends BaseModel implements OnInit {
       })
     
     }
-
+    ratingComponentClick(clickObj: any): void {
+      const item = this.items.find(((i: any) => i.id === clickObj.itemId));
+     // if (!!item) {
+     //   item.rating = clickObj.rating;
+     //   this.ratingClicked = clickObj.rating;
+     //   this.itemIdRatingClicked = item.company;
+     // }
+       this.language.rating=clickObj.rating;
+   }
 }

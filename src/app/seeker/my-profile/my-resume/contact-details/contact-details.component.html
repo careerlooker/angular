@@ -31,7 +31,7 @@
                               id="mediaId" 
                               name="mediaId" 
                               placeholder="Provide your media id"
-                              [(ngModel)]="contactDetails.mediaId"
+                              [(ngModel)]="contactDetails.mediaLink"
                               required>
                     </div>
                   </div>
@@ -118,18 +118,18 @@
                       </div>
                     </div> -->
                     <div class="row">
-                      <table  *ngIf="jobSeekerModel.contactDetails.length>0">
+                      <table  *ngIf="jobSeekerModel.contactDetails">
                         <thead>
                           <tr>
                             <th>Media Name</th>
-                            <th>Media Id</th>
+                            <th>Media Link</th>
                      <th></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let cd of jobSeekerModel.contactDetails" style="cursor: pointer;"> 
                             <td>{{cd.mediaName}}</td>
-                            <td>{{cd.mediaId}}</td>
+                            <td>{{cd.mediaLink}}</td>
                             <td>
                               <button class="btn btn_form3" (click)="edit(cd)">Edit</button>&nbsp;
                               <button class="btn btn_form3" (click)="delete(cd)">Delete</button>

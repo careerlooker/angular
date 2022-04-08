@@ -17,18 +17,11 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Current Job Type</label>
-                    <!-- <input type="text" class="form-control" name="currentJobType" [(ngModel)]="otherDetails.currentJobType" list="currentJobType"
-                      (change)="onCurrentJobTypeSelect($event.target.value)" required />
-                    <datalist id="currentJobType">
-                      <option [value]=""></option>
-                      <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
-                    </datalist> -->
-
                     <select class="form-control certficiati0n-form" 
                             name="jobType" 
                             id="jobType"
                             style="height: 42px;"
-                             [(ngModel)]="jobSeekerModel.otherDetails.currentJobType"
+                             [(ngModel)]="otherDetails.currentJobType"
                             (change)="onCurrentJobTypeSelect($event.target.value)"
                             required>
                       <option value="">Current Job Type</option>
@@ -41,18 +34,12 @@
                   <div class="form-group">
                     <label> Employement Type </label>
                     <div class="clearfix"></div>
-                    <!-- <input type="text" class="form-control" name="employementType" [(ngModel)]="otherDetails.employementType" list="employementType"
-                      (change)="onEmployementTypeSelect($event.target.value)" required />
-                    <datalist id="employementType">
-                      <option [value]=""></option>
-                      <option *ngFor="let et of employementType">{{et.employementType}}</option>
-                    </datalist> -->
 
                     <select class="form-control certficiati0n-form" 
                             name="employementType" 
                             id="employementType"
                             style="height: 42px;" 
-                            [(ngModel)]="jobSeekerModel.otherDetails.employementType"
+                            [(ngModel)]="otherDetails.employementType"
                             (change)="onEmployementTypeSelect($event.target.value)"
                             required>
                       <option value="">Employement Type</option>
@@ -78,7 +65,7 @@
                               name="willingToRelocate" 
                               id="willingToRelocate"
                               style="height: 42px;" 
-                              [(ngModel)]="jobSeekerModel.otherDetails.willingToRelocate"
+                              [(ngModel)]="otherDetails.willingToRelocate"
                               (change)="onWillingToRelocateSelect($event.target.value)"
                               required>
                       <option value="">Willing To Relocate</option>
@@ -102,7 +89,7 @@
                               name="noticePeriob" 
                               id="noticePeriob"
                               style="height: 42px;" 
-                              [(ngModel)]="jobSeekerModel.otherDetails.noticePeriod"
+                              [(ngModel)]="otherDetails.noticePeriod"
                               (change)="onNoticePeriobSelect($event.target.value)"
                               required>
                       <option value=""> Notice Period in Days</option>
@@ -116,7 +103,7 @@
                     <div class="form-group">
                       <label>Visa Status</label>
                       <textarea class="form-control" rows="5" id="visaStatus" name="visaStatus"
-                        [(ngModel)]="jobSeekerModel.otherDetails.visaStatus" required>Write Your Message</textarea> 
+                        [(ngModel)]="otherDetails.visaStatus" required>Write Your Message</textarea> 
                     </div>
                   </div>
                 </div>

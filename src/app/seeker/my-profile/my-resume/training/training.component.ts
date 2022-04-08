@@ -58,7 +58,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
   }
   add(form:NgForm){
     if(form.valid){
-      if(this.jobSeekerModel.training.length>0){
+      if(this.jobSeekerModel.training){
         if(this.jobSeekerModel.training.filter(x=>x.trainingId!==this.training.trainingId)&& this.actionType=='add'){
          let maxId = this.jobSeekerModel.training.reduce((max, character) => (character.trainingId > max ? character.trainingId : max),
          this.jobSeekerModel.training[0].trainingId);
@@ -66,6 +66,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
         }
        }else{
         this.training.trainingId=1;
+        this.jobSeekerModel.training=[];
        }
       this.jobSeekerModel.training.push(this.training);
     }
@@ -77,13 +78,15 @@ export class TrainingComponent extends BaseModel implements OnInit {
     this.email=localStorage.getItem('email');
     this.seekerService.getTrainingList(this.email).subscribe((result:JobSeekerModel)=>{
       this.jobSeekerModel=result;
-      if(this.jobSeekerModel.training.length>0){
+      if(this.jobSeekerModel.training){
         this.seekerService.tickSubject.next('tn');
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       }
+      
     })
   }
   nextPage(){
-    this.seekerService.saveTraining(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+    this.seekerService.saveTraining(this.jobSeekerModel).subscribe((result:any)=>{
       this.toastr.success(result.message);
       this.getTraningList();
       this.isAdd=true;

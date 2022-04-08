@@ -32,15 +32,14 @@
         <div class="progress md-progress progress-height col-sm-10">
           <div class="progress-bar" 
                role="progressbar" 
-               [ngStyle]="{'width':'75%'}" 
-               aria-valuenow="75" 
+               [ngStyle]="{'width': profileCompletion+'%'}" 
+               aria-valuenow={profileCompletion}
                aria-valuemin="0" 
                aria-valuemax="100">
           </div>
       </div>
       <div class="col-sm-1">          
-      75%
-      <!-- {{profile.profileCompletion}}% -->
+      {{profileCompletion}}%
       </div>
       <div class="clearfix"></div>
 			</div>

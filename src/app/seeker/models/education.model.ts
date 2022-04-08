@@ -1,6 +1,4 @@
-import { BaseModel } from './base.model';
-
-export class EducationModel extends BaseModel{
+export class EducationModel{
 eduId:number;
 college: string;
 degree: string;

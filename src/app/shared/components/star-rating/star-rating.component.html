@@ -1,4 +1,3 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
 <fieldset class="rating">
   <input type="radio" [name]="inputName" value="5" [checked]="rating===5" />
   <label title="Rocks!" (click)='onClick(5)'>5 stars</label>
@@ -15,4 +14,3 @@
   <input type="radio" [name]="inputName" value="1" [checked]="rating===1" />
   <label title="Sucks big time" (click)='onClick(1)'>1 star</label>
 </fieldset>
-</form>

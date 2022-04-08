@@ -1,5 +1,4 @@
-import { BaseModel } from './base.model';
-export class ContactDetailsModel extends BaseModel {
+export class ContactDetailsModel {
     mediaId: number;
     mediaName: string;
     mediaLink: string

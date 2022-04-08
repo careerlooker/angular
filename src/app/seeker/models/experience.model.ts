@@ -1,5 +1,3 @@
-import { BaseModel } from './base.model';
-
 export class ExperienceModel{
     expid:number;
     employerName: string;

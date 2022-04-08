@@ -9,7 +9,7 @@
   <div class="creat-resume-box">
     <div class="col-sm-12" style="padding: 0px;">
       <div class="creat-resume-right"> -->
-        <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+        <form #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
           <div class="row">
             <div class="col-sm-6">
               <div class="language-form-right">
@@ -27,17 +27,8 @@
             </div>
             <div class="col-sm-6">
               <div class="star-form-box">
-                <div class="star">
                   <label>Rating</label>
-                  <div>
-                  <span class="fa fa-star starchecked"></span>
-                  <span class="fa fa-star starchecked"></span>
-                  <span class="fa fa-star starchecked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  </div>
-              
-                </div>
+                  <app-star-rating [rating]="item?.rating" [itemId]="item?.id" (ratingClick)="ratingComponentClick($event)"></app-star-rating>
                 <div class="star-form">
                   <div class="form-group">
                     <label>Descriptional <span>(Optional)</span></label>
@@ -55,7 +46,7 @@
             </div>
           </div>
           <div class="row">
-            <table  *ngIf="jobSeekerModel.language.length>0">
+            <table  *ngIf="jobSeekerModel.language">
               <thead>
                 <tr>
                   <th>Language</th>
@@ -67,7 +58,7 @@
               <tbody>
                 <tr *ngFor="let language of jobSeekerModel.language" style="cursor: pointer;"> 
                   <td>{{language.langName}}</td>
-                  <td>{{language.ratings}}</td>
+                  <td>{{language.rating}}</td>
                   <td>{{language.langDesc}}</td>
                   <td>
                     <button class="btn btn_form3" (click)="edit(language)">Edit</button>&nbsp;
@@ -79,8 +70,8 @@
         </div><br>
           <div class="row">
             <div class="col-sm-6 col-xs-6">
-              <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Awards</button>
-              <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Awards</button>
+              <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Language</button>
+              <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Language</button>
              
             </div>
             <div class="col-sm-6 col-xs-6"> 

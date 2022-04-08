@@ -30,10 +30,11 @@ export class ProfessionalSummaryComponent implements OnInit {
     if(localStorage.getItem('userToken')!=null){
       this.jobSeekerModel.profSummary.summary=null;
       this.seekerService.seekerLogin(localStorage.getItem('email')).subscribe((result: JobSeekerModel)=>{
-        if(result.profSummary!=null){
           this.jobSeekerModel=result;
           this.email=this.jobSeekerModel.email;
+          if(this.jobSeekerModel.profSummary){
           this.seekerService.tickSubject.next('ps');
+          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
           }
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message);
@@ -43,11 +44,13 @@ export class ProfessionalSummaryComponent implements OnInit {
 
   onSubmit(form:NgForm){
     if(form.valid && this.textEditorComponent.description){
+      this.jobSeekerModel.profSummary=new professionalSummary();
     this.jobSeekerModel.profSummary.summary=this.textEditorComponent.description
     this.jobSeekerModel.email=this.email;
     this.seekerService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
       this.toastr.success(JSON.parse(result).message);
       if(result){
+        this.getProfesionalSummary();
         this.seekerService.tickSubject.next('ps');
         this.router.navigate(['/seeqem/my-profile/experience'])
       }

@@ -1,6 +1,4 @@
-import { BaseModel } from './base.model';
-
-export class CertificateModel extends BaseModel{
+export class CertificateModel{
     certId: number;
     certName: string;
     certMonth: string;

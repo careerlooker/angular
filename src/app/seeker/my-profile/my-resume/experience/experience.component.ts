@@ -43,13 +43,12 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   getExperienceList(){
     this.email=localStorage.getItem('email');
     if (this.email != null) {
-      this.seekerService.getExperienceList(this.email).subscribe((result: JobSeekerModel) => {
-        if(result!=null){
-          this.jobSeekerModel = result;
-
-        if( this.jobSeekerModel.experience.length>0)
-        this.seekerService.tickSubject.next('ex');
-      }
+      this.seekerService.getExperienceList(this.email).subscribe((result: any) => {
+        this.jobSeekerModel = result;
+        if(this.jobSeekerModel.experience){
+        this.seekerService.tickSubject.next('ex'); 
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+        }  
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })
@@ -153,7 +152,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.isUpdate=false;
       this.experience.presentEmployer=form.value.presentEmployer==true?1:0;
       this.jobSeekerModel.email=this.email;
-       if(this.jobSeekerModel.experience.length>0){
+       if(this.jobSeekerModel.experience){
         if(this.jobSeekerModel.experience.filter(x=>x.expid!==this.experience.expid)){
         let maxId = this.jobSeekerModel.experience.reduce((max, character) => (character.expid > max ? character.expid : max),
         this.jobSeekerModel.experience[0].expid);
@@ -162,6 +161,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
        }else{
         this.experience.expid=1;
        }
+       if(this.jobSeekerModel.experience){
        this.jobSeekerModel.experience.forEach(x=>{
          if(x.presentEmployer==1 && this.experience.presentEmployer==1){
               this.isChecked=true;
@@ -170,9 +170,15 @@ export class ExperienceComponent extends BaseModel implements OnInit {
            this.isChecked=false;
          }
        })
+      }else{
+        this.jobSeekerModel.experience=[];
+      }
        if(!this.isChecked){
-       this.jobSeekerModel.experience.push(this.experience)
+        this.jobSeekerModel.experience.push(this.experience)
        } 
+       else{
+        this.jobSeekerModel.experience.push(this.experience)
+       }
     }
   }
   UpdateCompany(){
@@ -186,7 +192,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.jobSeekerModel.experience.splice(targetIdx,1)
   }
   nextPage(){
-    this.seekerService.saveExperience(this.jobSeekerModel, this.actionType).subscribe((result:any)=>{
+    this.seekerService.saveExperience(this.jobSeekerModel).subscribe((result:any)=>{
       if(result){
       this.toastr.success(JSON.parse(result).message);
       this.getExperienceList();

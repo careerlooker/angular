@@ -60,7 +60,7 @@ export class AwardsComponent extends BaseModel implements OnInit {
     }
     add(form:NgForm){
       if(form.valid){
-        if(this.jobSeekerModel.awards.length>0){
+        if(this.jobSeekerModel.awards){
           if(this.jobSeekerModel.awards.filter(x=>x.awardId!==this.awards.awardId)&& this.actionType=='add'){
            let maxId = this.jobSeekerModel.awards.reduce((max, character) => (character.awardId > max ? character.awardId : max),
            this.jobSeekerModel.awards[0].awardId);
@@ -68,6 +68,7 @@ export class AwardsComponent extends BaseModel implements OnInit {
           }
          }else{
           this.awards.awardId=1;
+          this.jobSeekerModel.awards=[];
          }
         this.jobSeekerModel.awards.push(this.awards);
       }
@@ -77,13 +78,14 @@ export class AwardsComponent extends BaseModel implements OnInit {
       this.email=localStorage.getItem('email')
       this.seekerService.getawardsList(this.email).subscribe((result:JobSeekerModel)=>{
         this.jobSeekerModel=result;
-        if(this.jobSeekerModel.awards.length>0){
+        if(this.jobSeekerModel.awards){
           this.seekerService.tickSubject.next('ad');
+          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
         }
       })
     }
     nextPage(){
-      this.seekerService.saveAwards(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveAwards(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getawardsList();
         this.isAdd=true;

@@ -121,18 +121,15 @@ export class EducationComponent extends BaseModel implements OnInit {
   AddEducation(form: NgForm) {
     if (form.valid) {
       this.education.tillDate=form.value.tillDate==true?1:0
-      if(this.jobSeekerModel.education.length>0){
+      if(this.jobSeekerModel.education){
         if(this.jobSeekerModel.experience.filter(x=>x.expid!==this.education.eduId)&& this.actionType=='add'){
          let maxId = this.jobSeekerModel.experience.reduce((max, character) => (character.expid > max ? character.expid : max),
          this.jobSeekerModel.education[0].eduId);
-        // const ids = this.jobSeekerModel.education.map(object => {
-        //   return object.eduId;
-        // });
-        // const maxIds = Math.max.apply(null,ids);
-        this.education.eduId=maxId+1;
+          this.education.eduId=maxId+1;
         }
        }else{
         this.education.eduId=1;
+        this.jobSeekerModel.education=[];
        }
       //  this.jobSeekerModel.education.forEach(x=>{
       //    if(x.tillDate==1 && this.education.tillDate==1){
@@ -150,7 +147,7 @@ export class EducationComponent extends BaseModel implements OnInit {
   }
 
   saveAndNext(){
-    this.seekerService.saveEducation(this.jobSeekerModel,this.actionType).subscribe((result: any) => {
+    this.seekerService.saveEducation(this.jobSeekerModel).subscribe((result: any) => {
       if(result){
         this.toastr.success(JSON.parse(result).message)
         this.education=new EducationModel();
@@ -171,8 +168,9 @@ export class EducationComponent extends BaseModel implements OnInit {
     this.email=localStorage.getItem('email');
     this.seekerService.getEducationList(this.email).subscribe((result:JobSeekerModel)=>{
       this.jobSeekerModel=result;
-      if(this.jobSeekerModel.education.length>0){
+      if(this.jobSeekerModel.education){
       this.seekerService.tickSubject.next('ed');
+      this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       }
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);

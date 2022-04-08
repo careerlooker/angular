@@ -2,6 +2,6 @@ export class OthersDetails{
     currentJobType: string;
     employementType: string;
     willingToRelocate: string;
-    noticePeriod: number;
+    noticePeriod: string;
     visaStatus: string;
 }

@@ -59,7 +59,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
     }
     add(form:NgForm){
       if(form.valid){
-        if(this.jobSeekerModel.certification.length>0){
+        if(this.jobSeekerModel.certification){
           if(this.jobSeekerModel.certification.filter(x=>x.certId!==this.certificate.certId)&& this.actionType=='add'){
            let maxId = this.jobSeekerModel.certification.reduce((max, character) => (character.certId > max ? character.certId : max),
            this.jobSeekerModel.certification[0].certId);
@@ -67,6 +67,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
           }
          }else{
           this.certificate.certId=1;
+          this.jobSeekerModel.certification=[];
          }
         this.jobSeekerModel.certification.push(this.certificate);
       }
@@ -76,13 +77,14 @@ export class CertificationComponent extends BaseModel implements OnInit {
       this.email=localStorage.getItem('email');
       this.seekerService.getCertificateList(this.email).subscribe((result:JobSeekerModel)=>{
         this.jobSeekerModel=result;
-        if(this.jobSeekerModel.certification.length>0){
+        if(this.jobSeekerModel.certification){
           this.seekerService.tickSubject.next('ca');
+          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
         }
       })
     }
     nextPage(){
-      this.seekerService.saveCertificate(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveCertificate(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getCertificateList();
         this.isAdd=true;

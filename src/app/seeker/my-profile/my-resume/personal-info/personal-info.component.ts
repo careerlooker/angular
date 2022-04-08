@@ -77,8 +77,11 @@ export class PersonalInfoComponent implements OnInit {
        this.jobSeekerModel=result;
       // this.imgUrl.image=environment.baseUrl+"home/ubuntu/uploaded-pics/sek-pics/"+this.jobSeekerModel.personalInfo.photo;
         this.email = this.jobSeekerModel.email;
-       // localStorage.setItem('seekId', this.seekerProfile.id.toString())
+       
+        if(this.jobSeekerModel.personalInfo){
         this.seekerrService.tickSubject.next('pi');
+        this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
+        }
         this.getCountries();
       }
       },(err: HttpErrorResponse) => {
@@ -189,6 +192,7 @@ export class PersonalInfoComponent implements OnInit {
         this.seekerrService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
           this.toastr.success(JSON.parse(result).message)
           if(result){
+            this.getSeeker();
             this.seekerrService.tickSubject.next('pi');
             this.router.navigate(['/seeqem/my-profile/professional-summary'])
           }

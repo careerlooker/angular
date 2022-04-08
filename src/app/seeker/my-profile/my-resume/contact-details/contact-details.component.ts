@@ -51,7 +51,7 @@ constructor(private seekerService:SeekerService,
   }
   add(form:NgForm){
     if(form.valid){
-      if(this.jobSeekerModel.contactDetails.length>0){
+      if(this.jobSeekerModel.contactDetails){
         if(this.jobSeekerModel.contactDetails.filter(x=>x.mediaId!==this.contactDetails.mediaId)&& this.actionType=='add'){
          let maxId = this.jobSeekerModel.contactDetails.reduce((max, character) => (character.mediaId > max ? character.mediaId : max),
          this.jobSeekerModel.contactDetails[0].mediaId);
@@ -59,6 +59,7 @@ constructor(private seekerService:SeekerService,
         }
        }else{
         this.contactDetails.mediaId=1;
+        this.jobSeekerModel.contactDetails=[];
        }
       this.jobSeekerModel.contactDetails.push(this.contactDetails);
     }
@@ -69,14 +70,14 @@ constructor(private seekerService:SeekerService,
     this.email=localStorage.getItem('email');
     this.seekerService.getContactDetailsList(this.email).subscribe((result:JobSeekerModel)=>{
       this.jobSeekerModel=result;
-      if(this.jobSeekerModel.contactDetails.length>0){
+      if(this.jobSeekerModel.contactDetails){
         this.seekerService.tickSubject.next('cd');
-      }
-     
+         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+        }   
     })
   }
   nextPage(){
-    this.seekerService.saveContactDetails(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+    this.seekerService.saveContactDetails(this.jobSeekerModel).subscribe((result:any)=>{
       this.toastr.success(result.message);
       this.getContactDetailsList();
       this.isAdd=true;

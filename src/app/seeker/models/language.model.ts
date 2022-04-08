@@ -1,6 +1,4 @@
-import { BaseModel } from './base.model';
-
-export class LanguageModel extends BaseModel{
+export class LanguageModel {
     langName: string;
     rating: number;
     langDesc: string;

@@ -1,20 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
-// import { RecruiterService } from '../recruiter-services/recruiter.service';
-// import { UserModel } from '../my-account/models/user.model';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
 import { PersonalInfo } from '../models/personal-info.model';
 import { SeekerService } from '../seeker-services/seeker.service';
 import { Router } from '@angular/router';
 import { JobSeekerModel } from '../models/job-seeker-model';
+import { professionalSummary } from '../models/professional-summary';
+import { OthersDetails } from '../models/others-details.model';
+import { SkillsModel } from '../models/skills.model';
+import { TrainingModel } from '../models/training.model';
+import { LanguageModel } from '../models/language.model';
+import { EducationModel } from '../models/education.model';
+import { ContactDetailsModel } from '../models/contact-details.model';
+import { BlockCompanies } from '../models/block-companies.model';
+import { AwardsModel } from '../models/awards.model';
+import { CertificateModel } from '../models/certificate.model';
 
 @Component({
   selector: 'app-seeker-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class SeekerNavigationComponent  {
+export class SeekerNavigationComponent   {
   display: string = 'none';
   profile: JobSeekerModel = new JobSeekerModel();
   private email: string;
@@ -62,6 +69,17 @@ export class SeekerNavigationComponent  {
     }
 
   ngOnInit() {
+    this.profile.personalInfo=new PersonalInfo();
+    this.profile.awards=new Array<AwardsModel>();
+    this.profile.blockCompanies=new Array<BlockCompanies>();
+    this.profile.certification=new Array<CertificateModel>();
+    this.profile.contactDetails=new Array<ContactDetailsModel>();
+    this.profile.education=new Array<EducationModel>();
+    this.profile.language=new Array<LanguageModel>();
+    this.profile.training=new Array<TrainingModel>();
+    this.profile.skills=new Array<SkillsModel>();
+    this.profile.otherDetails=new OthersDetails();
+    this.profile.profSummary=new professionalSummary();
     this.leftProfile();
     this.change();
     this.tickStatus();
@@ -108,6 +126,7 @@ showMenu(){
        if(result!=null){
         this.profile = result;
         this.email = this.profile.email;
+        this.progresBar();
         console.log(this.profile);
        }
       }, (err: HttpErrorResponse) => {
@@ -117,31 +136,34 @@ showMenu(){
     }
   }
 
-  // openModal() {
-  //   this.display = 'block';
-  // }
+  count:number=0;
+  profileCompletion:number=0;
+  progresBar(){
+    this.seekerService.jobSeekereMessage.subscribe((result:any)=>{
+      this.profile=result;
+      this.profileCompletion=0;
+      this.count=0;
+      if(this.profile.personalInfo!=null){this.count+=1;this.seekerService.tickSubject.next('pi')}
+      if(this.profile.profSummary!=null){this.count+=1;this.seekerService.tickSubject.next('ps')}
+      if(this.profile.experience!=null){this.count+=1;this.seekerService.tickSubject.next('ex')}
+      if(this.profile.education!=null){this.count+=1;this.seekerService.tickSubject.next('ed')}
+      if(this.profile.skills!=null){this.count+=1;this.seekerService.tickSubject.next('ss')}
+      if(this.profile.awards!=null){this.count+=1;this.seekerService.tickSubject.next('ad')}
+      if(this.profile.certification!=null){this.count+=1;this.seekerService.tickSubject.next('ca')}
+      if(this.profile.contactDetails!=null){this.count+1;this.seekerService.tickSubject.next('cd')}
+      if(this.profile.otherDetails!=null){this.count+=1;this.seekerService.tickSubject.next('od')}
+      if(this.profile.language!=null){this.count+=1;this.seekerService.tickSubject.next('lg')}
+      if(this.profile.blockCompanies!=null){this.count+=1;this.seekerService.tickSubject.next('pi')}
+      if(this.profile.training!=null){this.count+=1;this.seekerService.tickSubject.next('tn')}
+      this.profileCompletion=Math.trunc((this.count/12)*100);
+    });
+     
 
-  // onCloseHandled() {
-  //   this.display = 'none';
-  // }
-
-  // onSubmit(form:NgForm){
-  //     this.profile.firstName=form.value.firstName;
-  //     this.profile.lastName=form.value.lastName;
-  //     this.profile.companyName=form.value.companyName;
-  //     this.profile.email=this.email;
-  //     this.recruiterService.updateReqProfile(this.profile).subscribe((result:any)=>{
-  //       this.toastr.success(result);
-  //       this.leftProfile();
-  //     },(err: HttpErrorResponse) => {
-  //       this.toastr.error(err.message);
-  //       console.log(err);
-  //     })
-  // }
+  }
 
   change(){
-    this.seekerService.profileMessage.subscribe((reuslt:any)=>{
+    this.seekerService.jobSeekereMessage.subscribe((reuslt:any)=>{
       this.profileUrl=reuslt;
     })
-  }
+  }    
 }

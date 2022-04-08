@@ -1,6 +1,4 @@
-import { BaseModel } from './base.model';
-
-export class AwardsModel extends BaseModel{
+export class AwardsModel{
     awardId: number;
     awardName: string;
     awardMonth: string;

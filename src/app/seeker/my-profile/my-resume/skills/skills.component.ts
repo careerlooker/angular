@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
-import { StarRatingComponent } from 'ng-starrating';
+import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
+import { StarRating } from 'src/app/seeker/models/start-rating.model';
 
 @Component({
   selector: 'app-skills',
@@ -28,16 +29,20 @@ export class SkillsComponent extends BaseModel implements OnInit {
   dropdownSettings={};
   ratingClicked: number;
   itemIdRatingClicked: string;
-  item:any;
-  items: any[];
+  item:StarRating;
+  items: StarRating[] = [
+    { 'id': 0, 'rating': 3, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' },
+    { 'id': 1, 'rating': 1, 'contact': 'Morgan Mccarthy', 'company': 'CENTREXIN' },
+    { 'id': 2, 'rating': 2, 'contact': 'Brady Craft', 'company': 'JIMBIES' },
+    { 'id': 3, 'rating': 5, 'contact': 'Alvarado Roman', 'company': 'TERRAGO' },
+    { 'id': 4, 'rating': 4, 'contact': 'Clark Daugherty', 'company': 'ISOTRONIC' }
+  ];
   constructor(private recruiterService:RecruiterService, 
               private seekerService:SeekerService,   
               private toastr:ToastrService,
               private router:Router,) {  
               super()
               
-            
-              this.items=[{ 'id': 0, 'rating': 3, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' }];
       this.dropdownSettings = {
       singleSelection: true,
       idField: 'id',
@@ -45,7 +50,8 @@ export class SkillsComponent extends BaseModel implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 1,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      required:true
     };
    }
 
@@ -53,6 +59,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
     this.jobSeekerModel.skills=new Array<SkillsModel>();
     this.isAdd=true;
     this.isDelete=true;
+    this.items=[{ 'id': 0, 'rating': 0, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' }];
     this.getKeySkills();
     this.actionType='add';
     this.getSkills();
@@ -69,9 +76,11 @@ export class SkillsComponent extends BaseModel implements OnInit {
       this.email=localStorage.getItem('email');
       this.seekerService.getSkillList(this.email).subscribe((result:JobSeekerModel)=>{
           this.jobSeekerModel=result;
-          if(this.jobSeekerModel.skills.length>0){
+          if(this.jobSeekerModel.skills){
             this.seekerService.tickSubject.next('ss');
+             this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
           }
+          
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
         console.log(err);})
@@ -84,6 +93,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
     }
     edit(skill:SkillsModel){
       this.skills= this.jobSeekerModel.skills.filter(x=>x.skillId==skill.skillId)[0];
+      this.starRatingComponent.rating=this.skills.rating;
       this.isUpdate = true;
       this.isAdd = false;
       this.actionType='edit';
@@ -95,7 +105,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
     }
     add(form:NgForm){
       if(form.valid){
-        if(this.jobSeekerModel.skills.length>0){
+        if(this.jobSeekerModel.skills){
           if(this.jobSeekerModel.skills.filter(x=>x.skillId!==this.skills.skillId)&& this.actionType=='add'){
            let maxId = this.jobSeekerModel.skills.reduce((max, character) => (character.skillId > max ? character.skillId : max),
            this.jobSeekerModel.skills[0].skillId);
@@ -103,6 +113,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
           }
          }else{
           this.skills.skillId=1;
+          this.jobSeekerModel.skills=[];
          }
         this.jobSeekerModel.skills.push(this.skills);
       }
@@ -110,7 +121,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
   
 
     nextPage(){
-      this.seekerService.saveSkills(this.jobSeekerModel,this.actionType).subscribe((result:any)=>{
+      this.seekerService.saveSkills(this.jobSeekerModel).subscribe((result:any)=>{
         if(result){
         this.toastr.success(JSON.parse(result).message);
         this.isUpdate=false;
@@ -126,8 +137,9 @@ export class SkillsComponent extends BaseModel implements OnInit {
         this.toastr.error(err.message);
         console.log(err);})
     }
-
+  
     onItemSelect(item: any) {
+      this.skills.name=item.name;
       console.log(item);
     }
     onSelectAll(items: any) {
@@ -136,12 +148,13 @@ export class SkillsComponent extends BaseModel implements OnInit {
   
 
     ratingComponentClick(clickObj: any): void {
-       this.item = this.items.find(((i: any) => i.id === clickObj.itemId));
-      if (!!this.item) {
-        this.item.rating = clickObj.rating;
-        this.ratingClicked = clickObj.rating;
-        this.itemIdRatingClicked = this.item.company;
-      }
-  
+       const item = this.items.find(((i: any) => i.id === clickObj.itemId));
+      // if (!!item) {
+      //   item.rating = clickObj.rating;
+      //   this.ratingClicked = clickObj.rating;
+      //   this.itemIdRatingClicked = item.company;
+      // }
+        this.skills.rating=clickObj.rating;
     }
 }
+
