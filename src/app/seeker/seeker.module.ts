@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SeekerRoutingModule } from './seeker-routing.module';
 import { MatchingJobsComponent } from './matching-jobs/matching-jobs.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
@@ -24,6 +24,7 @@ import { SharedModule } from '../shared/modules/shared.module';
     imports:[
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         SharedModule,
         SeekerRoutingModule
     ],

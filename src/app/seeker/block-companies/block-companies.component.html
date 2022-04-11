@@ -12,6 +12,20 @@
                     <label style="color: #636363;margin-left: 0px;">Block/Unblock Company(s)</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter company name"
                       style="    border: 1px solid #abaaaa; height: 55px;">
+
+                      <input   type="text"
+                      class="form-control" 
+                      id="blockCompany"
+                      name="blockCompany"
+                      placeholder="Enter company name"
+                      [(ngModel)]="blockCompany.blockEmployerName" 
+                      list="blockCompany"
+                      (change)="onCompanySelect($event.target.value)" required/>
+                     <datalist id="blockCompany">
+                         <option [value]=""></option>
+                         <option  *ngFor="let c of jobSeekerModel.blockCompanies">{{c.blockEmployerName}}</option>
+                     </datalist>
+
                   </div>
                 </div>
               </div>
@@ -19,7 +33,7 @@
             </div>
             <div class="clearfix"></div><br><br>
             <div class="row">
-              <table  border="1">
+              <table>
                 <thead>
                   <tr>
                     <th>Company Name</th>

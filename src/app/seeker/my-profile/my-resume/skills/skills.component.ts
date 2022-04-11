@@ -42,20 +42,25 @@ export class SkillsComponent extends BaseModel implements OnInit {
               private toastr:ToastrService,
               private router:Router,) {  
               super()
-              
-      this.dropdownSettings = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'name',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 1,
-      allowSearchFilter: true,
-      required:true
-    };
    }
 
   ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      enableCheckAll: true,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 3,
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
     this.jobSeekerModel.skills=new Array<SkillsModel>();
     this.isAdd=true;
     this.isDelete=true;
@@ -116,6 +121,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
           this.jobSeekerModel.skills=[];
          }
         this.jobSeekerModel.skills.push(this.skills);
+        this.skills=new SkillsModel();
       }
     }
   

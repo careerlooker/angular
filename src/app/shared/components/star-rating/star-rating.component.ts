@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-star-rating',
@@ -23,5 +24,9 @@ export class StarRatingComponent implements OnInit {
       itemId: this.itemId,
       rating: rating
     });
+  }
+
+  onSubmit(form:NgForm){
+
   }
 }

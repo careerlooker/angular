@@ -194,7 +194,7 @@
                         <td>{{experience.role}}</td>
                         <td>{{experience.joiningMonth}} {{experience.joiningYear}}</td>
                         <td>{{experience.resigningMonth}} {{experience.resigningYear}}</td>
-                        <td>{{experience.responsibilities}}</td>
+                        <td>{{replaceStrirng(experience.responsibilities)}}</td>
                         <td>{{experience.presentEmployer==1?'Yes':'No'}}</td>
                         <td>
                           <button class="btn btn_form3" (click)="updateCompany(experience);">Edit</button>&nbsp;

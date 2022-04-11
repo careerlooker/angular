@@ -1,4 +1,10 @@
-
+.ng-valid[checked], .ng-valid.required  {
+    border-left: 5px solid #42A948; 
+  }
+  
+  .ng-invalid:not(f)  {
+    border-left: 5px solid #a94442; 
+  }
 .rating {
     float:left;
 }

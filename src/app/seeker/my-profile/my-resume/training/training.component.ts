@@ -69,6 +69,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
         this.jobSeekerModel.training=[];
        }
       this.jobSeekerModel.training.push(this.training);
+      this.training=new TrainingModel();
     }
   }
 

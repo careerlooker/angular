@@ -71,7 +71,9 @@ export class AwardsComponent extends BaseModel implements OnInit {
           this.jobSeekerModel.awards=[];
          }
         this.jobSeekerModel.awards.push(this.awards);
+        this.awards=new AwardsModel();
       }
+    
     }
   
     getawardsList(){

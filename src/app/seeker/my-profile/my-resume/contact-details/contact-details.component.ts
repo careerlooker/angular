@@ -62,6 +62,7 @@ constructor(private seekerService:SeekerService,
         this.jobSeekerModel.contactDetails=[];
        }
       this.jobSeekerModel.contactDetails.push(this.contactDetails);
+      this.contactDetails=new ContactDetailsModel();
     }
   }
 

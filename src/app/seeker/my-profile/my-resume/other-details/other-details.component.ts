@@ -27,21 +27,20 @@ export class OtherDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.jobSeekerModel.otherDetails=new OthersDetails();
-    this.otherDetails=new OthersDetails;
+    this.otherDetails={} as OthersDetails;
+   
     this.getOtherDetails();
   }
 
   getOtherDetails(){
     this.seekerService.seekerLogin(localStorage.getItem('email')).subscribe((result:JobSeekerModel)=>{
-
-      if(Object.keys(result).length>0){
        this.jobSeekerModel=result;
-       this.otherDetails=this.jobSeekerModel.otherDetails;
        if(this.jobSeekerModel.otherDetails){
+        this.otherDetails=this.jobSeekerModel.otherDetails;
        this.seekerService.tickSubject.next('od');
        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
        }
-      }
+      
     })
   }
   onCurrentJobTypeSelect(event:any){
@@ -67,6 +66,8 @@ export class OtherDetailsComponent implements OnInit {
 
   onSubmit(form:NgForm){
     if(form.valid){
+      this.otherDetails.visaStatus=form.value.visaStatus;
+      this.jobSeekerModel.otherDetails=this.otherDetails;
       this.seekerService.updateSeekerProfile( this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(JSON.parse(result).message)
         if(result){

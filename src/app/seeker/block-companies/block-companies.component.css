@@ -1,6 +1,7 @@
 table {
     width:93%;
     margin-left:20px;
+    border:1px;
   }
   table, th, td {
     border: 1px solid black;

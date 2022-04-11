@@ -143,6 +143,7 @@ export class EducationComponent extends BaseModel implements OnInit {
       //  this.jobSeekerModel.education.push(this.education)
       //  } 
       this.jobSeekerModel.education.push(this.education)
+      this.education=new EducationModel();
     }
   }
 

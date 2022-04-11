@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { BlockCompanies } from 'src/app/seeker/models/block-companies.model';
 
 @Component({
   selector: 'app-experience',
@@ -23,7 +23,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   experience:ExperienceModel=new ExperienceModel();
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
-
+  blockCompany:BlockCompanies=new BlockCompanies();
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
@@ -31,6 +31,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   ngOnInit() {
     this.jobSeekerModel.experience= new Array<ExperienceModel>();
+    this.jobSeekerModel.blockCompanies=new Array<BlockCompanies>();
     this.experience.responsibilities='';
     this.isAdd=true;
     this.isDelete=true;
@@ -142,6 +143,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.isAdd = false;
     this.actionType='edit';
     this.isDelete=false;
+   
   }
 
 
@@ -175,17 +177,31 @@ export class ExperienceComponent extends BaseModel implements OnInit {
       }
        if(!this.isChecked){
         this.jobSeekerModel.experience.push(this.experience)
+        this.experience=new ExperienceModel();
+        this.experience.responsibilities='';
+        this.textEditorComponent.description='';
        } 
-       else{
-        this.jobSeekerModel.experience.push(this.experience)
-       }
+      //  else{
+      //   this.jobSeekerModel.experience.push(this.experience)
+      //  }
     }
   }
+
+  replaceStrirng(description:any){
+    if(description!=null && description!=undefined){
+    let desc=description.replace('<p>',"").replace('</p>',"");
+       return desc;
+    }
+  }
+
   UpdateCompany(){
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(this.experience.expid);
     this.experience.responsibilities=this.textEditorComponent.description;
     this.jobSeekerModel.experience[targetIdx] = this.experience;
     this.isDelete=true;
+    this.experience=new ExperienceModel();
+    this.experience.responsibilities='';
+    this.textEditorComponent.description='';
   }
   deleteCompany(experience:ExperienceModel){
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(experience.expid);

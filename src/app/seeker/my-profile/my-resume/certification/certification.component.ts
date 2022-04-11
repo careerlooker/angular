@@ -70,6 +70,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
           this.jobSeekerModel.certification=[];
          }
         this.jobSeekerModel.certification.push(this.certificate);
+        this.certificate=new CertificateModel();
       }
     }
   

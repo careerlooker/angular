@@ -18,33 +18,35 @@
                   <div class="form-group">
                     <label>Skill</label>
                     <ng-multiselect-dropdown 
+                          class="form-control col-sm-3" style="height: auto; padding: 0%;"
                           name="KeySkill"
                           [data]="keySkillsDropdownList"
                           [(ngModel)]="skills.name"
                           [settings]="dropdownSettings"
                           (onSelect)="onItemSelect($event)"
-                          (onSelectAll)="onSelectAll($event)"
-                          >
+                          required>
                     </ng-multiselect-dropdown>     
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="star-form-box">
-                 
-                    <label>Rating</label>
-                 <app-star-rating [rating]="item?.rating" [itemId]="item?.id" (ratingClick)="ratingComponentClick($event)"></app-star-rating>
-                 
-                
+
+                 <label>Rating</label>
+                 <app-star-rating [rating]="item?.rating" 
+                                  [itemId]="item?.id" 
+                                  (ratingClick)="ratingComponentClick($event)">
+                  </app-star-rating>
                   <div class="star-form">
                     <div class="form-group">
-                      <label>Description <span>(Optional)</span></label>
+                      <label>Description</label>
                       <input type="text" 
                               class="form-control" 
                               id="descrioption" 
                               name="descrioption" 
-                              [(ngModel)]="skills.descrioption"
-                              placeholder="e.g. Advance">
+                              [(ngModel)]="skills.description"
+                              placeholder="e.g. Advance"
+                              required>
                     </div>
                   </div>
                 </div>
@@ -65,7 +67,7 @@
                     <tr *ngFor="let skill of jobSeekerModel.skills" style="cursor: pointer;"> 
                       <td>{{skill.name}}</td>
                       <td>{{skill.rating}}</td>
-                      <td>{{skill.descrioption}}</td>
+                      <td>{{skill.description}}</td>
                       <td>
                         <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
                         <button class="btn btn_form3" (click)="delete(skill)">Delete</button>

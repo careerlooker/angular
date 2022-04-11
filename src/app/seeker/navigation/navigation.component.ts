@@ -30,7 +30,8 @@ export class SeekerNavigationComponent   {
   profileUrl='./assets/img/job-seeker.png';
   isProfileMainPage:boolean = false;
   showprofilemenu:boolean;
-
+  count:number=0;
+  profileCompletion:number=0;
 
   dropdowns = {
     "besics": false,
@@ -50,6 +51,7 @@ export class SeekerNavigationComponent   {
    od: boolean=false;
    rd: boolean=false;
    ad: boolean=false;
+   bc:boolean=false;
    constructor(private seekerService: SeekerService, private toastr: ToastrService, private router: Router) {
      this.profile.personalInfo=new PersonalInfo();
       if(this.router.url == '/seeqem/matching-job'){
@@ -99,6 +101,7 @@ export class SeekerNavigationComponent   {
      if(result=='od'){this.od=true;}
      if(result=='rd'){this.rd=true;}
      if(result=='ad'){this.ad=true;}
+     if(result=='bc'){this.bc=true;}
     })
   }
   togg(name:string) {
@@ -136,8 +139,7 @@ showMenu(){
     }
   }
 
-  count:number=0;
-  profileCompletion:number=0;
+ 
   progresBar(){
     this.seekerService.jobSeekereMessage.subscribe((result:any)=>{
       this.profile=result;
@@ -155,6 +157,7 @@ showMenu(){
       if(this.profile.language!=null){this.count+=1;this.seekerService.tickSubject.next('lg')}
       if(this.profile.blockCompanies!=null){this.count+=1;this.seekerService.tickSubject.next('pi')}
       if(this.profile.training!=null){this.count+=1;this.seekerService.tickSubject.next('tn')}
+      if(this.profile.blockCompanies!=null){this.seekerService.tickSubject.next('bc')}
       this.profileCompletion=Math.trunc((this.count/12)*100);
     });
      

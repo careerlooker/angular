@@ -71,6 +71,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
           this.jobSeekerModel.language=[];
          }
         this.jobSeekerModel.language.push(this.language);
+        this.language=new LanguageModel();
       }
     }
 

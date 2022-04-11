@@ -24,7 +24,7 @@
                              [(ngModel)]="otherDetails.currentJobType"
                             (change)="onCurrentJobTypeSelect($event.target.value)"
                             required>
-                      <option value="">Current Job Type</option>
+                      <!-- <option value="">Current Job Type</option> -->
                       <option *ngFor="let cjt of currentJobType">{{cjt.currentJobType}}</option>
                     </select>
                   </div>
@@ -42,7 +42,7 @@
                             [(ngModel)]="otherDetails.employementType"
                             (change)="onEmployementTypeSelect($event.target.value)"
                             required>
-                      <option value="">Employement Type</option>
+                      <!-- <option value="">Employement Type</option> -->
                       <option *ngFor="let et of employementType">{{et.employementType}}</option>
                     </select>
                   </div>
@@ -53,13 +53,6 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>Willing To Relocate</label>
-                      <!-- <input type="text" class="form-control" name="willingToRelocate"
-                        [(ngModel)]="otherDetails.willingToRelocate" list="willingToRelocate"
-                        (change)="onWillingToRelocateSelect($event.target.value)" required />
-                      <datalist id="willingToRelocate">
-                        <option [value]=""></option>
-                        <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
-                      </datalist> -->
 
                       <select class="form-control certficiati0n-form" 
                               name="willingToRelocate" 
@@ -68,7 +61,7 @@
                               [(ngModel)]="otherDetails.willingToRelocate"
                               (change)="onWillingToRelocateSelect($event.target.value)"
                               required>
-                      <option value="">Willing To Relocate</option>
+                      <!-- <option value="">Willing To Relocate</option> -->
                       <option *ngFor="let wtr of willingToRelocate">{{wtr.willingToRelocate}}</option>
                     </select>
                     </div>
@@ -77,13 +70,7 @@
                     <div class="form-group">
                       <label> Notice Period in Days</label>
                       <div class="clearfix"></div>
-                      <!-- <input type="text" class="form-control" name="noticePeriob"
-                        [(ngModel)]="otherDetails.noticePeriod" list="noticePeriob"
-                        (change)="onNoticePeriobSelect($event.target.value)" required />
-                      <datalist id="noticePeriob">
-                        <option [value]=""></option>
-                        <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
-                      </datalist> -->
+      
 
                       <select class="form-control certficiati0n-form" 
                               name="noticePeriob" 
@@ -92,7 +79,7 @@
                               [(ngModel)]="otherDetails.noticePeriod"
                               (change)="onNoticePeriobSelect($event.target.value)"
                               required>
-                      <option value=""> Notice Period in Days</option>
+                      <!-- <option value=""> Notice Period in Days</option> -->
                       <option *ngFor="let np of noticePeriob">{{np.noticePeriob}}</option>
                     </select>
                     </div>
