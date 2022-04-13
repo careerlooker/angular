@@ -93,7 +93,7 @@ export class PersonalInfoComponent implements OnInit {
   getCountries() {
     this.sharedService.getAllCountries().subscribe((countries: Array<CountriesModel>) => {
       this.countryList = countries;
-      if (Object.keys(this.jobSeekerModel.personalInfo).length > 0 && this.jobSeekerModel.personalInfo.country.length>0) {
+      if (this.jobSeekerModel.personalInfo!=null && this.jobSeekerModel.personalInfo.country!=null) {
         this.countryname = this.countryList.filter(x => x.name === this.jobSeekerModel.personalInfo.country)[0].name;
         this.onCountrySelect(this.countryname);
       }
@@ -110,7 +110,7 @@ export class PersonalInfoComponent implements OnInit {
     let id = this.countryList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
-      if(Object.keys(this.stateList).length>0 && this.jobSeekerModel.personalInfo.state.length>0){
+      if(Object.keys(this.stateList).length>0 && this.jobSeekerModel.personalInfo.state!=null){
         this.statename=this.stateList.filter(x=>x.name===this.jobSeekerModel.personalInfo.state)[0].name
         this.onStateSelect(this.statename);
       }else{
@@ -127,7 +127,7 @@ export class PersonalInfoComponent implements OnInit {
     let id = this.stateList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
-      if(Object.keys(this.cityList).length>0 && this.jobSeekerModel.personalInfo.city){
+      if(Object.keys(this.cityList).length>0 && this.jobSeekerModel.personalInfo.city!=null){
         this.cityname=this.cityList.filter(x=>x.name===this.jobSeekerModel.personalInfo.city)[0].name;
       }else{
         this.cityname='';

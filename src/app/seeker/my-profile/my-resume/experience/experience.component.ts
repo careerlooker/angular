@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
@@ -92,12 +92,14 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   onJoiningMonthChange(month:any){
     this.experience.joiningMonth=month;
+    this.checkMonth();
   }
   onResigningMonthChange(month){
     this.experience.resigningMonth=month;
+    this.checkMonth();
   }
   onJoiningYearChange(year){
-    if(this.experience.resigningYear!=undefined)
+    if(this.experience.resigningYear!=undefined &&  this.experience.joiningYear!="" && this.experience.joiningYear!=null)
     {
       let joinYear=+this.joiningYear.find(x=>x.joiningYear=year).joiningYear;
       if(joinYear<=+this.experience.resigningYear)
@@ -112,26 +114,29 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   else{
     this.experience.joiningYear=year;
   }
-  }
+  this.checkMonth();
+}
+
   onResigningYearChange(year){
-    if(this.experience.resigningYear!=undefined)
+    let resignYear=+year;
+    if(this.experience.resigningYear!=undefined &&  this.experience.resigningYear!="" && this.experience.resigningYear!=null)
     { 
-      let resignYear=+this.resigningYear.find(x=>x.resigningYear==year).resigningYear;
       let joiningYear=+this.experience.joiningYear;
       if(resignYear>=joiningYear)
       {
-        this.experience.resigningYear=year;
+        this.experience.resigningYear=resignYear.toString();
       }
       else
       {
         this.experience.resigningYear='';
         this.toastr.error('Resigning year should be greater than joining year');
       }
+    }
+    else{
+    this.experience.resigningYear=resignYear.toString();
+    }
+    this.checkMonth();
   }
-  else{
-    this.experience.resigningYear=year;
-  }
-}
 
   onPresentCompany(value:any){
    this.experience.presentEmployer=value==true?1:0;
@@ -146,6 +151,18 @@ export class ExperienceComponent extends BaseModel implements OnInit {
    
   }
 
+  checkMonth()
+  {
+    if(this.experience.joiningYear==this.experience.resigningYear){
+      let joinMonth=this.joiningMonth.filter(x=>x.joiningMonth==this.experience.joiningMonth)[0];
+      let resignMonth=this.resigningMonth.filter(x=>x.resigningMonth==this.experience.resigningMonth)[0];
+      if(joinMonth.Id>resignMonth.Id){
+        this.experience.joiningMonth='';
+        this.experience.resigningMonth='';
+        this.toastr.error("Joining month and Resigning month is not correct");
+      }
+    }
+  }
 
   addNewCompany (form:NgForm){
     if(form.valid){
