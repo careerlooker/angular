@@ -83,7 +83,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
         this.seekerService.tickSubject.next('tn');
       }
       this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
-    }(err: HttpErrorResponse) => {
+    },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
     })
   }

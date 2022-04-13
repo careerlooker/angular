@@ -38,8 +38,9 @@ export class ProfessionalSummaryComponent implements OnInit {
           this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message);
-    }
+    });
   }
+}
 
   onSubmit(form:NgForm){
     if(form.valid && this.textEditorComponent.description){
