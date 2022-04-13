@@ -81,8 +81,10 @@ export class LanguageComponent extends BaseModel implements OnInit {
         this.jobSeekerModel=result;
         if(this.jobSeekerModel.language){
           this.seekerService.tickSubject.next('lg');
-          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
         }
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);
       })
     }
     nextPage(){

@@ -80,8 +80,8 @@ export class PersonalInfoComponent implements OnInit {
        
         if(this.jobSeekerModel.personalInfo){
         this.seekerrService.tickSubject.next('pi');
-        this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
         }
+        this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
         this.getCountries();
       }
       },(err: HttpErrorResponse) => {

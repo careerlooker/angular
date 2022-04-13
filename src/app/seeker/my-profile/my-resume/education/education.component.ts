@@ -171,8 +171,8 @@ export class EducationComponent extends BaseModel implements OnInit {
       this.jobSeekerModel=result;
       if(this.jobSeekerModel.education){
       this.seekerService.tickSubject.next('ed');
-      this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       }
+      this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
       console.log(err);

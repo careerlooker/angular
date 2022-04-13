@@ -38,9 +38,10 @@ export class OtherDetailsComponent implements OnInit {
        if(this.jobSeekerModel.otherDetails){
         this.otherDetails=this.jobSeekerModel.otherDetails;
        this.seekerService.tickSubject.next('od');
-       this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
        }
-      
+       this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+    }, (err: HttpErrorResponse) => {
+      this.toastr.error(err.message);
     })
   }
   onCurrentJobTypeSelect(event:any){

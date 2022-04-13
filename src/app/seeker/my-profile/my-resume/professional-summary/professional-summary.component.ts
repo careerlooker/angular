@@ -34,11 +34,10 @@ export class ProfessionalSummaryComponent implements OnInit {
           this.email=this.jobSeekerModel.email;
           if(this.jobSeekerModel.profSummary){
           this.seekerService.tickSubject.next('ps');
-          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
           }
+          this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message);
-            console.log(err);})
     }
   }
 

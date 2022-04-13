@@ -73,9 +73,11 @@ constructor(private seekerService:SeekerService,
       this.jobSeekerModel=result;
       if(this.jobSeekerModel.contactDetails){
         this.seekerService.tickSubject.next('cd');
-         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
-        }   
-    })
+        }  
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+    },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);
+      })
   }
   nextPage(){
     this.seekerService.saveContactDetails(this.jobSeekerModel).subscribe((result:any)=>{

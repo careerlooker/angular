@@ -48,8 +48,8 @@ export class ExperienceComponent extends BaseModel implements OnInit {
         this.jobSeekerModel = result;
         if(this.jobSeekerModel.experience){
         this.seekerService.tickSubject.next('ex'); 
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
         }  
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

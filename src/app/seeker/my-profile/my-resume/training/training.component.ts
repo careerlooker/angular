@@ -81,9 +81,10 @@ export class TrainingComponent extends BaseModel implements OnInit {
       this.jobSeekerModel=result;
       if(this.jobSeekerModel.training){
         this.seekerService.tickSubject.next('tn');
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       }
-      
+      this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+    }(err: HttpErrorResponse) => {
+      this.toastr.error(err.message);
     })
   }
   nextPage(){
