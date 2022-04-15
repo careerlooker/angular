@@ -140,6 +140,10 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   onPresentCompany(value:any){
    this.experience.presentEmployer=value==true?1:0;
+   if(this.experience.presentEmployer){
+     this.experience.resigningMonth=null;
+     this.experience.resigningYear=null;
+   }
   }
 
   updateCompany(experience:ExperienceModel){
@@ -223,6 +227,9 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   deleteCompany(experience:ExperienceModel){
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(experience.expid);
     this.jobSeekerModel.experience.splice(targetIdx,1)
+    if(this.jobSeekerModel.experience.length==0){
+      this.jobSeekerModel.experience=null;
+    }
   }
   nextPage(){
     this.seekerService.saveExperience(this.jobSeekerModel).subscribe((result:any)=>{

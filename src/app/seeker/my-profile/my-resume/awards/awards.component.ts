@@ -57,6 +57,9 @@ export class AwardsComponent extends BaseModel implements OnInit {
     delete(award:AwardsModel){
       const targetIdx = this.jobSeekerModel.awards.map(item => item.awardId).indexOf(award.awardId);
       this.jobSeekerModel.awards.splice(targetIdx,1)
+       if(this.jobSeekerModel.awards.length==0){
+      this.jobSeekerModel.awards=null;
+    }
     }
     add(form:NgForm){
       if(form.valid){

@@ -55,6 +55,9 @@ export class TrainingComponent extends BaseModel implements OnInit {
   delete(training:TrainingModel){
     const targetIdx = this.jobSeekerModel.training.map(item => item.trainingId).indexOf(training.trainingId);
     this.jobSeekerModel.training.splice(targetIdx,1)
+    if(this.jobSeekerModel.training.length==0){
+      this.jobSeekerModel.training=null;
+    }
   }
   add(form:NgForm){
     if(form.valid){

@@ -117,6 +117,9 @@ export class EducationComponent extends BaseModel implements OnInit {
   deleteEducation(education:EducationModel){
     const targetIdx = this.jobSeekerModel.education.map(item => item.eduId).indexOf(education.eduId);
     this.jobSeekerModel.education.splice(targetIdx,1)
+    if(this.jobSeekerModel.education.length==0){
+      this.jobSeekerModel.education=null;
+    }
   }
   AddEducation(form: NgForm) {
     if (form.valid) {

@@ -56,6 +56,9 @@ export class CertificationComponent extends BaseModel implements OnInit {
     delete(certification:CertificateModel){
       const targetIdx = this.jobSeekerModel.certification.map(item => item.certId).indexOf(certification.certId);
       this.jobSeekerModel.certification.splice(targetIdx,1)
+       if(this.jobSeekerModel.certification.length==0){
+      this.jobSeekerModel.certification=null;
+    }
     }
     add(form:NgForm){
       if(form.valid){

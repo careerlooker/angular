@@ -48,6 +48,9 @@ constructor(private seekerService:SeekerService,
   delete(contact:ContactDetailsModel){
     const targetIdx = this.jobSeekerModel.contactDetails.map(item => item.mediaId).indexOf(contact.mediaId);
     this.jobSeekerModel.contactDetails.splice(targetIdx,1)
+     if(this.jobSeekerModel.contactDetails.length==0){
+      this.jobSeekerModel.contactDetails=null;
+    }
   }
   add(form:NgForm){
     if(form.valid){

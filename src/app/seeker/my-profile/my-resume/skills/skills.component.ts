@@ -94,6 +94,8 @@ export class SkillsComponent extends BaseModel implements OnInit {
       const targetIdx = this.jobSeekerModel.skills.map(item => item.skillId).indexOf(this.skills.skillId);
       this.jobSeekerModel.skills[targetIdx] = this.skills;
       this.isDelete=true;
+      this.skills=new SkillsModel();
+      this.starRatingComponent.rating=null;
     }
     edit(skill:SkillsModel){
       this.skills= this.jobSeekerModel.skills.filter(x=>x.skillId==skill.skillId)[0];
@@ -102,10 +104,15 @@ export class SkillsComponent extends BaseModel implements OnInit {
       this.isAdd = false;
       this.actionType='edit';
       this.isDelete=false;
+      let skil=this.keySkillsDropdownList.filter(x=>x.name==skill.name)[0];
+      this.skills.name=skil.name;
     }
     delete(skill:SkillsModel){
       const targetIdx = this.jobSeekerModel.skills.map(item => item.skillId).indexOf(skill.skillId);
       this.jobSeekerModel.skills.splice(targetIdx,1)
+      if(this.jobSeekerModel.skills.length==0){
+        this.jobSeekerModel.skills=null;
+      }
     }
     add(form:NgForm){
       if(form.valid){

@@ -57,6 +57,9 @@ export class LanguageComponent extends BaseModel implements OnInit {
     delete(language:LanguageModel){
       const targetIdx = this.jobSeekerModel.language.map(item => item.langId).indexOf(language.langId);
       this.jobSeekerModel.language.splice(targetIdx,1)
+      if(this.jobSeekerModel.language.length==0){
+        this.jobSeekerModel.language=null;
+      }
     }
     add(form:NgForm){
       if(form.valid){
