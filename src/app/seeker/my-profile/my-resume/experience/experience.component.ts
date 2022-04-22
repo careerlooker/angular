@@ -245,21 +245,6 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(this.experience.expid);
     this.onPresentCompany(this.experience.presentEmployer);
     this.jobSeekerModel.experience[targetIdx] = this.experience;
-    // this.jobSeekerModel.experience.forEach((x,i)=>{
-    //   if(x.expid==this.experience.expid){
-    //     x.city=this.experience.city;
-    //     x.country=this.experience.country;
-    //     x.state=this.experience.state;
-    //     x.employerName=this.experience.employerName;
-    //     x.joiningMonth=this.experience.joiningMonth;
-    //     x.joiningYear=this.experience.joiningYear;
-    //     x.presentEmployer=this.experience.presentEmployer;
-    //     x.resigningMonth=this.experience.resigningMonth;
-    //     x.resigningYear=this.experience.resigningYear;
-    //     x.responsibilities=this.experience.responsibilities;
-    //     x.role=this.experience.role;
-    //   }
-    // })
     this.isDelete=false;
     this.experience=new ExperienceModel();
     this.experience.responsibilities='';
