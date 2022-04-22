@@ -13,6 +13,7 @@ import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { BlockCompanies } from 'src/app/seeker/models/block-companies.model';
+import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-experience',
@@ -24,6 +25,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
   experience:ExperienceModel=new ExperienceModel();
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   blockCompany:BlockCompanies=new BlockCompanies();
+  isCompany:boolean;
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
@@ -35,6 +37,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.experience.responsibilities='';
     this.isAdd=true;
     this.isDelete=true;
+    this.isCompany=true;
     this.getExperienceList();
     this.getCountries();
   
@@ -60,35 +63,45 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.sharedService.getAllCountries().subscribe((countries: Array<CountriesModel>) => {
       this.countryList = countries;
       if (Object.keys(this.experience).length > 0 && this.experience.country) {
-        this.countryname = this.countryList.filter(x => x.name === this.experience.country)[0].name;
-        this.onCountrySelect(this.countryname);
+        this.experience.country = this.countryList.filter(x => x.name === this.experience.country)[0].name;
+        this.onCountrySelect(this.experience.country);
       }
     });
   }
 
   onCountrySelect(name: string) {
+    if(name!=null && name!=undefined && name!=""){
     let id = this.countryList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
       if(Object.keys(this.stateList).length>0 && this.experience.state){
-        this.statename=this.stateList.filter(x=>x.name===this.experience.state)[0].name
-        this.onStateSelect(this.statename);
+        this.experience.state=this.stateList.find(x=>x.name===this.experience.state).name
+        this.onStateSelect(this.experience.state);
       }else{
-        this.statename='';
+        this.experience.state='';
       }
     });
+    }else{
+      this.experience.country="";
+      this.experience.state="";
+      this.experience.city="";
+    }
   }
   onStateSelect(name: string) {
-    let id = this.stateList.filter(x => x.name === name)[0].id;
+    if(name!=null && name!=undefined && name!=""){
+    let id = this.stateList.find(x => x.name === name).id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
       if(Object.keys(this.cityList).length>0 && this.experience.city){
-        this.cityname=this.cityList.filter(x=>x.name===this.experience.city)[0].name;
+        this.experience.city=this.cityList.find(x=>x.name===this.experience.city).name;
       }else{
-        this.cityname='';
+        this.experience.city='';
       }
     })
+  }else{
+    this.experience.city='';
   }
+}
 
   onJoiningMonthChange(month:any){
     this.experience.joiningMonth=month;
@@ -137,22 +150,32 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     }
     this.checkMonth();
   }
-
   onPresentCompany(value:any){
    this.experience.presentEmployer=value==true?1:0;
    if(this.experience.presentEmployer){
-     this.experience.resigningMonth=null;
-     this.experience.resigningYear=null;
+     this.experience.resigningMonth="";
+     this.experience.resigningYear="";
+     this.isCompany=false;
+   }
+   else{
+    this.isCompany=true;
    }
   }
 
-  updateCompany(experience:ExperienceModel){
+  editCompany(experience:ExperienceModel){
     this.experience= this.jobSeekerModel.experience.filter(x=>x.expid==experience.expid)[0];
     this.isUpdate = true;
     this.isAdd = false;
     this.actionType='edit';
     this.isDelete=false;
-   
+    if(experience.presentEmployer){
+      this.isCompany=false;
+    }
+    else{
+      this.isCompany=true;
+    }
+    this.getCountries();
+  
   }
 
   checkMonth()
@@ -167,13 +190,28 @@ export class ExperienceComponent extends BaseModel implements OnInit {
       }
     }
   }
-
+  checkPresentCompany(){
+    if(this.jobSeekerModel.experience){
+      this.jobSeekerModel.experience.forEach(x=>{
+        if(x.presentEmployer==1 && this.experience.presentEmployer==1){
+             this.isChecked=true;
+        }
+        else{
+          this.isChecked=false;
+        }
+      })
+     }else{
+       this.jobSeekerModel.experience=[];
+     }
+     if(this.experience.presentEmployer!=1){
+      this.isCompany=true;
+       }
+  }
   addNewCompany (form:NgForm){
-    if(form.valid){
+    if(form.valid && this.textEditorComponent.description!="" && this.textEditorComponent.description!=undefined){
     this.experience.responsibilities=this.textEditorComponent.description
     this.isAdd=true;
     this.isUpdate=false;
-      this.experience.presentEmployer=form.value.presentEmployer==true?1:0;
       this.jobSeekerModel.email=this.email;
        if(this.jobSeekerModel.experience){
         if(this.jobSeekerModel.experience.filter(x=>x.expid!==this.experience.expid)){
@@ -184,27 +222,13 @@ export class ExperienceComponent extends BaseModel implements OnInit {
        }else{
         this.experience.expid=1;
        }
-       if(this.jobSeekerModel.experience){
-       this.jobSeekerModel.experience.forEach(x=>{
-         if(x.presentEmployer==1 && this.experience.presentEmployer==1){
-              this.isChecked=true;
-         }
-         else{
-           this.isChecked=false;
-         }
-       })
-      }else{
-        this.jobSeekerModel.experience=[];
-      }
+      this.checkPresentCompany();
        if(!this.isChecked){
         this.jobSeekerModel.experience.push(this.experience)
         this.experience=new ExperienceModel();
         this.experience.responsibilities='';
         this.textEditorComponent.description='';
        } 
-      //  else{
-      //   this.jobSeekerModel.experience.push(this.experience)
-      //  }
     }
   }
 
@@ -215,14 +239,33 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     }
   }
 
-  UpdateCompany(){
+  UpdateCompany(form:NgForm){
+    if(form.valid && this.textEditorComponent.description!="" && this.textEditorComponent.description!=undefined){
+      this.experience.responsibilities=this.textEditorComponent.description;
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(this.experience.expid);
-    this.experience.responsibilities=this.textEditorComponent.description;
+    this.onPresentCompany(this.experience.presentEmployer);
     this.jobSeekerModel.experience[targetIdx] = this.experience;
-    this.isDelete=true;
+    // this.jobSeekerModel.experience.forEach((x,i)=>{
+    //   if(x.expid==this.experience.expid){
+    //     x.city=this.experience.city;
+    //     x.country=this.experience.country;
+    //     x.state=this.experience.state;
+    //     x.employerName=this.experience.employerName;
+    //     x.joiningMonth=this.experience.joiningMonth;
+    //     x.joiningYear=this.experience.joiningYear;
+    //     x.presentEmployer=this.experience.presentEmployer;
+    //     x.resigningMonth=this.experience.resigningMonth;
+    //     x.resigningYear=this.experience.resigningYear;
+    //     x.responsibilities=this.experience.responsibilities;
+    //     x.role=this.experience.role;
+    //   }
+    // })
+    this.isDelete=false;
     this.experience=new ExperienceModel();
     this.experience.responsibilities='';
     this.textEditorComponent.description='';
+    this.isCompany=true;
+    }
   }
   deleteCompany(experience:ExperienceModel){
     const targetIdx = this.jobSeekerModel.experience.map(item => item.expid).indexOf(experience.expid);
@@ -240,7 +283,9 @@ export class ExperienceComponent extends BaseModel implements OnInit {
       this.isAdd = true;
       this.experience=new ExperienceModel();
       this.experience.responsibilities='';
-        this.router.navigate(['/seeqem/my-profile/education']);
+      if(this.jobSeekerModel.experience.length==0)
+      this.jobSeekerModel.experience=null;
+      this.router.navigate(['/seeqem/my-profile/education']);
       }
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);

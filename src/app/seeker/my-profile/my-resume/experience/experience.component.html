@@ -142,7 +142,7 @@
                     </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" *ngIf="isCompany">
                   <div class="col-sm-6">
                       <div class="form-group">
                         <label>Resigning Month</label>
@@ -249,7 +249,7 @@
                         <td>{{replaceStrirng(experience.responsibilities)}}</td>
                         <td>{{experience.presentEmployer==1?'Yes':'No'}}</td>
                         <td>
-                          <button class="btn btn_form3" (click)="updateCompany(experience);">Edit</button>&nbsp;
+                          <button class="btn btn_form3" (click)="editCompany(experience);">Edit</button>&nbsp;
                           <button class="btn btn_form3" (click)="deleteCompany(experience)" *ngIf="isDelete">Delete</button>
                         </td>
                       </tr>
@@ -260,11 +260,11 @@
                   <div class="col-sm-6 col-xs-6">
                   
                     <button type="button" class="btn btn_form3 pull-left" *ngIf="isAdd" (click)="addNewCompany(form)">Add New Company</button>
-                    <button type="button" class="btn btn_form3 pull-left" *ngIf="isUpdate"(click)="UpdateCompany()">Update Company</button>
+                    <button type="button" class="btn btn_form3 pull-left" *ngIf="isUpdate"(click)="UpdateCompany(form)">Update Company</button>
                   </div>
 
                   <div class="col-sm-6 col-xs-6">
-                    <button type="button" class="btn btn_form4" (click)="nextPage()" *ngIf="isDelete">Save & Next</button>
+                    <button type="button" class="btn btn_form4" (click)="nextPage()">Save & Next</button>
                   </div>
               </div>
             </div>
