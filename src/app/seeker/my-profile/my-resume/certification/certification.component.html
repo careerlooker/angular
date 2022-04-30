@@ -72,7 +72,7 @@
                     <td>{{certificate.certYear}}</td>
                     <td>
                       <button class="btn btn_form3" (click)="edit(certificate)">Edit</button>&nbsp;
-                      <button class="btn btn_form3" (click)="delete(certificate)">Delete</button>
+                      <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(certificate)">Delete</button>
                     </td>
                   </tr>
                 </tbody>
@@ -82,7 +82,12 @@
             <br>
             <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Certificate</button>
             <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Certificate</button>
-            <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
+          
+            <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+    
+            <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="save()">Save</button>
+            <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
+            
           </div>
         </form>
       <!-- </div>

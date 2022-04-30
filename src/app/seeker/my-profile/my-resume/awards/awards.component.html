@@ -71,7 +71,7 @@
                       <td>{{awards.awardYear}}</td>
                       <td>
                         <button class="btn btn_form3" (click)="edit(awards)">Edit</button>&nbsp;
-                        <button class="btn btn_form3" (click)="delete(awards)">Delete</button>
+                        <button class="btn btn_form3" *ngIf="isDelete"(click)="delete(awards)">Delete</button>
                       </td>
                     </tr>
                   </tbody>
@@ -81,7 +81,10 @@
               <br>
               <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Awards</button>
               <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Awards</button>
-              <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
+              
+              <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+              <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="save()">Save</button>
+              <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
             </div>
           </form>
         <!-- </div>

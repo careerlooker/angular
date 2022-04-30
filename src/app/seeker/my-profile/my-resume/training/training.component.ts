@@ -29,6 +29,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
   ngOnInit() { 
     this.isAdd=true;
     this.isDelete=true;
+    this.isSave=true;
     this.getTraningList();
     this.training.trainingMonth = "";
     this.training.trainingYear ="";
@@ -43,14 +44,19 @@ export class TrainingComponent extends BaseModel implements OnInit {
   update(){
     const targetIdx = this.jobSeekerModel.training.map(item => item.trainingId).indexOf(this.training.trainingId);
     this.jobSeekerModel.training[targetIdx] = this.training;
-    this.isDelete=true;
+    this.isDelete=false;
+    this.isSave=true;
+    this.isUpdate=false;
+
   }
   edit(training:TrainingModel){
     this.training= this.jobSeekerModel.training.filter(x=>x.trainingId==training.trainingId)[0];
     this.isUpdate = true;
     this.isAdd = false;
+    this.isDelete=false;
     this.actionType='edit';
     this.isDelete=false;
+    this.isSave=false;
   }
   delete(training:TrainingModel){
     const targetIdx = this.jobSeekerModel.training.map(item => item.trainingId).indexOf(training.trainingId);
@@ -84,23 +90,32 @@ export class TrainingComponent extends BaseModel implements OnInit {
       this.jobSeekerModel=result;
       if(this.jobSeekerModel.training){
         this.seekerService.tickSubject.next('tn');
+        this.jobSeekerModel.training.sort((a,b)=>+b.trainingYear-+a.trainingYear)
       }
       this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
     })
   }
-  nextPage(){
+  save(){
     this.seekerService.saveTraining(this.jobSeekerModel).subscribe((result:any)=>{
       this.toastr.success(result.message);
       this.getTraningList();
       this.isAdd=true;
       this.isUpdate=false;
+      this.isSave=true;
       this.training=new TrainingModel();
-      this.router.navigate(['/seeqem/my-profile/certificate'])
+    
     }, (err: HttpErrorResponse) => {
       this.toastr.error(err.message);
       console.log(err);
     })  
+  }
+
+  next(){
+    this.router.navigate(['/seeqem/my-profile/certificate'])
+  }
+  back(){
+    this.router.navigate(['/seeqem/my-profile/skills']);
   }
 }

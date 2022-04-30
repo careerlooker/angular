@@ -132,7 +132,7 @@
                             <td>{{cd.mediaLink}}</td>
                             <td>
                               <button class="btn btn_form3" (click)="edit(cd)">Edit</button>&nbsp;
-                              <button class="btn btn_form3" (click)="delete(cd)">Delete</button>
+                              <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(cd)">Delete</button>
                             </td>
                           </tr>
                         </tbody>
@@ -146,7 +146,9 @@
                     
                   </div>
                   <div class="col-sm-6 col-xs-6"> 
-                    <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
+                    <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+                    <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="save()">Save</button>
+                    <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
                   </div>
                 </div>
               </div>

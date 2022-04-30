@@ -47,13 +47,14 @@ export class SkillsComponent extends BaseModel implements OnInit {
   ngOnInit() {
     this.dropdownSettings = {
       singleSelection: false,
+      multiSelection:true,
       idField: 'id',
       textField: 'name',
-      enableCheckAll: true,
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      enableCheckAll: false,
+      //selectAllText: 'Select All',
+      //unSelectAllText: 'UnSelect All',
       allowSearchFilter: true,
-      limitSelection: -1,
+      limitSelection: 1,
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
@@ -64,6 +65,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
     this.jobSeekerModel.skills=new Array<SkillsModel>();
     this.isAdd=true;
     this.isDelete=true;
+    this.isSave=true;
     this.items=[{ 'id': 0, 'rating': 0, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' }];
     this.getKeySkills();
     this.actionType='add';
@@ -83,17 +85,20 @@ export class SkillsComponent extends BaseModel implements OnInit {
           this.jobSeekerModel=result;
           if(this.jobSeekerModel.skills){
             this.seekerService.tickSubject.next('ss');
+            this.jobSeekerModel.skills.sort((a,b)=>+b.rating-+a.rating)
           }
           this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
-        console.log(err);})
+        this.toastr.error(err.message,'Skill Info');
+       })
     }
 
     update(){
       const targetIdx = this.jobSeekerModel.skills.map(item => item.skillId).indexOf(this.skills.skillId);
       this.jobSeekerModel.skills[targetIdx] = this.skills;
-      this.isDelete=true;
+      this.isDelete=false;
+      this.isSave=true;
+      this.isUpdate=false;
       this.skills=new SkillsModel();
       this.starRatingComponent.rating=null;
     }
@@ -102,10 +107,10 @@ export class SkillsComponent extends BaseModel implements OnInit {
       this.starRatingComponent.rating=this.skills.rating;
       this.isUpdate = true;
       this.isAdd = false;
-      this.actionType='edit';
+      this.isSave=false;
       this.isDelete=false;
-      let skil=this.keySkillsDropdownList.filter(x=>x.name==skill.name)[0];
-      this.skills.name=skil.name;
+      this.actionType='edit';
+      this.keySkillsDropdownList[0]=this.keySkillsDropdownList.filter(x=>x.name==skill.name)[0]
     }
     delete(skill:SkillsModel){
       const targetIdx = this.jobSeekerModel.skills.map(item => item.skillId).indexOf(skill.skillId);
@@ -128,6 +133,8 @@ export class SkillsComponent extends BaseModel implements OnInit {
          }
         this.jobSeekerModel.skills.push(this.skills);
         this.skills=new SkillsModel();
+        this.selectedSkills.name='';
+        this.starRatingComponent.rating=0;
       }
     }
   
@@ -135,21 +142,22 @@ export class SkillsComponent extends BaseModel implements OnInit {
     nextPage(){
       this.seekerService.saveSkills(this.jobSeekerModel).subscribe((result:any)=>{
         if(result){
-        this.toastr.success(JSON.parse(result).message);
+        this.toastr.success(JSON.parse(result).message,'Skill Info');
         this.isUpdate=false;
         this.isAdd=true;
+        this.isDelete=true;
         this.getSkills();
         this.skills=new SkillsModel();
         this.selectedSkills=new KeySkillsModel();
         this.selectedSkills.name='';
         this.selectedSkills.id=null;
-        this.router.navigate(['/seeqem/my-profile/training']);
         }
       },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
-        console.log(err);})
+        this.toastr.error(err.message,'Skill Info');
+       })
     }
   
+   
     onItemSelect(item: any) {
       this.skills.name=item.name;
       console.log(item);
@@ -158,7 +166,11 @@ export class SkillsComponent extends BaseModel implements OnInit {
       console.log(items);
     }
   
-
+    onSkillChange(value:any){
+      if(value!="" && value!=undefined){
+        this.skills.name=value;
+      }
+    }
     ratingComponentClick(clickObj: any): void {
        const item = this.items.find(((i: any) => i.id === clickObj.itemId));
       // if (!!item) {
@@ -167,6 +179,13 @@ export class SkillsComponent extends BaseModel implements OnInit {
       //   this.itemIdRatingClicked = item.company;
       // }
         this.skills.rating=clickObj.rating;
+    }
+
+    next(){
+      this.router.navigate(['/seeqem/my-profile/training']);
+    }
+    back(){
+      this.router.navigate(['/seeqem/my-profile/education']);
     }
 }
 

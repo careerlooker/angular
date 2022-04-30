@@ -245,7 +245,7 @@
                         <td>{{experience.employerName}}</td>
                         <td>{{experience.role}}</td>
                         <td>{{experience.joiningMonth}} {{experience.joiningYear}}</td>
-                        <td>{{experience.resigningMonth}} {{experience.resigningYear}}</td>
+                        <td>{{experience.resigningMonth}} {{experience.resigningYear=="9999"? 'Till Date':experience.resigningYear}}</td>
                         <td>{{replaceStrirng(experience.responsibilities)}}</td>
                         <td>{{experience.presentEmployer==1?'Yes':'No'}}</td>
                         <td>
@@ -264,7 +264,9 @@
                   </div>
 
                   <div class="col-sm-6 col-xs-6">
-                    <button type="button" class="btn btn_form4" (click)="nextPage()">Save & Next</button>
+                    <button type="button" class="btn btn_form4 pull-centre" *ngIf="isSave"   (click)="next()">Next</button>
+                    <button type="button" class="btn btn_form4 pull-centre" *ngIf="isSave"  (click)="nextPage()">Save</button>
+                    <button type="button" class="btn btn_form4 pull-centre" *ngIf="isSave"   (click)="back()">Back</button>
                   </div>
               </div>
             </div>

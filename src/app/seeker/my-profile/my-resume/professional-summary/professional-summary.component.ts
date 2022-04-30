@@ -37,7 +37,7 @@ export class ProfessionalSummaryComponent implements OnInit {
           }
           this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message);
+            this.toastr.error(err.message,'Profile summary');
     });
   }
 }
@@ -48,15 +48,20 @@ export class ProfessionalSummaryComponent implements OnInit {
     this.jobSeekerModel.profSummary.summary=this.textEditorComponent.description
     this.jobSeekerModel.email=this.email;
     this.seekerService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
-      this.toastr.success(JSON.parse(result).message);
+      this.toastr.success(JSON.parse(result).message,'Profile summary');
       if(result){
-        this.getProfesionalSummary();
+        this.getProfesionalSummary(); 
         this.seekerService.tickSubject.next('ps');
-        this.router.navigate(['/seeqem/my-profile/experience'])
       }
     },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message);
-      console.log(err);})
+      this.toastr.error(err.message,'Profile summary');
+     })
     }
+  }
+  next(){
+    this.router.navigate(['/seeqem/my-profile/experience']);
+  }
+  back(){
+    this.router.navigate(['/seeqem/my-profile/personal-info']);
   }
 }

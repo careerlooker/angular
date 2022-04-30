@@ -85,7 +85,7 @@ export class PersonalInfoComponent implements OnInit {
         this.getCountries();
       }
       },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.message,'Professional Info');
       })
     }
   }
@@ -94,16 +94,16 @@ export class PersonalInfoComponent implements OnInit {
     this.sharedService.getAllCountries().subscribe((countries: Array<CountriesModel>) => {
       this.countryList = countries;
       if (this.jobSeekerModel.personalInfo!=null && this.jobSeekerModel.personalInfo.country!=null) {
-        this.countryname = this.countryList.filter(x => x.name === this.jobSeekerModel.personalInfo.country)[0].name;
-        this.onCountrySelect(this.countryname);
+        this.jobSeekerModel.personalInfo.country = this.countryList.filter(x => x.name === this.jobSeekerModel.personalInfo.country)[0].name;
+        this.onCountrySelect(this.jobSeekerModel.personalInfo.country);
       }
     });
   }
 
   onCountrySelect(name: string) {
     if(name==="" || name===undefined){
-      this.statename='';
-      this.cityname=''; 
+      this.jobSeekerModel.personalInfo.state='';
+      this.jobSeekerModel.personalInfo.city=''; 
       this.cityList=[];
       this.stateList=[];
     }else{
@@ -111,26 +111,27 @@ export class PersonalInfoComponent implements OnInit {
     this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
       if(Object.keys(this.stateList).length>0 && this.jobSeekerModel.personalInfo.state!=null){
-        this.statename=this.stateList.filter(x=>x.name===this.jobSeekerModel.personalInfo.state)[0].name
-        this.onStateSelect(this.statename);
+        this.jobSeekerModel.personalInfo.state=this.stateList.filter(x=>x.name===this.jobSeekerModel.personalInfo.state)[0].name
+        this.onStateSelect(this.jobSeekerModel.personalInfo.state);
       }else{
-        this.statename='';
+        this.jobSeekerModel.personalInfo.state='';
+        this.jobSeekerModel.personalInfo.city='';
       }
     });
   }
   }
   onStateSelect(name: string) {
     if(name==="" || name===undefined){
-      this.cityname='';
+      this.jobSeekerModel.personalInfo.city='';
       this.cityList=[];
     }else{
     let id = this.stateList.filter(x => x.name === name)[0].id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
       if(Object.keys(this.cityList).length>0 && this.jobSeekerModel.personalInfo.city!=null){
-        this.cityname=this.cityList.filter(x=>x.name===this.jobSeekerModel.personalInfo.city)[0].name;
+        this.jobSeekerModel.personalInfo.city=this.cityList.filter(x=>x.name===this.jobSeekerModel.personalInfo.city)[0].name;
       }else{
-        this.cityname='';
+        this.jobSeekerModel.personalInfo.city='';
       }
     });
   }
@@ -190,16 +191,17 @@ export class PersonalInfoComponent implements OnInit {
         this.jobSeekerModel.personalInfo.zipCode=form.value.zipCode;
       
         this.seekerrService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
-          this.toastr.success(JSON.parse(result).message)
+          this.toastr.success(JSON.parse(result).message,'Professional Info')
           if(result){
             this.getSeeker();
             this.seekerrService.tickSubject.next('pi');
-            this.router.navigate(['/seeqem/my-profile/professional-summary'])
           }
         }, (err: HttpErrorResponse) => {
-          this.toastr.error(err.message);
-          console.log(err);
+          this.toastr.error(err.message,'Professional Info');
         }) 
      }
+   }
+   next(){
+    this.router.navigate(['/seeqem/my-profile/professional-summary'])
    }
 }

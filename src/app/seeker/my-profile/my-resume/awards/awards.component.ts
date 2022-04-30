@@ -30,6 +30,7 @@ export class AwardsComponent extends BaseModel implements OnInit {
       this.jobSeekerModel.awards=new Array<AwardsModel>();
       this.isAdd=true;
       this.isDelete=true;
+      this.isSave=true;
       this.getawardsList();
       this.awards.awardMonth = "";
       this.awards.awardYear = "";
@@ -45,7 +46,10 @@ export class AwardsComponent extends BaseModel implements OnInit {
     update(){
       const targetIdx = this.jobSeekerModel.awards.map(item => item.awardId).indexOf(this.awards.awardId);
       this.jobSeekerModel.awards[targetIdx] = this.awards;
-      this.isDelete=true;
+      this.isDelete=false;
+      this.isSave=true;
+      this.isAdd=false;
+      this.isUpdate=false;
     }
     edit(award:AwardsModel){
       this.awards= this.jobSeekerModel.awards.filter(x=>x.awardId==award.awardId)[0];
@@ -53,6 +57,7 @@ export class AwardsComponent extends BaseModel implements OnInit {
       this.isAdd = false;
       this.actionType='edit';
       this.isDelete=false;
+      this.isSave=false;
     }
     delete(award:AwardsModel){
       const targetIdx = this.jobSeekerModel.awards.map(item => item.awardId).indexOf(award.awardId);
@@ -85,23 +90,33 @@ export class AwardsComponent extends BaseModel implements OnInit {
         this.jobSeekerModel=result;
         if(this.jobSeekerModel.awards){
           this.seekerService.tickSubject.next('ad');
+          this.jobSeekerModel.awards.sort((a,b)=>+b.awardYear-+a.awardYear);
         }
         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })
     }
-    nextPage(){
+    save(){
       this.seekerService.saveAwards(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getawardsList();
         this.isAdd=true;
         this.isUpdate=false;
+        this.isSave=true;
+        this.isDelete=true;
         this.awards=new AwardsModel();
-        this.router.navigate(['/seeqem/my-profile/language'])
+
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);
         console.log(err);
       });
+    }
+
+    next(){
+      this.router.navigate(['/seeqem/my-profile/language'])
+    }
+    back(){
+      this.router.navigate(['/seeqem/my-profile/certificate']);
     }
 }

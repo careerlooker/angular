@@ -17,7 +17,7 @@
                 <div class="language-form-right">
                   <div class="form-group">
                     <label>Skill</label>
-                    <ng-multiselect-dropdown 
+                    <!-- <ng-multiselect-dropdown 
                           class="form-control col-sm-3" style="height: auto; padding: 0%;"
                           name="KeySkill"
                           id="KeySkill"
@@ -26,7 +26,20 @@
                           [settings]="dropdownSettings"
                           (onSelect)="onItemSelect($event)"
                           required>
-                    </ng-multiselect-dropdown>     
+                    </ng-multiselect-dropdown>      -->
+                    <input   type="text"
+                        class="form-control" 
+                        name="keySkillsDropdownList"
+                        placeholder="Skills"
+                        (change)="onSkillChange($event.target.value)"
+                        [(ngModel)]="skills.name" 
+                        list="keySkillsDropdownList"
+                        required/>
+                        <datalist id="keySkillsDropdownList">
+                            <option [value]=""></option>
+                            <option *ngFor="let skill of keySkillsDropdownList">{{skill.name}}</option>
+                        </datalist>
+
                   </div>
                 </div>
               </div>
@@ -71,7 +84,7 @@
                       <td>{{skill.description}}</td>
                       <td>
                         <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
-                        <button class="btn btn_form3" (click)="delete(skill)">Delete</button>
+                        <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(skill)">Delete</button>
                       </td>
                     </tr>
                   </tbody>
@@ -81,11 +94,13 @@
             <div style="clear:both"></div>
               <div class="row">
                 <div class="col-sm-6 col-xs-6"> 
-                  <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Skills</button>
-                  <button type="submit" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Skills</button>
+                  <button type="button" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Skills</button>
+                  <button type="button" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Skills</button>
                 </div>
                 <div class="col-sm-6 col-xs-6"> 
-                  <button type="submit" class="btn btn_form4" *ngIf="isDelete" (click)="nextPage()">Save & Next</button>
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="nextPage()">Save</button>
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
                 </div>
                 <div class="clearfix"></div><br><br>
               </div>

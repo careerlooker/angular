@@ -8,7 +8,7 @@
   </div>
    -->
 
-          <form  #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+          <form  #form=ngForm  (keydown.enter)="$event.preventDefault()" novalidate>
             <div class="language-form-right">
               <div class="row">
                 <div class="col-sm-6">
@@ -47,7 +47,7 @@
                                id="country"
                                name="country"
                                placeholder="Select Country"
-                               [(ngModel)]="countryname" 
+                               [(ngModel)]="jobSeekerModel.personalInfo.country" 
                                list="countryName"
                                (change)="onCountrySelect($event.target.value)" required/>
                               <datalist id="countryName">
@@ -65,7 +65,7 @@
                       name="state"
                       placeholder="Select State"
                       (change)="onStateSelect($event.target.value)"
-                      [(ngModel)]="statename" 
+                      [(ngModel)]="jobSeekerModel.personalInfo.state" 
                       list="stateName" required/>
                       <datalist id="stateName">
                           <option [value]=""></option>
@@ -82,7 +82,8 @@
                                    class="form-control" 
                                    name="city"
                                    placeholder="Select City"
-                                   [(ngModel)]="cityname" list="cityName" required/>
+                                   [(ngModel)]="jobSeekerModel.personalInfo.city" 
+                                   list="cityName" required/>
                                    <datalist id="cityName">
                                        <option [value]=""></option>
                                        <option *ngFor="let c of cityList">{{c.name}}</option>
@@ -146,7 +147,8 @@
                 </div>
               </div>
               <br>
-              <button type="submit" class="btn btn_form4">Save &amp; Next</button>
+              <button type="button" class="btn btn_form4"(click)="next()" >Next</button>
+              <button type="button" class="btn btn_form4" (click)="onSubmit(form)">Save</button>
             </div>
           </form>
 

@@ -10,7 +10,7 @@
     <div class="creat-resume-box">
       <div class="col-sm-12" style="padding: 0px;">
         <div class="creat-resume-right"> -->
-          <form #form=ngForm (ngSubmit)="onSubmit(form)" (keydown.enter)="$event.preventDefault()" novalidate>
+          <form #form=ngForm  (keydown.enter)="$event.preventDefault()" novalidate>
             <div class="language-form-right" style="padding: 0px;">
 
               <div class="row">
@@ -95,7 +95,9 @@
                   </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn_form4">Save & Next</button>
+                <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+                <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="save(form)">Save</button>
+                <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
               </div>
             </div>
           </form>

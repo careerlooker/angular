@@ -37,6 +37,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
       this.actionType='add';
       this.isAdd=true;
       this.isDelete=true;
+      this.isSave=true;
       this.jobSeekerModel.language=new Array<LanguageModel>();
       this.getLanguageList();
     }
@@ -44,7 +45,11 @@ export class LanguageComponent extends BaseModel implements OnInit {
     update(){
       const targetIdx = this.jobSeekerModel.language.map(item => item.langId).indexOf(this.language.langId);
       this.jobSeekerModel.language[targetIdx] = this.language;
-      this.isDelete=true;
+      this.starRatingComponent.rating=0;
+      this.isDelete=false;
+      this.isSave=true;
+      this.isAdd=false;
+      this.isUpdate=false;
     }
     edit(language:LanguageModel){
       this.language= this.jobSeekerModel.language.filter(x=>x.langId==language.langId)[0];
@@ -53,6 +58,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
       this.isAdd = false;
       this.actionType='edit';
       this.isDelete=false;
+      this.isSave=false;
     }
     delete(language:LanguageModel){
       const targetIdx = this.jobSeekerModel.language.map(item => item.langId).indexOf(language.langId);
@@ -75,6 +81,7 @@ export class LanguageComponent extends BaseModel implements OnInit {
          }
         this.jobSeekerModel.language.push(this.language);
         this.language=new LanguageModel();
+        this.starRatingComponent.rating=0;
       }
     }
 
@@ -84,23 +91,26 @@ export class LanguageComponent extends BaseModel implements OnInit {
         this.jobSeekerModel=result;
         if(this.jobSeekerModel.language){
           this.seekerService.tickSubject.next('lg');
+          this.jobSeekerModel.language.sort((a,b)=>+b.rating-+a.rating);
         }
         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })
     }
-    nextPage(){
+    save(){
       this.seekerService.saveLanguage(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getLanguageList();
         this.isAdd=true;
         this.isUpdate=false;
+        this.isSave=true;
+        this.isDelete=true;
         this.language=new LanguageModel();
-        this.router.navigate(['/seeqem/my-profile/contact-details']);
+       
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);
-        console.log(err);
+       
       })
     
     }
@@ -113,4 +123,11 @@ export class LanguageComponent extends BaseModel implements OnInit {
      // }
        this.language.rating=clickObj.rating;
    }
+
+   next(){
+    this.router.navigate(['/seeqem/my-profile/contact-details']);
+  }
+  back(){
+    this.router.navigate(['/seeqem/my-profile/awards']);
+  }
 }

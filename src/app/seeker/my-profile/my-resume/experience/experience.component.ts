@@ -38,6 +38,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.isAdd=true;
     this.isDelete=true;
     this.isCompany=true;
+    this.isSave=true;
     this.getExperienceList();
     this.getCountries();
   
@@ -49,8 +50,11 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     if (this.email != null) {
       this.seekerService.getExperienceList(this.email).subscribe((result: any) => {
         this.jobSeekerModel = result;
+        this.isCompany=true;
         if(this.jobSeekerModel.experience){
         this.seekerService.tickSubject.next('ex'); 
+        this.jobSeekerModel.experience.sort((a,b)=>+b.resigningYear-+a.resigningYear)
+        
         }  
         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
       },(err: HttpErrorResponse) => {
@@ -71,7 +75,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   onCountrySelect(name: string) {
     if(name!=null && name!=undefined && name!=""){
-    let id = this.countryList.filter(x => x.name === name)[0].id;
+    let id = this.countryList.find(x => x.name === name).id;
     this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
       if(Object.keys(this.stateList).length>0 && this.experience.state){
@@ -112,7 +116,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.checkMonth();
   }
   onJoiningYearChange(year){
-    if(this.experience.resigningYear!=undefined &&  this.experience.joiningYear!="" && this.experience.joiningYear!=null)
+    if(this.experience.resigningYear!=undefined &&this.experience.resigningYear!="" &&  this.experience.joiningYear!="" && this.experience.joiningYear!=null)
     {
       let joinYear=+this.joiningYear.find(x=>x.joiningYear=year).joiningYear;
       if(joinYear<=+this.experience.resigningYear)
@@ -154,11 +158,14 @@ export class ExperienceComponent extends BaseModel implements OnInit {
    this.experience.presentEmployer=value==true?1:0;
    if(this.experience.presentEmployer){
      this.experience.resigningMonth="";
-     this.experience.resigningYear="";
+     this.experience.resigningYear="9999";
      this.isCompany=false;
+     this.experience.presentEmployer=1;
    }
    else{
+     this.experience.presentEmployer=0;
     this.isCompany=true;
+    this.isChecked=false;
    }
   }
 
@@ -168,6 +175,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.isAdd = false;
     this.actionType='edit';
     this.isDelete=false;
+    this.isSave=false;
     if(experience.presentEmployer){
       this.isCompany=false;
     }
@@ -223,6 +231,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
         this.experience.expid=1;
        }
       this.checkPresentCompany();
+      this.onPresentCompany(this.experience.presentEmployer);
        if(!this.isChecked){
         this.jobSeekerModel.experience.push(this.experience)
         this.experience=new ExperienceModel();
@@ -234,7 +243,7 @@ export class ExperienceComponent extends BaseModel implements OnInit {
 
   replaceStrirng(description:any){
     if(description!=null && description!=undefined){
-    let desc=description.replace('<p>',"").replace('</p>',"");
+    let desc=description.replace(/<[^>]*>/g, '');
        return desc;
     }
   }
@@ -250,6 +259,8 @@ export class ExperienceComponent extends BaseModel implements OnInit {
     this.experience.responsibilities='';
     this.textEditorComponent.description='';
     this.isCompany=true;
+    this.isUpdate=false;
+    this.isSave=true;
     }
   }
   deleteCompany(experience:ExperienceModel){
@@ -266,15 +277,21 @@ export class ExperienceComponent extends BaseModel implements OnInit {
       this.getExperienceList();
       this.isUpdate = false;
       this.isAdd = true;
+      this.isDelete=true;
       this.experience=new ExperienceModel();
       this.experience.responsibilities='';
       if(this.jobSeekerModel.experience.length==0)
       this.jobSeekerModel.experience=null;
-      this.router.navigate(['/seeqem/my-profile/education']);
       }
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
       console.log(err);
     }) 
+  }
+  next(){
+    this.router.navigate(['/seeqem/my-profile/education']);
+  }
+  back(){
+    this.router.navigate(['/seeqem/my-profile/professional-summary']);
   }
 }

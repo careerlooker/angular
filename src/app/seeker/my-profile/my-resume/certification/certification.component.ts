@@ -28,6 +28,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
     ngOnInit() { 
       this.isAdd=true;
       this.isDelete=true;
+      this.isSave=true;
       this.jobSeekerModel.certification=new Array<CertificateModel>();
       this.getCertificateList();
       this.certificate.certMonth = "";
@@ -44,7 +45,11 @@ export class CertificationComponent extends BaseModel implements OnInit {
     update(){
       const targetIdx = this.jobSeekerModel.certification.map(item => item.certId).indexOf(this.certificate.certId);
       this.jobSeekerModel.certification[targetIdx] = this.certificate;
-      this.isDelete=true;
+      this.isDelete=false;
+      this.isSave=true;
+      this.isAdd=false;
+      this.isUpdate=false;
+    
     }
     edit(certification:CertificateModel){
       this.certificate= this.jobSeekerModel.certification.filter(x=>x.certId==certification.certId)[0];
@@ -52,6 +57,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
       this.isAdd = false;
       this.actionType='edit';
       this.isDelete=false;
+      this.isSave=false;
     }
     delete(certification:CertificateModel){
       const targetIdx = this.jobSeekerModel.certification.map(item => item.certId).indexOf(certification.certId);
@@ -83,23 +89,32 @@ export class CertificationComponent extends BaseModel implements OnInit {
         this.jobSeekerModel=result;
         if(this.jobSeekerModel.certification){
           this.seekerService.tickSubject.next('ca');
+          this.jobSeekerModel.certification.sort((a,b)=>+b.certYear-+a.certYear);
         }
         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })
     }
-    nextPage(){
+    save(){
       this.seekerService.saveCertificate(this.jobSeekerModel).subscribe((result:any)=>{
         this.toastr.success(result.message);
         this.getCertificateList();
         this.isAdd=true;
         this.isUpdate=false;
+        this.isSave=true;
         this.certificate=new CertificateModel();
-        this.router.navigate(['/seeqem/my-profile/awards'])
+    
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);
-        console.log(err);
+       
       })
+    }
+
+    next(){
+      this.router.navigate(['/seeqem/my-profile/awards'])
+    }
+    back(){
+      this.router.navigate(['/seeqem/my-profile/training']);
     }
 }

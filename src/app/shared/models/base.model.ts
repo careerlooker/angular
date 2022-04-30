@@ -18,11 +18,8 @@ export class BaseModel {
     isDelete:boolean=false;
     hideForm:boolean=false;
     hideFormButton:boolean=true;
-
-    public options={
-            
-        }
-    
+    isSave:boolean=false;
+   
 
     joiningMonth = [{"Id":1, "joiningMonth": "January" }, {"Id":2, "joiningMonth": "February" }, { "Id":3,"joiningMonth": "March" }, {"Id":4, "joiningMonth": "April" }, { "Id":5,"joiningMonth": "May" }, { "Id":6,"joiningMonth": "June" },
     {"Id":7, "joiningMonth": "July" }, {"Id":8, "joiningMonth": "August" }, { "Id":9,"joiningMonth": "September" }, {"Id":10, "joiningMonth": "October" }, {"Id":11, "joiningMonth": "November" }, {"Id":12, "joiningMonth": "December" }];

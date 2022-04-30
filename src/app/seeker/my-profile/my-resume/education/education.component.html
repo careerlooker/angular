@@ -137,7 +137,8 @@
                         <th>College</th>
                         <th>Degree</th>
                         <th>Graduate <br/>Month &amp; Year</th>
-                        <th>City, Country</th>
+                        <th>City</th>
+                        <th>Country</th>
                         <th>Till Date</th>
                         <th></th>
                       </tr>
@@ -146,8 +147,9 @@
                       <tr *ngFor="let education of jobSeekerModel.education" style="cursor: pointer;"> 
                         <td>{{education.college}}</td>
                         <td>{{education.degree}}</td>
-                        <td>{{education.graduateMonth}}<br/> {{education.graduateYear}}</td>
-                        <td>{{education.city}}, <br/> {{education.country}}</td>
+                        <td>{{education.tillDate==true?'Pursuing': education.graduateMonth}}<br/> {{education.tillDate==true?'':education.graduateYear}}</td>
+                        <td>{{education.city}}</td>
+                        <td>{{education.country}}</td>
                         <td>{{education.tillDate==true?'Yes':'No'}}</td>
                         <td>
                           <button class="btn btn_form3" (click)="editEducation(education);">Edit</button>&nbsp;
@@ -162,9 +164,12 @@
               <div class="row">
                 <div class="col-sm-6  col-xs-6"> 
                   <button type="button" class="btn btn_form3" style="margin-top: 0px" *ngIf="isAdd" (click)="AddEducation(form)">Add Degree</button>
-                  <button type="button" class="btn btn_form4" style="margin-top: 0px" *ngIf="isUpdate" (click)="UpdateEducation()">Update Degree</button>
+                  <button type="button" class="btn btn_form4" style="margin-top: 0px" *ngIf="isUpdate" (click)="UpdateEducation(form)">Update Degree</button>
                 </div>
-                <div class="col-sm-6 col-xs-6"> <button type="button" class="btn btn_form4" *ngIf="isDelete" (click)="saveAndNext()">Save & Next</button>
+                <div class="col-sm-6 col-xs-6"> 
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="saveAndNext()">Save</button>
+                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
                 </div>
                 <div class="clearfix"></div><br><br>
               </div>

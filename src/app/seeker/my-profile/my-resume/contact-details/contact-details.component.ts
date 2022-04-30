@@ -27,6 +27,7 @@ constructor(private seekerService:SeekerService,
   this.jobSeekerModel.contactDetails=new Array<ContactDetailsModel>();
   this.isAdd=true;
   this.isDelete=true;
+  this.isSave=true;
   this.actionType='add';
     this.getContactDetailsList();
   }
@@ -36,14 +37,18 @@ constructor(private seekerService:SeekerService,
   update(){
     const targetIdx = this.jobSeekerModel.contactDetails.map(item => item.mediaId).indexOf(this.contactDetails.mediaId);
     this.jobSeekerModel.contactDetails[targetIdx] = this.contactDetails;
-    this.isDelete=true;
+    this.isDelete=false;
+    this.isSave=true;
+    this.isAdd=false;
+    this.isUpdate=false;
   }
   edit(contact:ContactDetailsModel){
     this.contactDetails= this.jobSeekerModel.contactDetails.filter(x=>x.mediaId==contact.mediaId)[0];
     this.isUpdate = true;
-    this.isAdd = false;
-    this.actionType='edit';
-    this.isDelete=false;
+      this.isAdd = false;
+      this.actionType='edit';
+      this.isDelete=false;
+      this.isSave=false;
   }
   delete(contact:ContactDetailsModel){
     const targetIdx = this.jobSeekerModel.contactDetails.map(item => item.mediaId).indexOf(contact.mediaId);
@@ -82,18 +87,26 @@ constructor(private seekerService:SeekerService,
         this.toastr.error(err.message);
       })
   }
-  nextPage(){
+  save(){
     this.seekerService.saveContactDetails(this.jobSeekerModel).subscribe((result:any)=>{
       this.toastr.success(result.message);
       this.getContactDetailsList();
       this.isAdd=true;
       this.isUpdate=false;
+      this.isSave=true;
+      this.isDelete=true;
       this.contactDetails=new ContactDetailsModel();
-      this.router.navigate(['/seeqem/my-profile/other-details'])
+     
     } ,(err: HttpErrorResponse) => {
       this.toastr.error(err.message);
       console.log(err);
     })
      
+  }
+  next(){
+    this.router.navigate(['/seeqem/my-profile/other-details'])
+  }
+  back(){
+    this.router.navigate(['/seeqem/my-profile/language']);
   }
 }
