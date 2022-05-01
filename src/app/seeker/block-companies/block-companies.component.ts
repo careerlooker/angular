@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
@@ -22,6 +23,12 @@ export class BlockCompaniesComponent extends BaseModel implements OnInit {
     private router:Router) { super()}
 
   ngOnInit() {
+    this.isAdd=true;
+  this.isDelete=true;
+  this.isSave=true;
+  this.actionType='add';
+  this.jobSeekerModel.blockCompanies=new Array<BlockCompanies>();
+  this.blockCompany=new BlockCompanies();
     this.getBlockCompanyList();
   }
 
@@ -41,5 +48,66 @@ export class BlockCompaniesComponent extends BaseModel implements OnInit {
   }
   onCompanySelect(event){
     this.blockCompany.blockEmployerName=event;
+  }
+  update(){
+    const targetIdx = this.jobSeekerModel.blockCompanies.map(item => item.employerId).indexOf(this.blockCompany.employerId);
+    this.jobSeekerModel.blockCompanies[targetIdx] = this.blockCompany;
+    this.isDelete=false;
+    this.isSave=true;
+    this.isAdd=false;
+    this.isUpdate=false;
+  }
+  edit(block:BlockCompanies){
+    this.blockCompany= this.jobSeekerModel.blockCompanies.filter(x=>x.employerId==block.employerId)[0];
+    this.isUpdate = true;
+      this.isAdd = false;
+      this.actionType='edit';
+      this.isDelete=false;
+      this.isSave=false;
+  }
+  delete(block:BlockCompanies){
+    const targetIdx = this.jobSeekerModel.blockCompanies.map(item => item.employerId).indexOf(block.employerId);
+    this.jobSeekerModel.blockCompanies.splice(targetIdx,1)
+     if(this.jobSeekerModel.blockCompanies.length==0){
+      this.jobSeekerModel.blockCompanies=null;
+    }
+  }
+  add(form:NgForm){
+    if(form.valid){
+      if(this.jobSeekerModel.blockCompanies){
+        if(this.jobSeekerModel.blockCompanies.filter(x=>x.employerId!==this.blockCompany.employerId)&& this.actionType=='add'){
+         let maxId = this.jobSeekerModel.blockCompanies.reduce((max, character) => (character.employerId > max ? character.employerId : max),
+         this.jobSeekerModel.blockCompanies[0].employerId);
+         this.blockCompany.employerId=maxId+1;
+        }
+       }else{
+        this.blockCompany.employerId=1;
+        this.jobSeekerModel.blockCompanies=[];
+       }
+      this.jobSeekerModel.blockCompanies.push(this.blockCompany);
+      this.blockCompany=new BlockCompanies();
+    }
+  }
+
+
+  save(){
+    this.seekerService.saveContactDetails(this.jobSeekerModel).subscribe((result:any)=>{
+      this.toastr.success(result.message);
+      this.getBlockCompanyList();
+      this.isAdd=true;
+      this.isUpdate=false;
+      this.isSave=true;
+      this.isDelete=true;
+      this.blockCompany=new BlockCompanies();
+     
+    } ,(err: HttpErrorResponse) => {
+      this.toastr.error(err.message);
+      console.log(err);
+    })
+     
+  }
+  next(){
+    this.router.navigate(['/seeqem/my-profile/personal-info'])
+    this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
   }
 }

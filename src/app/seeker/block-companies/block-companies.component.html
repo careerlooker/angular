@@ -3,33 +3,45 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-9"><br><br> -->
-          <h4 class="block_head">Your profile will not be searchable by tha company once you add them in the block list below:</h4>
-          <form action="/action_page.php">
+          <h4 class="block_head">Your profile will not be searchable by th company once you add them in the block list below:</h4>
+          <form  #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
             <div class="language-form-right">
               <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label style="color: #636363;margin-left: 0px;">Block/Unblock Company(s)</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter company name"
-                      style="    border: 1px solid #abaaaa; height: 55px;">
-
-                      <input   type="text"
+                      <!-- <input   type="text"
                       class="form-control" 
                       id="blockCompany"
                       name="blockCompany"
                       placeholder="Enter company name"
+                      style=" border: 1px solid #abaaaa; height: 55px;"
                       [(ngModel)]="blockCompany.blockEmployerName" 
                       list="blockCompany"
                       (change)="onCompanySelect($event.target.value)" required/>
                      <datalist id="blockCompany">
                          <option [value]=""></option>
                          <option  *ngFor="let c of jobSeekerModel.blockCompanies">{{c.blockEmployerName}}</option>
-                     </datalist>
+                     </datalist> -->
+
+                     <input   type="text"
+                     style=" border: 1px solid #abaaaa; height: 55px;"
+                     class="form-control" 
+                     name="company"
+                     placeholder="Enter company name"
+                     [(ngModel)]="blockCompany.blockEmployerName" 
+                     list="companyName"
+                     (change)="onCompanySelect($event.target.value)" required/>
+                    <datalist id="companyName">
+                        <option [value]=""></option>
+                        <option  *ngFor="let c of jobSeekerModel.blockCompanies">{{c.blockEmployerName}}</option>
+                    </datalist>
+
 
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn_form3">Add Company</button>
+              <!-- <button type="submit" class="btn btn_form3">Add Company</button> -->
             </div>
             <div class="clearfix"></div><br><br>
             <div class="row">
@@ -41,22 +53,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr  style="cursor: pointer;"> 
-                    <td>HCL</td>
-                      <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
-                  </tr>
-                  <tr  style="cursor: pointer;"> 
-                    <td>IBM</td>
-                      <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
-                  </tr>
-                  <tr  style="cursor: pointer;"> 
-                    <td>WIPRO</td>
-                      <td><button class="btn btn_form3">Edit</button>&nbsp;<button class="btn btn_form3">Delete</button></td>
+                  <tr *ngFor="let block of jobSeekerModel.blockCompanies" style="cursor: pointer;"> 
+                    <td>{{block.blockEmployerName}}</td>
+                    <td>
+                      <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(block)">Delete</button></td>
                   </tr>
                 </tbody>
                 </table>
           </div>
-          
+          <div class="row">
+            <div class="col-sm-6 col-xs-6"> 
+              <button type="submit" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Company Details</button>
+            
+              
+            </div>
+            <div class="col-sm-6 col-xs-6"> 
+              <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="next()">Home</button>
+              <button type="submit" class="btn btn_form4" *ngIf="isSave" (click)="save()">Save</button>
+            
+            </div>
+          </div>
           </form>
         <!-- </div>
       </div>
