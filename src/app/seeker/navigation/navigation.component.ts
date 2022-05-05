@@ -32,7 +32,7 @@ export class SeekerNavigationComponent   {
   showprofilemenu:boolean;
   count:number=0;
   profileCompletion:number=0;
-
+  barPercentage=0;
   dropdowns = {
     "besics": false,
     "images": false,
@@ -145,56 +145,97 @@ showMenu(){
       this.profile=result;
       this.profileCompletion=0;
       this.count=0;
-      if(this.profile.personalInfo!=null){this.count+=1;this.seekerService.tickSubject.next('pi')}
+      if(this.profile.personalInfo!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('pi')
+      }
       else if(this.profile.personalInfo==null){
         this.pi=false;
       }
-      if(this.profile.profSummary!=null){this.count+=1;this.seekerService.tickSubject.next('ps')}
+      if(this.profile.profSummary!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ps')
+      }
       else if(this.profile.profSummary==null){
         this.ps=false;
       }
-      if(this.profile.experience!=null){this.count+=1;this.seekerService.tickSubject.next('ex')}
+      if(this.profile.experience!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ex')
+      }
       else if(this.profile.experience==null){
         this.ex=false;
       }
-      if(this.profile.education!=null){this.count+=1;this.seekerService.tickSubject.next('ed')}
+      if(this.profile.education!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ed')
+      }
       else if(this.profile.education==null){
         this.ed=false;
       }
-      if(this.profile.skills!=null){this.count+=1;this.seekerService.tickSubject.next('ss')}
+      if(this.profile.skills!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ss')
+      }
       else if(this.profile.skills==null){
         this.ss=false;
       }
-      if(this.profile.awards!=null){this.count+=1;this.seekerService.tickSubject.next('ad')}
+      if(this.profile.awards!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ad')
+      }
       else if(this.profile.awards==null){
         this.ad=false;
       }
-      if(this.profile.certification!=null){this.count+=1;this.seekerService.tickSubject.next('ca')}
+      if(this.profile.certification!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('ca')
+      }
       else if(this.profile.certification==null){
         this.ca=false;
       }
-      if(this.profile.contactDetails!=null){this.count+1;this.seekerService.tickSubject.next('cd')}
+      if(this.profile.contactDetails!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('cd')
+      }
       else if(this.profile.contactDetails==null){
         this.cd=false;
       }
-      if(this.profile.otherDetails!=null){this.count+=1;this.seekerService.tickSubject.next('od')}
+      if(this.profile.otherDetails!=null){
+        this.count+=1;this.seekerService.tickSubject.next('od')
+      }
       else if(this.profile.otherDetails==null){
         this.od=false;
       }
-      if(this.profile.language!=null){this.count+=1;this.seekerService.tickSubject.next('lg')}
+      if(this.profile.language!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('lg')
+      }
       else if(this.profile.language==null){
         this.lg=false;
       }
-    
-      if(this.profile.training!=null){this.count+=1;this.seekerService.tickSubject.next('tn')}
+      if(this.profile.training!=null){
+        this.count+=1;
+        this.seekerService.tickSubject.next('tn')
+      }
       else if(this.profile.training==null){
         this.tn=false;
       }
-      if(this.profile.blockCompanies!=null){this.seekerService.tickSubject.next('bc')}
-      else if(this.profile.blockCompanies==null){
-        this.bc=false;
+      if(this.profile.resume!=null){ 
+       // this.count+=1; 
+        this.seekerService.tickSubject.next('rd')
       }
-      this.profileCompletion=Math.trunc((this.count/12)*100);
+      else if(this.profile.resume==null){
+        this.rd=false;
+      }
+      this.profileCompletion=Math.trunc((this.count/11)*100);
+      if(this.profileCompletion==100){
+       this.barPercentage= this.profileCompletion+12;
+      }
+      else
+      {
+        this.barPercentage=this.profileCompletion;
+      }
     });
      
 

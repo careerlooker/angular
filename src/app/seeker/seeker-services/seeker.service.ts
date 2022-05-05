@@ -37,6 +37,10 @@ export class SeekerService {
         return this.httpClient.get<JobSeekerModel>(environment.baseUrl + 'co-api/seeker/register/'+email);
     }
 
+    getCompanyList(email:string): Observable<any> {
+        return this.httpClient.get<any>(environment.baseUrl + 'co-api/company');
+    }
+
     saveEducation(jobSeekerModel:JobSeekerModel): Observable<JobSeekerModel> {
         return this.httpClient.patch<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register',jobSeekerModel,{ responseType: 'text' as 'json' })
     }

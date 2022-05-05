@@ -34,7 +34,7 @@
                      (change)="onCompanySelect($event.target.value)" required/>
                     <datalist id="companyName">
                         <option [value]=""></option>
-                        <option  *ngFor="let c of jobSeekerModel.blockCompanies">{{c.blockEmployerName}}</option>
+                        <option  *ngFor="let c of blockCompanyList">{{c.name}}</option>
                     </datalist>
 
 

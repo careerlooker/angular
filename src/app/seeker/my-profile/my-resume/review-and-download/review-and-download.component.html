@@ -8,104 +8,124 @@
     </div>
     <div class="creat-resume-right" style="padding:10px 25px;">
       <div class="creat-resume-box"> -->
-        <div class="col-sm-12" style="padding: 0px;">
+        <div class="col-sm-12" style="padding: 0px;"  id="pdfTable" #pdfTable>
           <div class="resumeBox">
             
             <div class="resume-bg">
               <div class="resume-head">
-                <h4>John Williams</h4>
-                <h5>B.sc IT</h5>
+                <h4>{{jobSeekerModel.personalInfo.firstName}}&nbsp;{{jobSeekerModel.personalInfo.lastName}}</h4>
+                <h5>{{degree}}</h5>
               </div>
               <div class="resume-body">
                 <div class="row">
                   <div class="col-sm-8">
                     <div class="resume-left">
-                      <p class="borderp">Skilled Net Developer with 8+years of experience in the full SDLC creating
-                        dynamic web applications. Updates funtionality based on coustomer requirements to ensure
-                        excellent user experience</p>
+                      <p class="borderp">{{replaceStrirng(jobSeekerModel.profSummary.summary)}} </p>
 
                       <div class="resume-left-box">
                         <h4>Experience</h4>
                         <table class="resume-table">
-                          <tr>
-                            <td>March 2012-</td>
-                            <td class="right_space">Employeed at TATA</td>
+                          <tr *ngFor="let ex of jobSeekerModel.experience">
+                
+                            <td>{{ex.joiningMonth}}&nbsp;{{ex.joiningYear}}&nbsp;{{ex.resigningMonth}}&nbsp;{{ex.resigningYear}}</td>
+                            <td class="right_space">Employeed at {{ex.employerName}}</td>
+                            <td>Role: &nbsp;{{ex.role}}</td>
+                            <td><i class="fas fa-circle"></i> Responsibilities And Achievements:&nbsp;{{replaceStrirng(ex.responsibilities)}}</td>
+                           
                           </tr>
-                          <tr>
-                            <td>March 2014</td>
-                            <td class="right_space">Role: Admin</td>
+                          <!-- <tr *ngFor="let ex of jobSeekerModel.experience">
+                            <td>{{ex.resigningMonth}}{{ex.resigningYear}}</td>
+                            <td class="right_space">Role: {{ex.role}}</td>
                           </tr>
-                          <tr>
+                          <tr *ngFor="let ex of jobSeekerModel.experience">
                             <td></td>
                             <td class="right_space"><i class="fas fa-circle"></i> Responsibilities And Achievements</td>
-                          </tr>
-                          <tr>
+                            <td></td>
+                          </tr> -->
+                          <!-- <tr>
                             <td></td>
                             <td class="right_space"><i class="fas fa-circle"></i> Responsibilities And Achievements</td>
-                          </tr>
-
+                          </tr> -->
+                        
 
                         </table>
-
-
 
                       </div>
 
                       <div class="resume-left-box">
                         <h4>Education</h4>
-                        <ul class="resume-left-box-list pull-left">
-                          <li>April 2008</li>
-                          <li>March 2010</li>
+                        <ul class="resume-left-box-list pull-left" *ngFor="let edu of jobSeekerModel.education">
+                          <!-- <li>April 2008</li>
+                          <li>March 2010</li> -->
+                        
+                          <li>{{edu.graduateMonth }}&nbsp;{{edu.graduateYear}}</li>
+                          <li>{{edu.degree}}</li>
+                          <li>{{edu.college}}</li>
+                          
                         </ul>
 
-                        <ul class="resume-left-box-list2">
-                          <li>B.Sc IT</li>
-                          <li>College: St.Wilson</li>
+                        <ul class="resume-left-box-list2" *ngFor="let edu of jobSeekerModel.education">
+                          <!-- <li>B.Sc IT</li>
+                          <li>College: St.Wilson</li> -->
+                          <!-- <li>{{edu.degree}}</li>
+                          <li>{{edu.college}</li> -->
 
                         </ul>
                       </div>
                       <div class="resume-left-box">
                         <h4>Certification</h4>
-                        <ul class="resume-left-box-list pull-left">
+                        <!-- <ul class="resume-left-box-list pull-left">
                           <li>Aug 2009</li>
                         </ul>
 
                         <ul class="resume-left-box-list2">
                           <li>Oracle DBA</li>
 
+                        </ul> -->
+                        <ul class="resume-left-box-list pull-left" *ngFor="let cert of jobSeekerModel.certification">
+                          <li>{{cert.certMonth}}&nbsp; {{cert.certYear}}</li>&nbsp;
+                          <li>{{cert.certName}}</li>&nbsp;
                         </ul>
+
+                        <!-- <ul class="resume-left-box-list2" *ngFor="let cert of jobSeekerModel.certification">
+                          <li>Oracle DBA</li>
+                          <li>{{cert.certName}}</li>
+                        </ul> -->
                       </div>
 
                       <div class="resume-left-box">
                         <h4>Awards</h4>
-                        <ul class="resume-left-box-list pull-left">
+                        <!-- <ul class="resume-left-box-list pull-left">
                           <li>Aug 2013</li>
+                        </ul> -->
+                        <ul class="resume-left-box-list pull-left" *ngFor="let awd of jobSeekerModel.awards">
+                          <li>{{awd.awardMonth}}&nbsp; {{awd.awardYear}}</li>&nbsp;
+                          <li>{{awd.awardName}}</li>&nbsp;
                         </ul>
-
-                        <ul class="resume-left-box-list2">
+                        <!-- <ul class="resume-left-box-list2">
                           <li>Employee Of The Year</li>
 
-                        </ul>
+                        </ul> -->
                       </div>
                       <div class="resume-left-box" style="border-bottom: 0px">
                         <h4>Other Details</h4>
                         <table class="resume-table">
                           <tr>
                             <td>Notice Period</td>
-                            <td class="right_space">Can Join</td>
+                            <td class="right_space">{{jobSeekerModel.otherDetails.noticePeriod}}</td>
                           </tr>
                           <tr>
                             <td>Current job Type</td>
-                            <td class="right_space">Permanent</td>
+                            <td class="right_space">{{jobSeekerModel.otherDetails.currentJobType}}</td>
                           </tr>
                           <tr>
                             <td>Willing To Relocate</td>
-                            <td class="right_space">Can Join</td>
+                            <td class="right_space">{{jobSeekerModel.otherDetails.willingToRelocate}}</td>
                           </tr>
                           
                           <tr>
                             <td>Vissa Status</td>
-                            <td class="right_space">Applied One month AGo And Is In Process</td>
+                            <td class="right_space">{{jobSeekerModel.otherDetails.visaStatus}}</td>
                           </tr>
 
                         </table>
@@ -122,59 +142,66 @@
                       <h4>Personal Info</h4>
                       <ul class="personal-list">
                         <li> <a href="#"></a></li>
-                        <li><i class="fas fa-map-marker-alt"></i> <a href="#">60, St. Collins, San Francisco, alifornia
-                            60185</a></li>
-                        <li><i class="fas fa-phone"></i> <a href="#">2025550145</a></li>
-                        <li><i class="fas fa-envelope"></i> <a href="#">john_williams@example.com</a></li>
-                        <li><i class="fab fa-facebook-square"></i> <a href="#">John_williams</a></li>
-                        <li><i class="fab fa-linkedin"></i> <a href="#">John_williams</a></li>
-                        <li><i class="fab fa-skype"></i> <a href="#">John.William_45</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> <a href="#">{{jobSeekerModel.personalInfo.address}}&nbsp;
+                          {{jobSeekerModel.personalInfo.city}}&nbsp;
+                          {{jobSeekerModel.personalInfo.state}}&nbsp;
+                          {{jobSeekerModel.personalInfo.country}}&nbsp;
+                          {{jobSeekerModel.personalInfo.zipCode}}
+                        </a></li>
+                        <li><i class="fas fa-phone"></i> <a href="#">{{jobSeekerModel.personalInfo.phoneNo}}</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="#">{{jobSeekerModel.email}}</a></li>
+                      </ul>
+                      <ul class="personal-list" *ngFor="let cd of jobSeekerModel.contactDetails">
+                        <!-- <li><i class="fab fa-facebook-square"></i> <a href="#">{{cd.mediaName}}</a></li> -->
+                        <!-- <li><i class="fab fa-linkedin"></i> <a href="#">John_williams</a></li>
+                        <li><i class="fab fa-skype"></i> <a href="#">John.William_45</a></li> -->
+                        <li>{{cd.mediaName}}:&nbsp;{{cd.mediaLink}}</li>
+                        
                       </ul>
                     </div>
-
+                
                     <div class="resume-right-box">
                       <h4>Skills</h4>
                       <div class="skill-box">
-                        <p class="project_text">Project<br> Management</p>
+                        <!-- <p class="project_text">Project<br> Management</p> -->
                         <div class="star">
-                          <ul class="star-list">
+                          <ul class="star-list" *ngFor="let skil of jobSeekerModel.skills">
+                            <!-- <li><a href="#"><img src="assets/img/star.png"></a></li>
                             <li><a href="#"><img src="assets/img/star.png"></a></li>
                             <li><a href="#"><img src="assets/img/star.png"></a></li>
                             <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/half-star.png"></a></li>
+                            <li><a href="#"><img src="assets/img/half-star.png"></a></li> -->
+                            <li>{{skil.name}}</li>
+                            <li>          
+                              <app-star-rating [rating]="skil.rating"></app-star-rating>
+                          </li>
                           </ul>
-                          <p>(Advanced)</p>
                         </div>
                       </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="resume-right-box" style="padding-top:8px">
                       <h4>Training</h4>
-                      <div class="skill-box">
-                        <p class="project_text">Aug 2009-<br>Jan 2010</p>
-                        <div class="star">
-
-                          <p>Hadoop</p>
+                      <div class="skill-box"*ngFor="let tr of jobSeekerModel.training">
+                        <p class="project_text">{{tr.trainingMonth}} &nbsp;{{tr.trainingYear}}</p>
+                          <p>{{tr.trainingName}}</p>
                         </div>
-                      </div>
                     </div>
 
                     <div class="clearfix"></div>
                     <div class="resume-right-box" style="padding-top:8px">
                       <h4>Language</h4>
                       <div class="skill-box">
-                        <p class="project_text">English</p>
+                        <!-- <p class="project_text">English</p> -->
                         <div class="star">
-                          <ul class="star-list">
-                            <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/star.png"></a></li>
-                            <li><a href="#"><img src="assets/img/half-star.png"></a></li>
+                          <ul class="star-list" *ngFor="let lag of jobSeekerModel.language">
+                              <li>{{lag.langName}}</li>
+                              <li>          
+                                <app-star-rating [rating]="lag.rating"></app-star-rating>
+                            </li>
                           </ul>
-                          <p>(Advanced)</p>
-                        </div>
+                          <!-- <p>(Advanced)</p> -->
+                       
                       </div>
                     </div>
 
@@ -295,7 +322,8 @@
 
 
           </div>
-          <a href="after-search.html" class="btn btn_form4" style="margin: 10px 0px">Download</a>
+          <button class="btn btn_form4" style="margin: 10px 0px" (click)="home()">Home</button>
+          <button class="btn btn_form4" style="margin: 10px 0px" (click)="downloadAsPDF()">Download</button>
         </div>
 <!--          
         </div>

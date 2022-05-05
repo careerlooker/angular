@@ -27,6 +27,7 @@ export class JobSeekerModel{
     contactDetails:ContactDetailsModel[];
     blockCompanies:BlockCompanies [];
     otherDetails:OthersDetails;
+    resume:string;
     createDate: string;
     updatedate: string;  
 }

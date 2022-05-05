@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { BlockCompanies } from '../models/block-companies.model';
+import { BlockCompany } from '../models/block-company.model';
 import { JobSeekerModel } from '../models/job-seeker-model';
 import { SeekerService } from '../seeker-services/seeker.service';
 
@@ -17,6 +18,7 @@ import { SeekerService } from '../seeker-services/seeker.service';
 export class BlockCompaniesComponent extends BaseModel implements OnInit {
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   blockCompany:BlockCompanies=new BlockCompanies();
+  blockCompanyList:Array<BlockCompany>=new Array<BlockCompany>();
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
@@ -29,11 +31,23 @@ export class BlockCompaniesComponent extends BaseModel implements OnInit {
   this.actionType='add';
   this.jobSeekerModel.blockCompanies=new Array<BlockCompanies>();
   this.blockCompany=new BlockCompanies();
-    this.getBlockCompanyList();
+  this.email=localStorage.getItem('email');
+  this.getCompanyList();
+  this.getBlockCompanyList();
   }
 
+  getCompanyList(){
+    if (this.email != null) {
+      this.seekerService.getCompanyList(this.email).subscribe((result: Array<BlockCompany>) => {
+        this.blockCompanyList = result;
+        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);
+      })
+    }
+  }
   getBlockCompanyList(){
-    this.email=localStorage.getItem('email');
+  
     if (this.email != null) {
       this.seekerService.getExperienceList(this.email).subscribe((result: any) => {
         this.jobSeekerModel = result;
