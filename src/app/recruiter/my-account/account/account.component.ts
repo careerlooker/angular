@@ -1,69 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
-import { UserModel } from '../models/user.model';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UpdateAccountModel } from '../models/update-account.model';
 import { Router } from '@angular/router';
+import { BaseModel } from 'src/app/shared/models/base.model';
+import { RecruiterModel } from '../models/recruiter.model';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
-   userAccount:UserModel=new UserModel();
-   private email:string;
-   updateAccount:UpdateAccountModel=new UpdateAccountModel();
+export class AccountComponent extends BaseModel implements OnInit {
+  recruiterModel:RecruiterModel=new RecruiterModel();
   constructor(private recruiterService:RecruiterService, 
               private toastr:ToastrService,
-              private router:Router) { }
+              private router:Router) { 
+                super();
+              }
 
   ngOnInit() {
     this.getAccount();
   }
   
   getAccount(){
-    if(localStorage.getItem('userToken')!=null){
-      this.recruiterService.recruiterLogin(JSON.parse(localStorage.getItem('credentials'))).subscribe((result: UserModel)=>{
+    this.email=localStorage.getItem('email');
+    if(this.email!=null && this.email!=""){
+      this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any)=>{
         if(result!=null){
-          this.userAccount=result;
-          this.email=this.userAccount.email;
-            console.log(this.userAccount);
+          this.recruiterModel=result;
         }
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message);
-            console.log(err);})
+            this.toastr.error(err.message,'Account Info');
+      })
     }
   }
 
   onSubmit(form:NgForm){
-   this.updateAccount.currentPwd=form.value.currentPwd;
-   this.updateAccount.newPwd=form.value.newPwd;
-   this.updateAccount.confirmPwd=form.value.confirmPwd;
-   
-   if(this.updateAccount.currentPwd== undefined || this.updateAccount.newPwd==undefined || this.updateAccount.currentPwd==undefined){
-    this.toastr.error('Please fill all mandatory fields')
-    return;
-   }
+    if(form.valid){
+       if(form.value.newPwd!=form.value.confirmPwd){
+        this.toastr.error('New password and confirm password not matching','Account Info')
+        return;
+       }
 
-   if(this.updateAccount.currentPwd!=this.userAccount.password){
-    this.toastr.error('Current password is invalid')
-    return;
-   }
-   if(this.updateAccount.newPwd!=this.updateAccount.confirmPwd){
-    this.toastr.error('New password and confirm password not matching')
-    return;
-   }
-    this.userAccount.password=this.updateAccount.newPwd;
-    this.userAccount.email=this.email;
-    this.recruiterService.updateReqProfile(this.userAccount).subscribe((result:any)=>{
-      this.toastr.success('Password Updated');
-      this.router.navigateByUrl('/login');
-      localStorage.removeItem('userToken');
-    },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message);
-      console.log(err);})
+       this.recruiterModel.password=form.value.newPwd;
+       this.recruiterModel.newPassword=form.value.newPwd;
+       this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
+         this.toastr.success('Password Updated', 'Account Info');
+         this.router.navigateByUrl('/login');
+         localStorage.removeItem('userToken');
+       },(err: HttpErrorResponse) => {
+         this.toastr.error(err.message,'Account Info');
+        })
+    }
   }
 }

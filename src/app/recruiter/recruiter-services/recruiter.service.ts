@@ -10,6 +10,9 @@ import { QualificationModel } from '../my-listing/models/qualification.model';
 import { KeySkillsModel } from '../my-listing/models/key-skills.model';
 import { SearchJob } from '../my-listing/models/search-job.model';
 import { JobOperationModel } from '../my-listing/models/job-operation.model';
+import { RecruiterModule } from '../recruiter.module';
+import { RecruiterModel } from '../my-account/models/recruiter.model';
+import { SocialNetwork } from '../my-account/models/social-network.model';
 
 
 
@@ -26,11 +29,19 @@ export class RecruiterService{
     constructor(private httpClient:HttpClient){}
 
     recruiterLogin(credentials):Observable<UserModel>{
-        return this.httpClient.post<UserModel>(environment.baseUrl+'co-api/recruiter/login',credentials);
+        return this.httpClient.post<UserModel>(environment.baseUrl+'co-api/recruiter/register',credentials);
+    }
+    
+    getRecruiterDetails(email:string):Observable<RecruiterModel>{
+        return this.httpClient.get<RecruiterModel>(environment.baseUrl+'co-api/recruiter/register/'+email);
     }
 
-    updateReqProfile(userProfile:UserModel):Observable<any>{
-        return this.httpClient.patch<any>(environment.baseUrl+'co-api/recruiter/register',userProfile,{responseType:'text' as 'json'})
+    getSocialDropdownList():Observable<SocialNetwork>
+    {
+        return this.httpClient.get<SocialNetwork>(environment.baseUrl+'co-api/socialnetwork');    
+    }
+    updateReqProfile(recruiterProfile:RecruiterModule):Observable<any>{
+        return this.httpClient.patch<any>(environment.baseUrl+'co-api/recruiter/register',recruiterProfile,{responseType:'text' as 'json'})
     }
 
     changeMessage(userModel:UserModel){

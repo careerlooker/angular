@@ -13,13 +13,13 @@ export class UserService{
     userSubject:Subject<any>=new Subject<any>();
     constructor(private httpClient:HttpClient){}
 
-    signUp(jobSeekerModel:JobSeekerModel,registerType:string):Observable<any>{
+    signUp(signUpModel:any,registerType:string):Observable<any>{
         const headers = new HttpHeaders({'No-Auth':environment.NoAuth,'Content-Type':environment.Accept});
         if(registerType=='recruiter'){
-        return this.httpClient.post<any>(environment.baseUrl+'recruiter/register',SignupModel, {headers:headers, responseType: 'text'as 'json'})
+        return this.httpClient.post<any>(environment.baseUrl+'recruiter/register',signUpModel, {headers:headers, responseType: 'text'as 'json'})
         }
         else{
-            return this.httpClient.post<any>(environment.baseUrl+'seeker/register',jobSeekerModel, {headers:headers, responseType: 'text'as 'json'})
+            return this.httpClient.post<any>(environment.baseUrl+'seeker/register',signUpModel, {headers:headers, responseType: 'text'as 'json'})
         }
     }
 

@@ -8,8 +8,9 @@
                             class="form-control" 
                             name="firstName"
                             id="firstName" 
-                            [(ngModel)]="userProfile.firstName"
-                            placeholder="e.g. Daniel">
+                            [(ngModel)]="recruiterModel.personalInfo.firstName"
+                            placeholder="e.g. Daniel"
+                            required>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -19,8 +20,9 @@
                             class="form-control"
                             name="lastName"
                             id="lastName" 
-                            [(ngModel)]="userProfile.lastName"
-                           placeholder="e.g. Williams">
+                            [(ngModel)]="recruiterModel.personalInfo.lastName"
+                           placeholder="e.g. Williams"
+                           required>
                 </div>
             </div>
         </div>
@@ -32,8 +34,9 @@
                             class="form-control" 
                             name="companyName"
                             id="companyName" 
-                            [(ngModel)]="userProfile.companyName"
-                            placeholder="e.g. CTC Offer">
+                            [(ngModel)]="recruiterModel.personalInfo.companyName"
+                            placeholder="e.g. CTC Offer"
+                            required>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -43,8 +46,9 @@
                             class="form-control" 
                             name="designation"
                             id="designation" 
-                            [(ngModel)]="userProfile.designation"
-                            placeholder="e.g. Sr. HR">
+                            [(ngModel)]="recruiterModel.personalInfo.designation"
+                            placeholder="e.g. Sr. HR"
+                            required>
                 </div>
             </div>
         </div>
@@ -57,9 +61,10 @@
                              id="country"
                              name="country"
                              placeholder="Select Country"
-                             [(ngModel)]="countryname" 
+                             [(ngModel)]="recruiterModel.personalInfo.country" 
                              list="countryName"
-                             (change)="onCountrySelect($event.target.value)"/>
+                             (change)="onCountrySelect($event.target.value)"
+                             required>
                             <datalist id="countryName">
                                 <option [value]=""></option>
                                 <option  *ngFor="let c of countryList">{{c.name}}</option>
@@ -76,8 +81,9 @@
                                 name="state"
                                 placeholder="Select State"
                                 (change)="onStateSelect($event.target.value)"
-                                [(ngModel)]="statename" 
-                                list="stateName"/>
+                                [(ngModel)]="recruiterModel.personalInfo.state" 
+                                list="stateName"
+                                required>
                                 <datalist id="stateName">
                                     <option [value]=""></option>
                                     <option *ngFor="let c of stateList">{{c.name}}</option>
@@ -93,7 +99,8 @@
                                 class="form-control" 
                                 name="city"
                                 placeholder="Select City"
-                                [(ngModel)]="cityname" list="cityName" required/>
+                                [(ngModel)]="recruiterModel.personalInfo.city" 
+                                list="cityName" required>
                                 <datalist id="cityName">
                                     <option [value]=""></option>
                                     <option *ngFor="let c of cityList">{{c.name}}</option>
@@ -105,10 +112,12 @@
                     <label>Website URL</label>
                     <input type="text" 
                             class="form-control" 
-                            id="websiteUrl" 
-                            name="websiteUrl"
+                            id="websiteURL" 
+                            name="websiteURL"
                             placeholder="e.g. www.WEBSITENAME.com"
-                           [(ngModel)]="userProfile.websiteUrl">
+                            pattern=""
+                           [(ngModel)]="recruiterModel.personalInfo.websiteURL"
+                           required>
                 </div>
             </div>
         </div>

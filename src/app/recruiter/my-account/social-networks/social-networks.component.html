@@ -1,16 +1,23 @@
-<form #form="ngForm" (ngSubmit)="updateSocialNetwork(form)" novalidate>
+<form #form="ngForm" novalidate>
   <div class="empoyer-accoun-form">
   <h4>Social Networks</h4>
-  <div class="row">
+  <div class="row" *ngFor="let container of containers">
     <div class="col-sm-6">
       <div class="input-group">
         <span class="input-group-addon"><i class="fab fa-google-plus-square"></i></span>
-        <input type="text" 
-                class="form-control" 
-                name="google"
-                id="google"
-                [(ngModel)]="socialNetwork.googlePlus"
-                placeholder="Google+">
+                <input  type="text"
+                        class="form-control" 
+                        name="socialNetworkDropdownList"
+                        placeholder="Social network id"
+                        (change)="onSocialNetworkChange($event.target.value)"
+                        [(ngModel)]="socialNetwork.name"
+                        list="socialNetworkDropdownList"
+                        required/>
+                        <datalist id="socialNetworkDropdownList">
+                            <option [value]=""></option>
+                            <option *ngFor="let social of socialNetworkDropdownList">{{social.name}}</option>
+                        </datalist>
+
       </div>
     </div>
     <div class="col-sm-6">
@@ -18,30 +25,57 @@
         <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
         <input type="text" 
                 class="form-control" 
-                id="linkedin" 
-                name="linkedin"
-                [(ngModel)]="socialNetwork.linkedIn"
-                placeholder="Linkedin">
+                id="socialNetworkName" 
+                name="socialNetworkName"
+                [(ngModel)]="socialNetworkName.name"
+                placeholder="Social network name"
+                required>
       </div>
     </div>
   </div><br>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-sm-6">
       <div class="input-group">
         <span class="input-group-addon"><i class="fab fa-facebook-square"></i></span>
         <input type="text" 
                 class="form-control" 
-                id="facebook"
-                name="facebook" 
-                [(ngModel)]="socialNetwork.facebook"
+                id="name3"
+                name="name3" 
+                [(ngModel)]="socialNetwork.name"
                 placeholder="Facebook">
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="row">
     <div class="col-sm-12">
-      <button type="submit" class="btn btn_form5 pull-right" style="margin-top: 0px">Update Social Network</button>
+      <button type="button" 
+        class="btn btn_form5 pull-right" 
+        style="margin-top: 0px"
+        (click)="updateSocialNetwork(form)">Update Social Network</button>
+        <button type="button" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Social Network</button>
     </div>
   </div>
+  <div class="row">
+    <table  *ngIf="recruiterModel.socialNetwork">
+      <thead>
+        <tr>
+          <th>Social Network Id</th>
+          <th>Social Network Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let social of recruiterModel.socialNetwork" style="cursor: pointer;"> 
+          <td>{{social.id}}</td>
+          <td>{{social.name}}</td>
+  
+          <td>
+            <!-- <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
+            <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(skill)">Delete</button> -->
+          </td>
+        </tr>
+      </tbody>
+      </table>
+</div>
 </div>
 </form>

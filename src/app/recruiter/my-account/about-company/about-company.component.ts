@@ -1,56 +1,58 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
-import { ToastrService } from 'ngx-toastr';
-import { UserModel } from '../models/user.model';
+import { ToastrService } from 'ngx-toastr';;
 import { NgForm } from '@angular/forms';
-import { Router, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TextEditorComponent } from '../../../shared/components/text-editor/text-editor.component';
+import { BaseModel } from 'src/app/shared/models/base.model';
+import { RecruiterModel } from '../models/recruiter.model';
+import { CompanyDetail } from '../models/company-detail.model';
 
 @Component({
   selector: 'app-about-company',
   templateUrl: './about-company.component.html',
   styleUrls: ['./about-company.component.css']
 })
-export class AboutCompanyComponent implements OnInit {
-  companyDetails:UserModel=new UserModel();
-  email:string;
+export class AboutCompanyComponent extends BaseModel implements OnInit {
   imgUrl:any={
     'image':'/assets/img/client/1.png',
     'buttonText':'Upload Company Logo'
   }
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
+  recruiterModel:RecruiterModel=new RecruiterModel();
   constructor(private recruiterService:RecruiterService,
               private toastr:ToastrService,
-              private router:Router) {}
+              private router:Router) {super();}
 
   ngOnInit() {
+    this.recruiterModel.companyDetail=new CompanyDetail();
     this.aboutCompany();
     
   }
 
   aboutCompany(){
-    if(localStorage.getItem('userToken')!=null){
-      this.recruiterService.recruiterLogin(JSON.parse(localStorage.getItem('credentials'))).subscribe((result: UserModel)=>{
+    this.email=localStorage.getItem('email');
+    if(this.email){
+      this.recruiterModel.companyDetail.description=null;
+      this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any)=>{
         if(result!=null){
-          this.companyDetails=result;
-          this.email=this.companyDetails.email;
-            console.log(this.companyDetails);
+          this.recruiterModel=result;
           }
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message);
-            console.log(err);})
+            this.toastr.error(err.message,'Company Info');
+          })
     }
   }
 
  
   onSubmit(form:NgForm){
-    this.companyDetails.aboutCompany=this.textEditorComponent.description
-    this.companyDetails.email=this.email;
-    this.recruiterService.updateReqProfile(this.companyDetails).subscribe((result:any)=>{
-      this.toastr.success(result);
+    this.recruiterModel.companyDetail.description=this.textEditorComponent.description;
+    //this.recruiterModel.companyDetail.companyLogo=this.imgUrl;
+    this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
+      this.toastr.success(JSON.parse(result).message,'Company Info');
     },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message);
-      console.log(err);})
+      this.toastr.error(err.message,'Company Info');
+     })
     }
 }

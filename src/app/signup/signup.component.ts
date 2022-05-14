@@ -8,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UpdateAccountModel } from '../recruiter/my-account/models/update-account.model';
 import { JobSeekerModel } from '../seeker/models/job-seeker-model';
 import { PersonalInfo } from '../seeker/models/personal-info.model';
+import { RecruiterModel } from '../recruiter/my-account/models/recruiter.model';
+import { PersonalInformation } from '../recruiter/my-account/models/personal-Information.model';
 
 @Component({
   selector: 'app-signup',
@@ -20,6 +22,7 @@ export class SignupComponent implements OnInit {
   signupModel: SignupModel = new SignupModel();
   registerType: string;
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
+  recruiterModel:RecruiterModel=new RecruiterModel()
   validatePwd:UpdateAccountModel=new UpdateAccountModel();
   constructor(private signupService: UserService, private router: Router, private toastr: ToastrService) { }
 
@@ -48,27 +51,41 @@ export class SignupComponent implements OnInit {
         this.toastr.error('Passowrd and confirm password not matching');
         return;
       }
+      if(this.registerType=='seeker'){
       this.jobSeekerModel.email= this.signupModel.email;
       this.jobSeekerModel.password=this.signupModel.password;
       this.jobSeekerModel.personalInfo=new PersonalInfo();
       this.jobSeekerModel.personalInfo.firstName=this.signupModel.firstName;
       this.jobSeekerModel.personalInfo.lastName=this.signupModel.lastName;
       this.jobSeekerModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
-  
-      this.signupService.signUp(this.jobSeekerModel,this.registerType).subscribe((result: any) => {
-        this.toastr.success(JSON.parse(result).message);
-         if(this.registerType=='seeker'){
-          this.router.navigate(['seeqem']);
-         }
-         else{
-          this.router.navigate(['seeqem']);
-         }
-      }, (err: HttpErrorResponse) => {
-        this.toastr.error(JSON.parse(err.error).message);
-      });     
+      this.signUp(this.jobSeekerModel)
+      }
+      else{
+        this.recruiterModel.email=this.signupModel.email;
+        this.recruiterModel.password=this.signupModel.password;
+        this.recruiterModel.personalInfo=new PersonalInformation();
+        this.recruiterModel.personalInfo.firstName=this.signupModel.firstName;
+        this.recruiterModel.personalInfo.lastName=this.signupModel.lastName;
+        this.recruiterModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
+        this.signUp(this.recruiterModel)
+      }    
     }
     else {
       this.toastr.error('Please enter all madatory details');
     }
+  }
+
+  signUp(signUpModel:any){
+    this.signupService.signUp(signUpModel,this.registerType).subscribe((result: any) => {
+      this.toastr.success(JSON.parse(result).message);
+       if(this.registerType=='seeker'){
+        this.router.navigate(['seeqem']);
+       }
+       else{
+        this.router.navigate(['seeqem']);
+       }
+    }, (err: HttpErrorResponse) => {
+      this.toastr.error(JSON.parse(err.error).message);
+    });
   }
 }

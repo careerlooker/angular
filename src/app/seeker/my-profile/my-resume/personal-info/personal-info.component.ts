@@ -75,7 +75,7 @@ export class PersonalInfoComponent implements OnInit {
       this.seekerrService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
         if(result!=null){
        this.jobSeekerModel=result;
-      // this.imgUrl.image=environment.baseUrl+"home/ubuntu/uploaded-pics/sek-pics/"+this.jobSeekerModel.personalInfo.photo;
+       this.imgUrl.image=environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
         this.email = this.jobSeekerModel.email;
        
         if(this.jobSeekerModel.personalInfo){
@@ -184,7 +184,7 @@ export class PersonalInfoComponent implements OnInit {
         this.jobSeekerModel.personalInfo.lastName=form.value.lastName;
         this.jobSeekerModel.personalInfo.address=form.value.address;
         this.jobSeekerModel.personalInfo.phoneNo=form.value.phoneNo;
-        //this.jobSeekerModel.personalInfo.photo=this.selectedFile.name;
+        this.jobSeekerModel.personalInfo.photo=this.selectedFile.name;
         this.jobSeekerModel.personalInfo.country=form.value.country;
         this.jobSeekerModel.personalInfo.state=form.value.state;
         this.jobSeekerModel.personalInfo.city=form.value.city;

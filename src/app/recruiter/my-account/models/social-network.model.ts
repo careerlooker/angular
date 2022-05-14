@@ -1,5 +1,4 @@
-export class SocialNetworkModel{
-    google:string;
-    facebook:string;
-    linkedin:string
+export class SocialNetwork {
+    id: number;
+    name: string;
 }
