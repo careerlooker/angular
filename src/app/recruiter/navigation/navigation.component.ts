@@ -4,6 +4,7 @@ import { UserModel } from '../my-account/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
+import { RecruiterModel } from '../my-account/models/recruiter.model';
 
 @Component({
   selector: 'app-recruiter-navigation',
@@ -13,6 +14,7 @@ import { NgForm } from '@angular/forms';
 export class RecruiterNavigationComponent implements OnInit {
   display: string = 'none';
   profile: UserModel = new UserModel();
+  recruiterModel:RecruiterModel=new RecruiterModel();
   private email: string;
   credentials:string;
   progressBar:number=10;
@@ -22,8 +24,9 @@ export class RecruiterNavigationComponent implements OnInit {
   ngOnInit() {
     this.leftProfile();
     this.change();
+    this.profileMessage();
   }
-
+ 
 
   leftProfile() {
     if (localStorage.getItem('userToken') != null) {
@@ -66,5 +69,16 @@ export class RecruiterNavigationComponent implements OnInit {
     this.recruiterService.profileMessage.subscribe((reuslt:any)=>{
       this.profileUrl=reuslt;
     })
+  }
+
+  profileMessage(){
+    this.recruiterService.recruiterMessage.subscribe((result:any)=>{
+      this.recruiterModel=result;
+      if(this.recruiterModel){
+      this.profile.profileCompletion= this.recruiterModel.personalInfo.profileCompletion
+      this.profile.email=this.recruiterModel.email;
+      this.profile.phoneNumber=this.recruiterModel.personalInfo.phoneNo;
+      }
+    });
   }
 }

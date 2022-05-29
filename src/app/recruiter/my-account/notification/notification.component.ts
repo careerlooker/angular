@@ -79,6 +79,7 @@ export class NotificationComponent extends BaseModel implements OnInit {
    }
 
    checkNotification(){
+     if(this.recruiterModel.notification){
      if(this.recruiterModel.notification.foundSameProfileAlert==true || this.recruiterModel.notification.myAccountExpiredAlert==true || 
       this.recruiterModel.notification.postedJobExpiredAlert==true||this.recruiterModel.notification.postedJobAlert==true){
        this.recruiterModel.notification.emailNotificationAlert=true;
@@ -87,4 +88,8 @@ export class NotificationComponent extends BaseModel implements OnInit {
       this.recruiterModel.notification.emailNotificationAlert=false;
      }
    }
+   else{
+     this.recruiterModel.notification=new Notification();
+   }
+  }
 }

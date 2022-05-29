@@ -1,10 +1,10 @@
 <form #form="ngForm" novalidate>
   <div class="empoyer-accoun-form">
-  <h4>Social Networks</h4>
-  <div class="row" *ngFor="let container of containers">
-    <div class="col-sm-6">
+  <!-- <h4>Social Networks</h4> -->
+  <div class="row">
+    <div class="col-sm-12">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fab fa-google-plus-square"></i></span>
+        <!-- <span class="input-group-addon"><i class="fab fa-google-plus-square"></i></span>
                 <input  type="text"
                         class="form-control" 
                         name="socialNetworkDropdownList"
@@ -16,22 +16,72 @@
                         <datalist id="socialNetworkDropdownList">
                             <option [value]=""></option>
                             <option *ngFor="let social of socialNetworkDropdownList">{{social.name}}</option>
-                        </datalist>
+                        </datalist> -->
+        
+                        <form [formGroup]="socialForm">  
+                          
+                          <table class="table table-bordered" formArrayName="socialNetworks">  
+                            <tr>  
+                              <!-- <th colspan="2"><h4>Social Networks</h4></th>   -->
+                              <th colspan="3"><button type="button" (click)="addQuantity()" class="btn btn-primary">Add Social Network</button></th>  
+                            </tr>
+                            <tr *ngFor="let quantity of socialNetworks().controls; let i=index" [formGroupName]="i">  
+                              <td>  
+                                 
+                                  <!-- <input type="text" formControlName="qty" class="form-control">   -->
+
+                                  <input  type="text"
+                                  class="form-control" 
+                                  name="socialNetworkDropdownList"
+                                  formControlName="socialNwId" 
+                                  placeholder="Social network id"
+                                  (change)="onSocialNetworkChange($event.target.value)"
+                                
+                                  list="socialNetworkDropdownList"
+                                  required/>
+                                  <datalist id="socialNetworkDropdownList">
+                                      <option [value]=""></option>
+                                      <option *ngFor="let social of socialNetworkDropdownList">{{social.name}}</option>
+                                  </datalist>
+
+                              </td>  
+                              <td>  
+                             
+                                  <!-- <input type="text" formControlName="price" class="form-control">   -->
+
+                                  <input type="text" 
+                                  class="form-control" 
+                                  id="socialNetworkName" 
+                                  name="socialNetworkName"
+                                  formControlName="name"
+                                 
+                                  placeholder="Social network name"
+                                  required>
+                              </td>  
+                              <!-- <td>
+                                <button type="button" (click)="addQuantity(social)" class="btn btn-primary">Add</button>
+                              </td> -->
+                              <td>  
+                                  <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>  
+                              </td>  
+                            </tr>  
+                          </table> 
+                        </form>  
 
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+    <!-- <div class="col-sm-6">
+      <div class="input-group"> -->
+        <!-- <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
         <input type="text" 
                 class="form-control" 
                 id="socialNetworkName" 
                 name="socialNetworkName"
                 [(ngModel)]="socialNetworkName.name"
                 placeholder="Social network name"
-                required>
-      </div>
-    </div>
+                required> -->
+      <!-- </div>
+    </div> -->
   </div><br>
   <!-- <div class="row">
     <div class="col-sm-6">
@@ -52,30 +102,8 @@
         class="btn btn_form5 pull-right" 
         style="margin-top: 0px"
         (click)="updateSocialNetwork(form)">Update Social Network</button>
-        <button type="button" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Social Network</button>
+        <!-- <button type="button" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Social Network</button> -->
     </div>
   </div>
-  <div class="row">
-    <table  *ngIf="recruiterModel.socialNetwork">
-      <thead>
-        <tr>
-          <th>Social Network Id</th>
-          <th>Social Network Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let social of recruiterModel.socialNetwork" style="cursor: pointer;"> 
-          <td>{{social.id}}</td>
-          <td>{{social.name}}</td>
-  
-          <td>
-            <!-- <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
-            <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(skill)">Delete</button> -->
-          </td>
-        </tr>
-      </tbody>
-      </table>
-</div>
 </div>
 </form>

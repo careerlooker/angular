@@ -1,7 +1,7 @@
 export class PersonalInformation{
     firstName: string;
     lastName: string;
-    phoneNo: Number;
+    phoneNo: number;
     companyName: string;
     designation: string;
     country: string;
@@ -9,4 +9,5 @@ export class PersonalInformation{
     city: string;
     websiteURL: string;
     recruiterPhoto: string;
+    profileCompletion:number;
 }

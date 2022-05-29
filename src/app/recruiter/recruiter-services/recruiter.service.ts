@@ -26,6 +26,9 @@ export class RecruiterService{
     profileSubject:Subject<UserModel>=new Subject<UserModel>();
     profileMessage=this.profileSubject.asObservable();
 
+    recruiterSubject:Subject<any>=new Subject<any>();
+    recruiterMessage=this.recruiterSubject.asObservable();
+
     constructor(private httpClient:HttpClient){}
 
     recruiterLogin(credentials):Observable<UserModel>{

@@ -53,6 +53,7 @@ export class ProfileComponent extends BaseModel implements OnInit {
         this.recruiterModel = result;
         this.getCountries();
       }
+      this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message,'Profile Info');
       })

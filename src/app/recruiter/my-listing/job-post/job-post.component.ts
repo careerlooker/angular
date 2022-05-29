@@ -13,6 +13,12 @@ import { FunctionalAreaModel } from '../models/functional-area.model';
 import { QualificationModel } from '../models/qualification.model';
 import { KeySkillsModel } from '../models/key-skills.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RecruiterModel } from '../../my-account/models/recruiter.model';
+import { JobDetail } from '../../my-account/models/job-detail.model';
+import { JobCtcDetail } from '../../my-account/models/job-ctc-detail.model';
+import { PostedJobs } from '../../my-account/models/posted-jobs.model';
+import { JobInterviewDetail } from '../../my-account/models/job-interview-detail.model';
+import { JobInterviewDetails } from '../../my-account/models/job-interview-etails.model';
 
 
 
@@ -24,6 +30,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./job-post.component.css']
 })
 export class JobPostComponent implements OnInit {
+  recruiterModel:RecruiterModel=new RecruiterModel();
+  jobDetail:JobDetail=new JobDetail();
+  jobCtcDetail:JobCtcDetail=new JobCtcDetail();
+  postedJob:PostedJobs=new PostedJobs();
+  postedJobList:Array<PostedJobs>=new Array<PostedJobs>();
+  jobInterviewDetail:JobInterviewDetail=new JobInterviewDetail();
+  jobInterviewDetails:JobInterviewDetails=new JobInterviewDetails();
+
   jobPosting:JobPosting=new JobPosting();
   email: string;
   countryList: Array<CountriesModel>;
@@ -94,6 +108,18 @@ export class JobPostComponent implements OnInit {
   jobType=[{"jobType":"Full Time"},{"jobType":"Part Time"},{"jobType":"Temporary"},{"jobType":"Contract"}]
 
   ngOnInit() {
+    this.recruiterModel=new RecruiterModel();
+    this.jobDetail=new JobDetail();
+    this.jobCtcDetail=new JobCtcDetail();
+    this.postedJob=new PostedJobs();
+    this.postedJobList=new Array<PostedJobs>();
+    this.jobInterviewDetail=new JobInterviewDetail();
+    this.jobInterviewDetails=new JobInterviewDetails();
+
+    this.postedJob.jobDetail=new JobDetail();
+    this.postedJob.jobCtcDetail=new JobCtcDetail();
+    this.postedJob.jobInterviewDetail=new JobInterviewDetail();
+
     this.selectedCity=new Array<CityModel>();
     this.selectedSkills=new Array<KeySkillsModel>();
     this.getJobById();
@@ -249,19 +275,43 @@ getJobById(){
     
 
 
-  onSubmit(form:JobPosting,jobStatus:any){
+  onSubmit(postedJob:PostedJobs,jobStatus:any){
           this.jobPosting.cities='';
           this.jobPosting.keySkill='';
-          form.jobStatus=jobStatus;
-          this.jobPosting=form;
+         
+          //recruiterModel.jobStatus=jobStatus;
+          //this.recruiterModel=recruiterModel;
           this.jobPosting.cities=this.setDropdownList('city')
           this.jobPosting.keySkill=this.setDropdownList('skill');
+          if(this.recruiterModel.postedJobs==undefined ){
+            this.recruiterModel.postedJobs=[];
+          }
+          if(this.recruiterModel.postedJobs.length>0){
+            if(this.recruiterModel.postedJobs.filter(x=>x.jobId!==this.postedJob.jobId)){
+             let maxId = this.recruiterModel.postedJobs.reduce((max, character) => (character.jobId > max ? character.jobId : max),
+             this.recruiterModel.postedJobs[0].jobId);
+             this.postedJob.jobId=maxId+1;
+            }
+           }else{
+            this.postedJob.jobId=1;
+            this.recruiterModel.postedJobs=[];
+           }
+           //let walkinDate=this.postedJob.jobInterviewDetail.walkinDate;
+          this.postedJob.jobInterviewDetail.walkinDate=new Date(this.postedJob.jobInterviewDetail.walkinDate).toISOString();
           
+          this.postedJob.jobInterviewDetail.walkinTime=new Date(this.postedJob.jobInterviewDetail.walkinDate).toISOString();
+        //  let validtill=this.postedJob.jobInterviewDetail.validUntil+":"+this.postedJob.jobInterviewDetail.walkinTime;
+          this.postedJob.jobInterviewDetail.validUntil=new Date(this.postedJob.jobInterviewDetail.validUntil).toISOString();
+          this.recruiterModel.jobStatus=jobStatus;
+          this.recruiterModel.jobPostedDate=new Date().toISOString();
+          this.recruiterModel.jobUpdatedDate=new Date().toISOString();
+          
+          this.recruiterModel.postedJobs.push(postedJob);
        
-      this.jobPosting.reqId=+JSON.parse(localStorage.getItem('reqId'));
+     // this.jobPosting.reqId=+JSON.parse(localStorage.getItem('reqId'));
      
       if(jobStatus==1){
-        this.recruiterService.jobPostingSave(this.jobPosting).subscribe((result:any)=>{
+        this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
           this.toastr.success(result);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);})

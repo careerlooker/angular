@@ -1,4 +1,5 @@
 export class SocialNetwork {
-    id: number;
-    name: string;
+    socialNwId: number;
+    name:string;
+    profileCompletion: number;
 }

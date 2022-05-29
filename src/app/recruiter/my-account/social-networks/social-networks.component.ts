@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { RecruiterModel } from '../models/recruiter.model';
 import { SocialNetwork } from '../models/social-network.model';
+import { SocialNetworkList } from '../models/social-network-list.model';
 
 @Component({
   selector: 'app-social-networks',
@@ -16,17 +17,49 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
   recruiterModel:RecruiterModel=new RecruiterModel();
   socialNetwork:SocialNetwork=new SocialNetwork();
   socialNetworkName:SocialNetwork=new SocialNetwork();
-  socialNetworkDropdownList:Array<SocialNetwork>=new Array<SocialNetwork>();
-  constructor(private recruiterService:RecruiterService,private toastr:ToastrService) { super()}
+  socialNetworkDropdownList:Array<SocialNetworkList>=new Array<SocialNetworkList>();
+
+
+  socialForm: FormGroup;  
+
+  constructor(private recruiterService:RecruiterService,
+              private toastr:ToastrService,
+              private fb:FormBuilder) { 
+                super();
+              
+                this.socialForm = this.fb.group({  
+                  socialNetworks: this.fb.array([]) ,  
+                });  
+              }
 
   ngOnInit() {
     this.recruiterModel.socialNetwork=new Array<SocialNetwork>();
-    this.socialNetworkDropdownList=new Array<SocialNetwork>();
+    this.socialNetworkDropdownList=new Array<SocialNetworkList>();
     this.isAdd=true;
-    this.addNewDiv();
     this.getSocialDropdownList();
-    this.getSocialNetwork();
   }
+
+  socialNetworks() : FormArray {  
+    return this.socialForm.get("socialNetworks") as FormArray  
+  } 
+
+  newQuantity(): FormGroup {  
+    return this.fb.group({  
+      socialNwId: '',  
+      name: '',  
+    })  
+  }
+
+  addQuantity() {  
+    if(this.socialForm.valid){
+    this.socialNetworks().push(this.newQuantity());  
+    }
+  }  
+     
+  removeQuantity(i:number) {  
+    this.socialNetworks().removeAt(i);  
+  } 
+ 
   onSocialNetworkChange(value:any){
     if(value!="" && value!=undefined){
       this.socialNetwork.name=value;
@@ -35,6 +68,9 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
   getSocialDropdownList(){
     this.recruiterService.getSocialDropdownList().subscribe((result:any)=>{
       this.socialNetworkDropdownList=result;
+      if(this.socialNetworkDropdownList){
+        this.getSocialNetwork();
+      }
     });
   }
 
@@ -44,6 +80,20 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
       this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any)=>{
         if(result!=null){
           this.recruiterModel=result;
+          if(this.recruiterModel.socialNetwork){
+            let sociallist=this.fb.array([]);
+          this.recruiterModel.socialNetwork.forEach(element=>{
+            if(element.socialNwId){
+              let setValue=this.fb.group({  
+                socialNwId: this.socialNetworkDropdownList.filter(x=>x.id== element.socialNwId)[0].name,  
+                name: element.name,  
+              }) 
+               sociallist.push(setValue);
+            }
+          });
+            this.socialForm.setControl('socialNetworks',  sociallist)
+        }
+        this.recruiterService.recruiterSubject.next(this.recruiterModel);
         }
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message,'Social Network Info');
@@ -51,9 +101,15 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
     }
   }
    updateSocialNetwork(form:NgForm){
-   
-    this.recruiterModel.socialNetwork.push(this.socialNetworkName);
-
+   this.recruiterModel.socialNetwork=[]
+  if(this.socialForm.valid){
+    this.socialForm.value.socialNetworks.forEach((element) => {
+      this.socialNetwork.socialNwId=this.socialNetworkDropdownList.filter(x=>x.name== element.socialNwId)[0].id;
+      this.socialNetwork.name=element.name;
+      this.recruiterModel.socialNetwork.push(Object.assign({}, this.socialNetwork)); 
+    });
+  
+     this.socialForm.value.socialNetworks=[];
      this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
        this.getSocialNetwork(); 
        this.toastr.success(JSON.parse(result).message,'Social Network Info');
@@ -61,25 +117,21 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
       this.toastr.error(err.message,'Social Network Info');
      })
    }
+  }
 
    add(form:NgForm){
     if(form.valid){
       if(this.socialNetwork.name!="" && this.socialNetwork.name!= undefined){
        let social= this.socialNetworkDropdownList.filter(x=>x.name==this.socialNetwork.name)[0];
        this.recruiterModel.socialNetwork=[];
-       this.socialNetworkName.id=social.id;
+       this.socialNetworkName.socialNwId=social.id;
        this.recruiterModel.socialNetwork.push(this.socialNetworkName);
        this.socialNetwork=new SocialNetwork();
        this.socialNetworkName=new SocialNetwork();
-       this.addNewDiv();
       }
       else{
         
       }
     }
-  }
-  containers = [];
-  addNewDiv() {
-    this.containers.push(this.containers.length);
   }
 }

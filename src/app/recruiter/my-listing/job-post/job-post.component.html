@@ -1,5 +1,5 @@
 <div class="empoyer-accoun-form">
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <form #f="ngForm"  novalidate>
   <h4><strong>Job Details</strong></h4>
   <div class="row">
     <div class="col-sm-12">
@@ -9,7 +9,7 @@
                 class="form-control" 
                 id="jobTitle"
                 name="jobTitle"
-                [(ngModel)]="jobPosting.jobTitle"
+                [(ngModel)]="postedJob.jobDetail.jobTitle"
                 required>
       </div>
     </div>
@@ -49,7 +49,7 @@
                   <ng-multiselect-dropdown 
                   name="countryname"
                   [data]="countryList"
-                  [(ngModel)]="selectedcountry"
+                  [(ngModel)]="postedJob.jobDetail.country"
                   [settings]="singleDropdownSettings"
                   (onSelect)="onItemSelect($event)"
                   (onSelectAll)="onSelectAll($event)">
@@ -62,7 +62,7 @@
       <ng-multiselect-dropdown 
                           name="cityname"
                           [data]="cityDropdownList"
-                          [(ngModel)]="selectedcities"
+                          [(ngModel)]="postedJob.jobDetail.city"
                           [settings]="dropdownSettings"
                           (onSelect)="onItemSelect($event)"
                           (onSelectAll)="onSelectAll($event)">
@@ -80,7 +80,7 @@
               class="form-control" 
               id="zipCode" 
               name="zipCode"
-              [(ngModel)]="jobPosting.zipCode"
+              [(ngModel)]="postedJob.jobDetail.zipCode"
               required>
     </div>
   </div>
@@ -95,7 +95,7 @@
               class="form-control" 
               id="annualCtc" 
               name="annualCtc"
-              [(ngModel)]="jobPosting.annualCtc"
+              [(ngModel)]="postedJob.jobCtcDetail.annualCtc"
               required>
       </div>
     </div>
@@ -105,7 +105,7 @@
         <input   type="text"
                   class="form-control" 
                   name="ExpMin"
-                  [(ngModel)]="jobPosting.expMin"
+                  [(ngModel)]="postedJob.jobCtcDetail.minExp"
                   list="expMin" 
                   (change)="onMinExpSelect($event.target.value)" 
                   required/>
@@ -123,7 +123,7 @@
                   class="form-control" 
                   name="ExpMax"
                   list="expMax" 
-                  [(ngModel)]="jobPosting.expMax"
+                  [(ngModel)]="postedJob.jobCtcDetail.maxExp"
                   (change)="onMaxExpSelect($event.target.value)" 
                   required/>
         <datalist id="expMax">
@@ -144,7 +144,7 @@
                   class="form-control" 
                   name="funcArea"
                   list="functionalAreaList" 
-                  [(ngModel)]="jobPosting.functionArea"
+                  [(ngModel)]="postedJob.jobCtcDetail.functionArea"
                   (change)="onFunAreaSelect($event.target.value)" 
                   required/>
         <datalist id="functionalAreaList">
@@ -176,7 +176,7 @@
         <input  type="text"
                 class="form-control" 
                 name="gender"
-                [(ngModel)]="jobPosting.gender"
+                [(ngModel)]="postedJob.jobCtcDetail.gender"
                 list="gender" 
                 (change)="onGenderSelect($event.target.value)" 
                 required/>
@@ -195,7 +195,7 @@
         <input type="text"
                class="form-control" 
                name="noOfVacancy"
-               [(ngModel)]="jobPosting.noOfVacancies"
+               [(ngModel)]="postedJob.jobCtcDetail.noOfVaccancy"
               required/>
       </div>
     </div>
@@ -206,7 +206,7 @@
         <input    type="text"
                   class="form-control" 
                   name="jobType"
-                  [(ngModel)]="jobPosting.jobType"
+                  [(ngModel)]="postedJob.jobCtcDetail.jobType"
                   list="jobType" 
                   (change)="onjobTypeSelect($event.target.value)" 
                   required/>
@@ -224,7 +224,7 @@
                   class="form-control" 
                   name="qualification"
                   list="qualificationList" 
-                  [(ngModel)]="jobPosting.qualification"
+                  [(ngModel)]="postedJob.jobCtcDetail.qualification"
                   (change)="onQualificationSelect($event.target.value)" 
                   required/>
           <datalist id="qualificationList">
@@ -246,7 +246,7 @@
                class="form-control" 
                id="WalkInDate"
                name="WalkInDate"
-                [(ngModel)]="jobPosting.walkIn"
+                [(ngModel)]="postedJob.jobInterviewDetail.walkinDate"
                 required
                >
 
@@ -259,7 +259,7 @@
                class="form-control" 
                id="WalkInTime" 
                name="WalkInTime"
-               [(ngModel)]="jobPosting.walkinTime"
+               [(ngModel)]="postedJob.jobInterviewDetail.walkinTime"
                required
                >
 
@@ -273,7 +273,7 @@
                 class="form-control" 
                 id="validityUntil" 
                 name="validityUntil"
-                [(ngModel)]="jobPosting.validity"
+                [(ngModel)]="postedJob.jobInterviewDetail.validUntil"
                 required>
       </div>
     </div>
@@ -287,7 +287,7 @@
                 class="form-control" 
                 id="contactPerson"
                 name="contactPerson"
-                [(ngModel)]="jobPosting.contactPerson">
+                [(ngModel)]="postedJob.jobInterviewDetail.contactName">
       </div>
     </div>
 
@@ -298,7 +298,7 @@
                 class="form-control" 
                 id="contactNumber"
                 name="contactNumber"
-                [(ngModel)]="jobPosting.contactNumber">
+                [(ngModel)]="postedJob.jobInterviewDetail.contactNo">
       </div>
     </div>
   </div>
@@ -333,9 +333,9 @@
   <div class="row">
     <div class="edit-button">
       <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onReset()">Reset</button>
-      <button *ngIf="jobId!=0" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,2)">Update</button>
-      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,3)">Save &amp; Publish</button>
-      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(jobPosting,1)">Save</button>
+      <button *ngIf="jobId!=0" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(postedJob,2)">Update</button>
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(postedJob,3)">Save &amp; Publish</button>
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(postedJob,1)">Save</button>
     </div>
   </div>
 </form>

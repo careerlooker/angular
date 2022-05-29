@@ -7,7 +7,7 @@ import { MyAccountRoutingModule } from './my-account-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { NotificationComponent } from './notification/notification.component';
 import { MyAccountComponent } from './my-account.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorAllModule, RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor'; 
 import { SharedModule } from 'src/app/shared/modules/shared.module';
 
@@ -26,6 +26,7 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
     imports:[
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RichTextEditorModule,
         RichTextEditorAllModule,
         SharedModule,

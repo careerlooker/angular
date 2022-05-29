@@ -13,7 +13,7 @@ import { MainHeaderComponent } from './main-header/main-header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { FooterComponent } from '../footer/footer.component';
 import { RecruiterService } from './recruiter-services/recruiter.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './my-account/profile/profile.component';
 
 @NgModule({
@@ -36,6 +36,7 @@ import { ProfileComponent } from './my-account/profile/profile.component';
     imports:[
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RecruiterRoutingModule,
 
     ],
