@@ -39,6 +39,7 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
         if(result!=null){
           this.recruiterModel=result;
           }
+          this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message,'Company Info');
           })
@@ -47,6 +48,7 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
 
  
   onSubmit(form:NgForm){
+    this.recruiterModel.companyDetail=new CompanyDetail();
     this.recruiterModel.companyDetail.description=this.textEditorComponent.description;
     //this.recruiterModel.companyDetail.companyLogo=this.imgUrl;
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{

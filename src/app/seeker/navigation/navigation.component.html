@@ -33,13 +33,11 @@
           <div class="progress-bar" 
                role="progressbar" 
                [ngStyle]="{'width': barPercentage+'%'}" 
-               aria-valuenow={profileCompletion}
+               aria-valuenow="25"
                aria-valuemin="0" 
                aria-valuemax="100">
+               {{profileCompletion}}%
           </div>
-      </div>
-      <div class="col-sm-1">          
-      {{profileCompletion}}%
       </div>
       <div class="clearfix"></div>
 			</div>

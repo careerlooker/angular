@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { RecruiterModel } from '../my-account/models/recruiter.model';
+import { PersonalInformation } from '../my-account/models/personal-Information.model';
 
 @Component({
   selector: 'app-recruiter-navigation',
@@ -13,7 +14,7 @@ import { RecruiterModel } from '../my-account/models/recruiter.model';
 })
 export class RecruiterNavigationComponent implements OnInit {
   display: string = 'none';
-  profile: UserModel = new UserModel();
+
   recruiterModel:RecruiterModel=new RecruiterModel();
   private email: string;
   credentials:string;
@@ -22,6 +23,7 @@ export class RecruiterNavigationComponent implements OnInit {
   constructor(private recruiterService: RecruiterService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.recruiterModel.personalInfo=new PersonalInformation();
     this.leftProfile();
     this.change();
     this.profileMessage();
@@ -29,18 +31,15 @@ export class RecruiterNavigationComponent implements OnInit {
  
 
   leftProfile() {
-    if (localStorage.getItem('userToken') != null) {
-      this.credentials=JSON.parse(localStorage.getItem('credentials'));
-      this.recruiterService.recruiterLogin(this.credentials).subscribe((result: UserModel) => {
+      this.recruiterService.getRecruiterDetails(localStorage.getItem('email')).subscribe((result: any) => {
        if(result!=null){
-        this.profile = result;
-        this.email = this.profile.email;
+       this.recruiterModel=result;
        }
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);
         console.log(err);
       })
-    }
+    
   }
 
   openModal() {
@@ -52,11 +51,11 @@ export class RecruiterNavigationComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
-      this.profile.firstName=form.value.firstName;
-      this.profile.lastName=form.value.lastName;
-      this.profile.companyName=form.value.companyName;
-      this.profile.email=this.email;
-      this.recruiterService.updateReqProfile(this.profile).subscribe((result:any)=>{
+      this.recruiterModel.personalInfo.firstName=form.value.firstName;
+      this.recruiterModel.personalInfo.lastName=form.value.lastName;
+      this.recruiterModel.personalInfo.companyName=form.value.companyName;
+      this.recruiterModel.email=this.email;
+      this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
         this.toastr.success(result);
         this.leftProfile();
       },(err: HttpErrorResponse) => {
@@ -74,11 +73,6 @@ export class RecruiterNavigationComponent implements OnInit {
   profileMessage(){
     this.recruiterService.recruiterMessage.subscribe((result:any)=>{
       this.recruiterModel=result;
-      if(this.recruiterModel){
-      this.profile.profileCompletion= this.recruiterModel.personalInfo.profileCompletion
-      this.profile.email=this.recruiterModel.email;
-      this.profile.phoneNumber=this.recruiterModel.personalInfo.phoneNo;
-      }
     });
   }
 }

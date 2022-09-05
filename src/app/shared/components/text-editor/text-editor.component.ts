@@ -13,6 +13,7 @@ import { NgForm } from '@angular/forms';
 export class TextEditorComponent {
 
   @Input()description: any = '';
+  @Input()company:any='';
   @Output()jobDescription:EventEmitter<any>=new EventEmitter<any>();
   @Output()Company:EventEmitter<any>=new EventEmitter<any>();
   @Output()profesionalSummary:EventEmitter<any>=new EventEmitter<any>();

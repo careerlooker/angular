@@ -15,6 +15,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { RecruiterService } from './recruiter-services/recruiter.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './my-account/profile/profile.component';
+import { SharedModule } from '../shared/modules/shared.module';
 
 @NgModule({
     declarations:[
@@ -36,6 +37,7 @@ import { ProfileComponent } from './my-account/profile/profile.component';
     imports:[
         CommonModule,
         FormsModule,
+        SharedModule,
         ReactiveFormsModule,
         RecruiterRoutingModule,
 

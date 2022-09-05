@@ -32,6 +32,7 @@ export class NotificationComponent extends BaseModel implements OnInit {
           this.recruiterModel=result;
           this.checkNotification();
         }
+        this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message,'Notification Info');
             console.log(err);})

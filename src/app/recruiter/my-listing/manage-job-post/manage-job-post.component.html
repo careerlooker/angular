@@ -43,9 +43,10 @@
         <tbody style="border: 0px">
           <tr class="border-manage" *ngFor="let jobItem of postedJobList">
             <td class="officve-admin">
-              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.id)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">{{jobItem.jobTitle}}<br><span>Posted On: {{jobItem.createDate|date:'yyyy-MM-dd h:mm:ss'}} Expiry Date:
-                  {{jobItem.validity}}</span>
+              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.reqId)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On: {{jobItem.jobPostedDate|date:'yyyy-MM-dd h:mm:ss'}} 
+                <!-- Expiry Date:{{jobItem.validity}} -->
+              </span>
                 <div class="clearfix"></div>
                 <div class="button-managepost">
                   <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob(jobItem.id)">Delete</button>

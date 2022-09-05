@@ -6,7 +6,7 @@ import { SocialNetwork } from "./social-network.model";
 
 
 export class RecruiterModel{
-    
+    reqId: number;
     email: string;
     password: string;
     newPassword: string;
@@ -18,7 +18,7 @@ export class RecruiterModel{
     notification: Notification;
     socialNetwork:SocialNetwork[];
     companyDetail: CompanyDetail;
-    postedJobs:PostedJobs [];
     emailVerifyStatus: number;
+    profileCompletion:number;
 }
       

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { JobOperationModel } from '../models/job-operation.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PostedJobs } from '../../my-account/models/posted-jobs.model';
 
 @Component({
   selector: 'app-manage-job-post',
@@ -14,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./manage-job-post.component.css']
 })
 export class ManageJobPostComponent implements OnInit {
-  postedJobList:Array<JobPosting>=new Array<JobPosting>();
+  postedJobList:Array<PostedJobs>=new Array<PostedJobs>();
   search:SearchJob=new SearchJob();
   jobOperation:JobOperationModel=new JobOperationModel();
   paging:boolean= false;
@@ -28,8 +29,8 @@ export class ManageJobPostComponent implements OnInit {
   }
 
   getPostedJob(){
-    this.recruiterService.getPostedJobList(this.page).subscribe((result:Array<JobPosting>)=>{
-      this.postedJobList=result;
+    this.recruiterService.getJobById(2).subscribe((result:any)=>{
+      this.postedJobList=result.postedJobs;
       this.setPaging();
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);})
@@ -59,7 +60,7 @@ export class ManageJobPostComponent implements OnInit {
   searchJob(search:SearchJob){
       this.search.from=search.from;
       this.search.to=this.search.to;
-      this.recruiterService.jobSearch(this.search).subscribe((result:Array<JobPosting>)=>{
+      this.recruiterService.jobSearch(this.search).subscribe((result:any)=>{
           this.postedJobList=result;
           console.log(this.postedJobList);
       },(err: HttpErrorResponse) => {

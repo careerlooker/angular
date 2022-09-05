@@ -31,6 +31,7 @@ export class AccountComponent extends BaseModel implements OnInit {
         if(result!=null){
           this.recruiterModel=result;
         }
+        this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
             this.toastr.error(err.message,'Account Info');
       })

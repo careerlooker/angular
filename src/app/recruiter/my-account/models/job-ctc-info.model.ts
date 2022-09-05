@@ -1,8 +1,9 @@
-export class JobCtcDetail{
+export class JobCtcInfo{
     annualCTC: number;
-    minExp: number;
-    maxExp: number;
+    minExp: string;
+    maxExp: string;
     functionalArea: string;
+    industry: string;
     gender: string;
     noOfVaccancy: number;
     jobType: string;

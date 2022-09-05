@@ -3,7 +3,7 @@
 		<div class="job-seker-img"><img [src]="profileUrl" class="img-responsive"></div>
 		<div style="padding: 30px 0px;">
 			<div class="text-name">
-				<h3>{{profile.firstName}} {{profile.lastName}} </h3>
+				<h3>{{recruiterModel.personalInfo.firstName}} {{recruiterModel.personalInfo.lastName}} </h3>
 				<!-- <div class="icon-box-edit"><a attr.data-toggle="modal" attr.data-target="'#profile-edit'">
 					<i class="fas fa-pen"></i></a>
 				</div> -->
@@ -12,10 +12,10 @@
 						<i class="fas fa-pen"></i></a>
 				</div> -->
 				<div class="clearfix"></div><br>
-				<h3 style="color: #626161; font-size: 18px;">{{profile.designation}}<br><br>{{profile.companyName}} </h3>
+				<h3 style="color: #626161; font-size: 18px;">{{recruiterModel.personalInfo.designation}}<br><br>{{recruiterModel.personalInfo.companyName}} </h3>
 			</div>
 			<div class="clearfix"></div>
-			<div class="text-name text-neme-top"><a class="mail"><strong>Email:</strong>{{profile.email}}</a>
+			<div class="text-name text-neme-top"><a class="mail"><strong>Email:</strong>{{this.recruiterModel.email}}</a>
 				<div class="clearfix"></div>
 				<a class="verify"><i class="fas fa-exclamation"></i><span
 						style="color: #ff9f52; border-bottom: 1px solid #ff9f52">Verify Now </span></a>
@@ -23,7 +23,7 @@
 
 			</div>
 			<div class="clearfix"></div>
-			<div class="text-name text-neme-top" style="margin-top: 15px;"><a  class="mail"><strong>Ph:</strong>  {{profile.phoneNumber}}</a>
+			<div class="text-name text-neme-top" style="margin-top: 15px;"><a  class="mail"><strong>Ph:</strong>  {{recruiterModel.personalInfo.phoneNo}}</a>
 				<div class="clearfix"></div>
 				<!-- <a class="verify-green"><i class="fas fa-check"></i><span
 						style="color: #349e39; border-bottom: 1px solid #349e39">Verified </span></a>
@@ -37,11 +37,11 @@
         <div class="progress md-progress progress-height">
           <div class="progress-bar" 
                role="progressbar" 
-               [ngStyle]="{'width':profile.profileCompletion+'%'}" 
+               [ngStyle]="{'width':recruiterModel.profileCompletion+'%'}" 
                aria-valuenow="25" 
                aria-valuemin="0" 
                aria-valuemax="100">
-               {{profile.profileCompletion}}%
+               {{recruiterModel.profileCompletion}}%
           </div>
       </div>
 			</div>

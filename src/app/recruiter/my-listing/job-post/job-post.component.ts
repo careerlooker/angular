@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
 import { CityModel } from 'src/app/shared/models/city.model';
 import { SharedService } from 'src/app/shared/services/shared.service';
-import { NgForm } from '@angular/forms';
-import { JobPosting } from '../models/job-posting.model';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -12,13 +10,14 @@ import { IndustryModel } from '../models/industry.model';
 import { FunctionalAreaModel } from '../models/functional-area.model';
 import { QualificationModel } from '../models/qualification.model';
 import { KeySkillsModel } from '../models/key-skills.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { RecruiterModel } from '../../my-account/models/recruiter.model';
-import { JobDetail } from '../../my-account/models/job-detail.model';
-import { JobCtcDetail } from '../../my-account/models/job-ctc-detail.model';
+import { JobCtcInfo } from '../../my-account/models/job-ctc-info.model';
 import { PostedJobs } from '../../my-account/models/posted-jobs.model';
-import { JobInterviewDetail } from '../../my-account/models/job-interview-detail.model';
-import { JobInterviewDetails } from '../../my-account/models/job-interview-etails.model';
+import { JobInterviewInfo } from '../../my-account/models/job-interview-info.model';
+import { JobInfo } from '../../my-account/models/job-info.model';
+import { NgForm } from '@angular/forms';
+import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 
 
 
@@ -30,15 +29,16 @@ import { JobInterviewDetails } from '../../my-account/models/job-interview-etail
   styleUrls: ['./job-post.component.css']
 })
 export class JobPostComponent implements OnInit {
+  @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   recruiterModel:RecruiterModel=new RecruiterModel();
-  jobDetail:JobDetail=new JobDetail();
-  jobCtcDetail:JobCtcDetail=new JobCtcDetail();
+  jobInfo:JobInfo=new JobInfo();
+  jobCtcInfo:JobCtcInfo=new JobCtcInfo();
   postedJob:PostedJobs=new PostedJobs();
   postedJobList:Array<PostedJobs>=new Array<PostedJobs>();
-  jobInterviewDetail:JobInterviewDetail=new JobInterviewDetail();
-  jobInterviewDetails:JobInterviewDetails=new JobInterviewDetails();
+  jobInterviewInfo:JobInterviewInfo=new JobInterviewInfo();
 
-  jobPosting:JobPosting=new JobPosting();
+
+ 
   email: string;
   countryList: Array<CountriesModel>;
   stateList: Array<StatesModel>;
@@ -64,9 +64,8 @@ export class JobPostComponent implements OnInit {
   constructor(private sharedService:SharedService, 
               private recruiterService:RecruiterService,
               private toastr:ToastrService,
-              private router:Router,
-              private route: ActivatedRoute) { 
-                this.jobId =+this.route.snapshot.queryParamMap.get('id');
+              private router:Router) { 
+              
                 this.dropdownSettings = {
                   singleSelection: false,
                   idField: 'id',
@@ -74,7 +73,8 @@ export class JobPostComponent implements OnInit {
                   selectAllText: 'Select All',
                   unSelectAllText: 'UnSelect All',
                   itemsShowLimit: 3,
-                  allowSearchFilter: true
+                  allowSearchFilter: true,
+                  defaultOpen:false
                 };
 
                 this.singleDropdownSettings = {
@@ -84,7 +84,8 @@ export class JobPostComponent implements OnInit {
                   selectAllText: 'Select All',
                   unSelectAllText: 'UnSelect All',
                   itemsShowLimit: 1,
-                  allowSearchFilter: true
+                  allowSearchFilter: true,
+                  defaultOpen:false
                 };
               }
 
@@ -109,20 +110,20 @@ export class JobPostComponent implements OnInit {
 
   ngOnInit() {
     this.recruiterModel=new RecruiterModel();
-    this.jobDetail=new JobDetail();
-    this.jobCtcDetail=new JobCtcDetail();
+    this.jobInfo=new JobInfo();
+    this.jobCtcInfo=new JobCtcInfo();
     this.postedJob=new PostedJobs();
     this.postedJobList=new Array<PostedJobs>();
-    this.jobInterviewDetail=new JobInterviewDetail();
-    this.jobInterviewDetails=new JobInterviewDetails();
+    this.jobInterviewInfo=new JobInterviewInfo();
+    this.postedJob.jobDescription=null;
 
-    this.postedJob.jobDetail=new JobDetail();
-    this.postedJob.jobCtcDetail=new JobCtcDetail();
-    this.postedJob.jobInterviewDetail=new JobInterviewDetail();
+    this.postedJob.jobInfo=new JobInfo();
+    this.postedJob.jobCtcInfo=new JobCtcInfo();
+    this.postedJob.jobInterviewInfo=new JobInterviewInfo();
 
     this.selectedCity=new Array<CityModel>();
     this.selectedSkills=new Array<KeySkillsModel>();
-    this.getJobById();
+    this.getRecruitrerDetails();
     this.getKeySkills();
     this.getCountries();
     this.getfunctionalArea();
@@ -130,10 +131,19 @@ export class JobPostComponent implements OnInit {
     this.getQualification();  
     
   }
+
+  getRecruitrerDetails(){
+    this.recruiterService.getRecruiterDetails(localStorage.getItem('email')).subscribe(result=>{
+      if(result){
+        this.recruiterModel=result;
+        this.getJobById();
+      }
+    });
+  }
 getJobById(){
-  if(this.jobId!=0){
-  this.recruiterService.getJobById(this.jobId).subscribe((result:JobPosting)=>{
-      this.jobPosting=result;
+  if(this.recruiterModel.reqId!=0){
+  this.recruiterService.getJobById(this.recruiterModel.reqId).subscribe((result:any)=>{
+     // this.postedJob=result;
     })
   }
 }
@@ -141,69 +151,107 @@ getJobById(){
     this.sharedService.getAllCountries().subscribe((countries: Array<CountriesModel>) => {
       this.countryList = countries;
       if(this.countryList){
-         if(this.jobId!=0 && Object.keys(this.jobPosting).length>0){
-         this.selectedcountry=this.countryList.filter(x=>x.id===this.jobPosting.countryId)
-         }
-        this.getAllCity();
+         if(this.jobId!=0 && Object.keys(this.postedJob).length>0){
+         this.selectedcountry=this.countryList.filter(x=>x.name===this.postedJob.jobInfo.country)
+         } 
       }
     });
   }
 
-  onCountrySelect(name: string) {
-    let id = this.countryList.filter(x => x.name === name)[0].id;
-    this.jobPosting.countryId=id;
-    this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
+  onCountrySelect(country: any) {
+    if(country){
+      let id=this.countryList.filter(x=>x.name==country)[0].id;
+      this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
+      this.postedJob.jobInfo.country= this.countryList.filter(x=>x.name==country)[0].name;
     });
+   }
+   else{
+     this.stateList=[];
+     this.cityList=[];
+    this.postedJob.jobInfo.state='';
+    this.postedJob.jobInfo.city='';
+   }
   }
-  onStateSelect(name: string) {
-    let id = this.stateList.filter(x => x.name === name)[0].id;
+  onStateSelect(state: any) {
+    if(state){
+      let id=this.stateList.filter(x=>x.name==state)[0].id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
+      this.postedJob.jobInfo.state= this.stateList.filter(x=>x.name==state)[0].name;
     });
+    }
+    else{
+      this.cityList=[];
+      this.postedJob.jobInfo.city='';
+    }
   }
  
-  onSelectCity(name:string){
-   // this.jobPosting.cityId=this.cityList.filter(x=>x.name===name)[0].id;
+  onSelectCity(city:any){
+    if(city){
+    this.postedJob.jobInfo.city=this.cityList.filter(x=>x.name===city)[0].name;
+    }
+    else{
+    }
   }
-
-  onKeySkillSelect(name:string){
-      this.jobPosting.keySkill=name;
+  getAllCity(){
+    this.sharedService.getAllCities().subscribe((result:Array<CityModel>)=>{
+      this.cityDropdownList=result;
+      if(this.postedJob.jobInfo.city){
+        let citylist= this.selectedList(this.postedJob.jobInfo.city)
+          citylist.forEach((x:any)=>{
+          this.cityDropdownList.forEach(y=>{
+            if(x==y.name)
+            {
+              this.selectedCity.push(y);
+            }
+          })
+        })
+      }
+      this.selectedcities=this.selectedCity;
+    })
+  }
+  onKeySkillSelect(skill:any){
+    if(skill){
+      this.jobInfo.keySkills=this.keySkillsDropdownList.filter(x=>x.name==skill)[0].name;
+    }
   }
 
   onSelectRadio(event:any){
-    this.jobPosting.contactVisibility=event; 
+    this.postedJob.jobVisibility=event; 
   }
   onMinExpSelect(event:any){
-    this.jobPosting.expMin=+event;
+    this.jobCtcInfo.minExp=event;
+    this.checkExperience();
   }
 
   onMaxExpSelect(event:any){
-    this.jobPosting.expMax=+event;
+    this.jobCtcInfo.maxExp=event;
+    this.checkExperience();
   }
 
   onFunAreaSelect(event){
-    this.jobPosting.functionArea=event;
+    this.jobCtcInfo.functionalArea=event;
   }
 
   onIndustrySelect(event){
-    this.jobPosting.industry=event;
+    this.jobCtcInfo.industry=event;
   }
 
   onGenderSelect(event){
-    this.jobPosting.gender=event;
+    this.jobCtcInfo.gender=event;
   }
 
   onOfVacancySelect(event){
-    this.jobPosting.noOfVacancies=+event;
+    this.postedJob.jobCtcInfo.noOfVaccancy=+event;
   }
 
   onjobTypeSelect(event){
-    this.jobPosting.jobType=event;
+    this.jobCtcInfo.jobType=event;
   }
 
   onQualificationSelect(event){
-    this.jobPosting.qualification=event;
+    this.jobCtcInfo.qualification=event;
   }
 
   selectedList(selectedList:string){
@@ -211,23 +259,7 @@ getJobById(){
     selectedlist=selectedList.split('_')
     return selectedlist;
   }
-    getAllCity(){
-      this.sharedService.getAllCities().subscribe((result:Array<CityModel>)=>{
-        this.cityDropdownList=result;
-        if(this.jobPosting.cities){
-          let citylist= this.selectedList(this.jobPosting.cities)
-            citylist.forEach((x:any)=>{
-            this.cityDropdownList.forEach(y=>{
-              if(x==y.name)
-              {
-                this.selectedCity.push(y);
-              }
-            })
-          })
-        }
-        this.selectedcities=this.selectedCity;
-      })
-    }
+   
 
     onItemSelect(item: any) {
       console.log(item);
@@ -258,8 +290,8 @@ getJobById(){
     getKeySkills(){
       this.recruiterService.getKeySkills().subscribe((result:Array<KeySkillsModel>)=>{
           this.keySkillsDropdownList=result;
-          if(this.jobPosting.keySkill){
-            let skilllist= this.selectedList(this.jobPosting.keySkill)
+          if(this.postedJob.jobInfo.keySkills){
+            let skilllist= this.selectedList(this.postedJob.jobInfo.keySkills)
               skilllist.forEach((x:any)=>{
               this.keySkillsDropdownList.forEach(y=>{
                 if(x==y.name)
@@ -275,62 +307,58 @@ getJobById(){
     
 
 
-  onSubmit(postedJob:PostedJobs,jobStatus:any){
-          this.jobPosting.cities='';
-          this.jobPosting.keySkill='';
-         
-          //recruiterModel.jobStatus=jobStatus;
-          //this.recruiterModel=recruiterModel;
-          this.jobPosting.cities=this.setDropdownList('city')
-          this.jobPosting.keySkill=this.setDropdownList('skill');
-          if(this.recruiterModel.postedJobs==undefined ){
-            this.recruiterModel.postedJobs=[];
-          }
-          if(this.recruiterModel.postedJobs.length>0){
-            if(this.recruiterModel.postedJobs.filter(x=>x.jobId!==this.postedJob.jobId)){
-             let maxId = this.recruiterModel.postedJobs.reduce((max, character) => (character.jobId > max ? character.jobId : max),
-             this.recruiterModel.postedJobs[0].jobId);
-             this.postedJob.jobId=maxId+1;
-            }
-           }else{
-            this.postedJob.jobId=1;
-            this.recruiterModel.postedJobs=[];
-           }
-           //let walkinDate=this.postedJob.jobInterviewDetail.walkinDate;
-          this.postedJob.jobInterviewDetail.walkinDate=new Date(this.postedJob.jobInterviewDetail.walkinDate).toISOString();
-          
-          this.postedJob.jobInterviewDetail.walkinTime=new Date(this.postedJob.jobInterviewDetail.walkinDate).toISOString();
-        //  let validtill=this.postedJob.jobInterviewDetail.validUntil+":"+this.postedJob.jobInterviewDetail.walkinTime;
-          this.postedJob.jobInterviewDetail.validUntil=new Date(this.postedJob.jobInterviewDetail.validUntil).toISOString();
-          this.recruiterModel.jobStatus=jobStatus;
-          this.recruiterModel.jobPostedDate=new Date().toISOString();
-          this.recruiterModel.jobUpdatedDate=new Date().toISOString();
-          
-          this.recruiterModel.postedJobs.push(postedJob);
-       
-     // this.jobPosting.reqId=+JSON.parse(localStorage.getItem('reqId'));
-     
-      if(jobStatus==1){
-        this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
-          this.toastr.success(result);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-      }else if(jobStatus==2){
-        this.recruiterService.updateJob(this.jobPosting).subscribe((result:any)=>{
-          this.toastr.success(result);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-      }else if(jobStatus==3){
-        this.recruiterService.publishJob(this.jobPosting).subscribe((result:any)=>{
-          this.toastr.success(result);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-      }
-      this.router.navigate(['/reqem/my-lising/manage-job-post']);
-    }
+  onSubmit(form:NgForm,jobStatus:any){
+         if(form.valid){
+          if(this.postedJob==undefined ){
+            this.postedJob=new PostedJobs();
+          } 
+        this.postedJob.jobId=this.recruiterModel.reqId;
+        //this.postedJob.aboutCompany=this.textEditorComponent.company;
+        this.postedJob.jobDescription=this.textEditorComponent.description;
+        // this.postedJob.jobInterviewInfo.validUntil=new Date(this.postedJob.jobInterviewInfo.validUntil).toISOString();
+        // this.postedJob.jobInterviewInfo.walkinDate=new Date(this.postedJob.jobInterviewInfo.walkinDate).toISOString();
+        //this.postedJob.jobPostedDate=new Date().toISOString();
+        this.postedJob.jobInterviewInfo.validUntil="";
+        this.postedJob.jobInterviewInfo.walkinDate="";
+        this.postedJob.jobInterviewInfo.walkinTime="";
+        this.postedJob.jobInterviewInfo.contactName="";
+        this.postedJob.jobInterviewInfo.contactNo=9789995443;
+        this.postedJob.jobPostedDate="2022-09-04";
+        this.postedJob.jobVisibility=true;
+        //"contactName": "",
+        //"contactNo": 9789995443
+        //"walkinDate": "",
+        //"walkinTime": "",
+       // "validUntil": "",
+        ///"contactName": "",
 
+        this.postedJob.jobStatus=jobStatus;
+        this.postedJobList.push(this.postedJob);
+        
+      if(jobStatus==1){
+        this.recruiterService.jobPostingSave(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+          this.toastr.success(result);
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);})
+        this.postedJobList=[];
+      }else if(jobStatus==2){
+        this.recruiterService.updateJob(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+          this.toastr.success(result);
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);})
+        this.postedJobList=[];
+      }else if(jobStatus==3){
+        this.recruiterService.publishJob(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+          this.toastr.success(result);
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);})
+        this.postedJobList=[];
+      }
+      //this.router.navigate(['/reqem/my-lising/manage-job-post']);
+    }
+  }
     onReset(){
-      this.jobPosting=new JobPosting();
+      this.postedJob=new PostedJobs();
       this.countryname='';
     }
 
@@ -370,5 +398,22 @@ getJobById(){
       })
     }
       return selectedName;
+    }
+    isExperience:boolean=false;
+    checkExperience(){
+      if(+this.postedJob.jobCtcInfo.minExp>+this.postedJob.jobCtcInfo.maxExp && this.postedJob.jobCtcInfo.maxExp!=""
+      && this.postedJob.jobCtcInfo.minExp!=""){
+        this.isExperience=true;
+        this.postedJob.jobCtcInfo.minExp='';
+        this.postedJob.jobCtcInfo.maxExp='';
+      }else if(+this.postedJob.jobCtcInfo.maxExp<+this.postedJob.jobCtcInfo.minExp && this.postedJob.jobCtcInfo.minExp!=""
+      && this.postedJob.jobCtcInfo.maxExp!=""){
+        this.isExperience=true;
+        this.postedJob.jobCtcInfo.minExp='';
+        this.postedJob.jobCtcInfo.maxExp='';
+      }
+      else{
+        this.isExperience=false;
+      }
     }
 }

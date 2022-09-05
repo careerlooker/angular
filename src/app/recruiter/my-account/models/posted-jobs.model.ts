@@ -1,14 +1,16 @@
-import { JobCtcDetail } from "./job-ctc-detail.model";
-import { JobDetail } from "./job-detail.model";
-import { JobInterviewDetail } from "./job-interview-detail.model";
-import { JobInterviewDetails } from "./job-interview-etails.model";
+import { JobCtcInfo } from "./job-ctc-info.model";
+import { JobInfo } from "./job-info.model";
+import { JobInterviewInfo } from "./job-interview-info.model";
+
 
 export class PostedJobs{
     jobId: number;
     jobDescription: string;
     aboutCompany: string;
-    jobDetail:JobDetail;
-    jobCtcDetail:JobCtcDetail;
-    jobInterviewDetail:JobInterviewDetail;
-    jobInterviewDetails:JobInterviewDetails;
+    jobInfo:JobInfo;
+    jobCtcInfo:JobCtcInfo;
+    jobInterviewInfo:JobInterviewInfo;
+    jobVisibility: boolean;
+    jobPostedDate: string;
+    jobStatus: string
 }

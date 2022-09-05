@@ -1,7 +1,8 @@
-export class JobDetail{
+export class JobInfo{
     jobTitle: string;
-    keySkill: string;
+    keySkills: string;
     country: string;
+    state:string;
     city: string;
     zipCode: number;
 }
