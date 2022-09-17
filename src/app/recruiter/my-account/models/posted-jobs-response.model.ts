@@ -2,8 +2,8 @@ import { JobCtcInfo } from "./job-ctc-info.model";
 import { JobInfo } from "./job-info.model";
 import { JobInterviewInfo } from "./job-interview-info.model";
 
-
-export class PostedJobs{
+export class PostedJobsResponse{
+    jobId:number;
     jobDescription: string;
     aboutCompany: string;
     companyName:string;
@@ -11,5 +11,7 @@ export class PostedJobs{
     jobCtcInfo:JobCtcInfo;
     jobInterviewInfo:JobInterviewInfo;
     jobVisibility: boolean;
-    jobStatus: string
+    jobStatus: string;
+    jobPostedDate:string;
+    matchingPercentage:number;
 }

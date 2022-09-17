@@ -36,33 +36,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>office Admin</td>
-            <td>2018/06/03 11:10:11</td>
-            <td>2018/06/03</td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
+          <tr *ngFor="let item of postedJobList">
+            <td>{{item.jobInfo.jobTitle}}</td>
+            <td> {{item.jobPostedDate|date:'yyyy-MM-dd'}}</td>
+            <td>{{item.jobInterviewInfo.validUntil|date:'yyyy-MM-dd'}}</td>
+            <td class="greennnn">{{item.jobStatus}}</td>
+            <td>{{item.matchingPercentage}}</td>
           </tr>
-          <tr>
-            <td>office Admin</td>
-            <td>2018/06/03 11:10:11</td>
-            <td>2018/06/03</td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>office Admin</td>
-            <td>2018/06/03 11:10:11</td>
-            <td>2018/06/03</td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>office Admin</td>
-            <td>2018/06/03 11:10:11</td>
-            <td>2018/06/03</td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
+          <tr *ngIf="postedJobList.length<=0">
+              <span>No records available</span>
           </tr>
         </tbody>
       </table>

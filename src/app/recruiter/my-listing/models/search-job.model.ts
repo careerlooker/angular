@@ -1,4 +1,5 @@
 export class SearchJob{
-    from:string;
-    to:string;
+    startDate: string;
+    endDate: string;
+    reqId:number
 }

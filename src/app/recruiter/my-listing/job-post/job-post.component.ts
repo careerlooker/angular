@@ -10,7 +10,7 @@ import { IndustryModel } from '../models/industry.model';
 import { FunctionalAreaModel } from '../models/functional-area.model';
 import { QualificationModel } from '../models/qualification.model';
 import { KeySkillsModel } from '../models/key-skills.model';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { RecruiterModel } from '../../my-account/models/recruiter.model';
 import { JobCtcInfo } from '../../my-account/models/job-ctc-info.model';
 import { PostedJobs } from '../../my-account/models/posted-jobs.model';
@@ -18,11 +18,6 @@ import { JobInterviewInfo } from '../../my-account/models/job-interview-info.mod
 import { JobInfo } from '../../my-account/models/job-info.model';
 import { NgForm } from '@angular/forms';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
-
-
-
-
-
 @Component({
   selector: 'app-job-post',
   templateUrl: './job-post.component.html',
@@ -37,8 +32,6 @@ export class JobPostComponent implements OnInit {
   postedJobList:Array<PostedJobs>=new Array<PostedJobs>();
   jobInterviewInfo:JobInterviewInfo=new JobInterviewInfo();
 
-
- 
   email: string;
   countryList: Array<CountriesModel>;
   stateList: Array<StatesModel>;
@@ -52,7 +45,7 @@ export class JobPostComponent implements OnInit {
   countryname: string;
   statename: string;
   jobId:number=0;
-
+  reqId:any;
   cityDropdownList: Array<CityModel>;
   selectedCity: Array<CityModel>;
   selectedcities: Array<CityModel>;
@@ -64,7 +57,8 @@ export class JobPostComponent implements OnInit {
   constructor(private sharedService:SharedService, 
               private recruiterService:RecruiterService,
               private toastr:ToastrService,
-              private router:Router) { 
+              private router:Router,
+              private route:ActivatedRoute) { 
               
                 this.dropdownSettings = {
                   singleSelection: false,
@@ -113,14 +107,12 @@ export class JobPostComponent implements OnInit {
     this.jobInfo=new JobInfo();
     this.jobCtcInfo=new JobCtcInfo();
     this.postedJob=new PostedJobs();
-    this.postedJobList=new Array<PostedJobs>();
-    this.jobInterviewInfo=new JobInterviewInfo();
-    this.postedJob.jobDescription=null;
-
     this.postedJob.jobInfo=new JobInfo();
     this.postedJob.jobCtcInfo=new JobCtcInfo();
     this.postedJob.jobInterviewInfo=new JobInterviewInfo();
-
+    this.postedJobList=new Array<PostedJobs>();
+    this.jobInterviewInfo=new JobInterviewInfo();
+    this.postedJob.jobDescription=null;
     this.selectedCity=new Array<CityModel>();
     this.selectedSkills=new Array<KeySkillsModel>();
     this.getRecruitrerDetails();
@@ -129,21 +121,45 @@ export class JobPostComponent implements OnInit {
     this.getfunctionalArea();
     this.getIndustryList();
     this.getQualification();  
-    
+    this.editJob();
   }
+test:any;
+  editJob(){
+    this.recruiterService.editJobMessage.subscribe((result:PostedJobs)=>{
+      if(result){
+        this.getJobById()
+        // this.postedJob.aboutCompany=result.aboutCompany;
+        // this.postedJob.companyName=result.companyName;
+        // this.postedJob.jobDescription=result.jobDescription;
+        // this.postedJob.jobInfo=result.jobInfo;
+        // this.postedJob.jobCtcInfo=result.jobCtcInfo;
+        // this.postedJob.jobInterviewInfo=result.jobInterviewInfo;
+
+        // this.jobInfo=result.jobInfo;
+        // this.jobCtcInfo=result.jobCtcInfo;
+        // this.jobInterviewInfo=result.jobInterviewInfo;
+
+        // this.postedJob.jobStatus=result.jobStatus;
+        // this.postedJob.jobVisibility=result.jobVisibility;
+        this.test=result.jobInfo.jobTitle
+      }
+    });
+  }
+
 
   getRecruitrerDetails(){
     this.recruiterService.getRecruiterDetails(localStorage.getItem('email')).subscribe(result=>{
       if(result){
         this.recruiterModel=result;
-        this.getJobById();
+        localStorage.setItem('reqId',this.recruiterModel.reqId.toString());
+      //  this.getJobById();
       }
     });
   }
 getJobById(){
   if(this.recruiterModel.reqId!=0){
   this.recruiterService.getJobById(this.recruiterModel.reqId).subscribe((result:any)=>{
-     // this.postedJob=result;
+      this.postedJob=result;
     })
   }
 }
@@ -163,14 +179,14 @@ getJobById(){
       let id=this.countryList.filter(x=>x.name==country)[0].id;
       this.sharedService.getAllStatesByCountryId(id).subscribe((states: Array<StatesModel>) => {
       this.stateList = states;
-      this.postedJob.jobInfo.country= this.countryList.filter(x=>x.name==country)[0].name;
+      this.jobInfo.country= this.countryList.filter(x=>x.name==country)[0].name;
     });
    }
    else{
      this.stateList=[];
      this.cityList=[];
-    this.postedJob.jobInfo.state='';
-    this.postedJob.jobInfo.city='';
+    this.jobInfo.state='';
+    this.jobInfo.city='';
    }
   }
   onStateSelect(state: any) {
@@ -178,18 +194,18 @@ getJobById(){
       let id=this.stateList.filter(x=>x.name==state)[0].id;
     this.sharedService.getAllCitiesByStateId(id).subscribe((cities: Array<CityModel>) => {
       this.cityList = cities;
-      this.postedJob.jobInfo.state= this.stateList.filter(x=>x.name==state)[0].name;
+      this.jobInfo.state= this.stateList.filter(x=>x.name==state)[0].name;
     });
     }
     else{
       this.cityList=[];
-      this.postedJob.jobInfo.city='';
+      this.jobInfo.city='';
     }
   }
  
   onSelectCity(city:any){
     if(city){
-    this.postedJob.jobInfo.city=this.cityList.filter(x=>x.name===city)[0].name;
+    this.jobInfo.city=this.cityList.filter(x=>x.name===city)[0].name;
     }
     else{
     }
@@ -218,7 +234,7 @@ getJobById(){
   }
 
   onSelectRadio(event:any){
-    this.postedJob.jobVisibility=event; 
+    this.postedJob.jobVisibility=event=='Yes'?true:false; 
   }
   onMinExpSelect(event:any){
     this.jobCtcInfo.minExp=event;
@@ -311,56 +327,45 @@ getJobById(){
          if(form.valid){
           if(this.postedJob==undefined ){
             this.postedJob=new PostedJobs();
-          } 
-        this.postedJob.jobId=this.recruiterModel.reqId;
-        //this.postedJob.aboutCompany=this.textEditorComponent.company;
+          }
         this.postedJob.jobDescription=this.textEditorComponent.description;
-        // this.postedJob.jobInterviewInfo.validUntil=new Date(this.postedJob.jobInterviewInfo.validUntil).toISOString();
-        // this.postedJob.jobInterviewInfo.walkinDate=new Date(this.postedJob.jobInterviewInfo.walkinDate).toISOString();
-        //this.postedJob.jobPostedDate=new Date().toISOString();
-        this.postedJob.jobInterviewInfo.validUntil="";
-        this.postedJob.jobInterviewInfo.walkinDate="";
-        this.postedJob.jobInterviewInfo.walkinTime="";
-        this.postedJob.jobInterviewInfo.contactName="";
-        this.postedJob.jobInterviewInfo.contactNo=9789995443;
-        this.postedJob.jobPostedDate="2022-09-04";
-        this.postedJob.jobVisibility=true;
-        //"contactName": "",
-        //"contactNo": 9789995443
-        //"walkinDate": "",
-        //"walkinTime": "",
-       // "validUntil": "",
-        ///"contactName": "",
-
+        this.postedJob.aboutCompany=this.recruiterModel.companyDetail.description;
+        this.postedJob.companyName=this.recruiterModel.personalInfo.companyName;
         this.postedJob.jobStatus=jobStatus;
+        this.postedJob.jobInfo=this.jobInfo;
+        this.postedJob.jobCtcInfo=this.jobCtcInfo
+        this.postedJob.jobInterviewInfo=this.jobInterviewInfo;
         this.postedJobList.push(this.postedJob);
+        var postedJobs={'postedJobs':this.postedJobList}
         
-      if(jobStatus==1){
-        this.recruiterService.jobPostingSave(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+      if(jobStatus=="1"){
+        this.recruiterService.jobPostingSave(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
           this.toastr.success(result);
+          this.router.navigate(['/reqem/my-lising/manage-job-post']);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);})
         this.postedJobList=[];
-      }else if(jobStatus==2){
-        this.recruiterService.updateJob(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+      }else if(jobStatus=="2"){
+        this.recruiterService.updateJob(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
           this.toastr.success(result);
+          this.router.navigate(['/reqem/my-lising/manage-job-post']);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);})
         this.postedJobList=[];
-      }else if(jobStatus==3){
-        this.recruiterService.publishJob(this.postedJobList,this.recruiterModel.reqId).subscribe((result:any)=>{
+      }else if(jobStatus=="3"){
+        this.recruiterService.publishJob(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
           this.toastr.success(result);
+          this.router.navigate(['/reqem/my-lising/manage-job-post']);
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);})
         this.postedJobList=[];
       }
-      //this.router.navigate(['/reqem/my-lising/manage-job-post']);
     }
   }
     onReset(){
       this.postedJob=new PostedJobs();
       this.countryname='';
-    }
+    } 
 
     setDropdownList(name:string){
       let i=0;
@@ -401,16 +406,16 @@ getJobById(){
     }
     isExperience:boolean=false;
     checkExperience(){
-      if(+this.postedJob.jobCtcInfo.minExp>+this.postedJob.jobCtcInfo.maxExp && this.postedJob.jobCtcInfo.maxExp!=""
-      && this.postedJob.jobCtcInfo.minExp!=""){
+      if(+this.jobCtcInfo.minExp>+this.jobCtcInfo.maxExp && this.jobCtcInfo.maxExp!=""
+      && this.jobCtcInfo.minExp!=""){
         this.isExperience=true;
-        this.postedJob.jobCtcInfo.minExp='';
-        this.postedJob.jobCtcInfo.maxExp='';
-      }else if(+this.postedJob.jobCtcInfo.maxExp<+this.postedJob.jobCtcInfo.minExp && this.postedJob.jobCtcInfo.minExp!=""
-      && this.postedJob.jobCtcInfo.maxExp!=""){
+        this.jobCtcInfo.minExp='';
+        this.jobCtcInfo.maxExp='';
+      }else if(+this.jobCtcInfo.maxExp<+this.jobCtcInfo.minExp && this.jobCtcInfo.minExp!=""
+      && this.jobCtcInfo.maxExp!=""){
         this.isExperience=true;
-        this.postedJob.jobCtcInfo.minExp='';
-        this.postedJob.jobCtcInfo.maxExp='';
+        this.jobCtcInfo.minExp='';
+        this.jobCtcInfo.maxExp='';
       }
       else{
         this.isExperience=false;

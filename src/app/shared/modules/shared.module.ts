@@ -17,6 +17,7 @@ import { SpinnerComponent } from '../components/spinner/spinner.component';
 import { FileUploadComponent } from '../components/file-upload/file-upload.component';
 import { DropdownDirective } from '../directives/app-dropdown.directive';
 import { RatingModule } from 'ng-starrating';
+import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.directive';
 
 @NgModule({
     declarations:[
@@ -31,8 +32,8 @@ import { RatingModule } from 'ng-starrating';
         RestrictFutureDateDirective,
         ValidatePhoneNumberDirective,
         FileUploadComponent,
-        DropdownDirective
-        
+        DropdownDirective,
+        AllownumbersonlyDirective
     ],
     imports:[
         CommonModule,
@@ -56,7 +57,8 @@ import { RatingModule } from 'ng-starrating';
         RestrictFutureDateDirective,
         ValidatePhoneNumberDirective,
         FileUploadComponent,
-        DropdownDirective
+        DropdownDirective,
+        AllownumbersonlyDirective
 
     ]
 

@@ -8,7 +8,7 @@
           <input type="date" 
                   class="form-control" 
                   id="from"
-                  [(ngModel)]="search.from">
+                  [(ngModel)]="search.startDate">
           <img src="./assets/img/calender.png">
         </div>
       </div>
@@ -19,13 +19,13 @@
           <input type="date" 
                   class="form-control" 
                   id="to"
-                  [(ngModel)]="search.to">
+                  [(ngModel)]="search.endDate">
           <img src="./assets/img/calender.png">
         </div>
       </div>
 
       <div class="col-sm-2">
-        <button type="button" class="btn btn_form3" (click)="searchJob(search)">Search</button>
+        <button type="button" class="btn btn_form3" (click)="searchJob()">Search</button>
       </div>
     </div>
 
@@ -43,19 +43,24 @@
         <tbody style="border: 0px">
           <tr class="border-manage" *ngFor="let jobItem of postedJobList">
             <td class="officve-admin">
-              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.reqId)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On: {{jobItem.jobPostedDate|date:'yyyy-MM-dd h:mm:ss'}} 
+              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.jobId)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On: {{jobItem.jobPostedDate|date:'yyyy-MM-dd'}} 
                 <!-- Expiry Date:{{jobItem.validity}} -->
               </span>
                 <div class="clearfix"></div>
+                <input type="checkbox" [(ngModel)]="jobItem.jobId">
                 <div class="button-managepost">
-                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob(jobItem.id)">Delete</button>
-                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.id)">Copy</button>
+                 
+                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob(jobItem.jobId)">Delete</button>
+                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.jobId)">Copy</button>
                 </div>
               </div>
             </td>
-            <td class="greennnn">{{jobItem.jobStatus===3?'Active':'Non Active'}}</td>
-            <td>0</td>
+            <td class="greennnn">{{jobItem.jobStatus}}</td>
+            <td>{{jobItem.matchingPercentage}}</td>
+          </tr>
+          <tr *ngIf="postedJobList.length<=0">
+              <span>Records not found</span>
           </tr>
           <!-- <tr class="border-manage">
             <td class="officve-admin">

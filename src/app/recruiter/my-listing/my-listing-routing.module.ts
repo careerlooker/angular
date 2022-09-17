@@ -8,11 +8,11 @@ import { MatchingProfileComponent } from './matching-profile/matching-profile.co
 import { MyListingComponent } from './my-listing.component';
 const childRoutes:Routes=[
         {path:'',component:MyListingComponent, children:[
-        {path:'',redirectTo:'candidate-manager',pathMatch:'full'},
-        {path:'candidate-manager',component:CandidateManagerComponent},
+        {path:'',redirectTo:'job-post',pathMatch:'full'},
         {path:'job-post',component:JobPostComponent},
         {path:'job-post/:id',component:JobPostComponent},
         {path:'manage-job-post',component:ManageJobPostComponent},
+        {path:'candidate-manager',component:CandidateManagerComponent},
         {path:'edit-job-post',component:EditManageJobComponent},
         {path:'matching-profile',component:MatchingProfileComponent}]
         }]

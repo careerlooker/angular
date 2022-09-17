@@ -51,6 +51,7 @@ export class ProfileComponent extends BaseModel implements OnInit {
       this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any) => {
         if(result!=null){
         this.recruiterModel = result;
+        localStorage.setItem('reqId',this.recruiterModel.reqId.toString());
         this.getCountries();
       }
       this.recruiterService.recruiterSubject.next(this.recruiterModel);

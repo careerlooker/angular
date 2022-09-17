@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
@@ -29,6 +29,8 @@ export class RecruiterService{
     recruiterSubject:Subject<any>=new Subject<any>();
     recruiterMessage=this.recruiterSubject.asObservable();
 
+    editJobSubject:Subject<any>=new Subject<any>();
+    editJobMessage=this.editJobSubject.asObservable();
     constructor(private httpClient:HttpClient){}
 
     recruiterLogin(credentials):Observable<UserModel>{
@@ -46,13 +48,13 @@ export class RecruiterService{
     updateReqProfile(recruiterProfile:RecruiterModel):Observable<any>{
         return this.httpClient.patch<any>(environment.baseUrl+'co-api/recruiter/register',recruiterProfile,{responseType:'text' as 'json'})
     }
-
+ 
     changeMessage(userModel:UserModel){
         this.messageSource.next(userModel)
     }
    
-    jobPostingSave(jobpost:Array<PostedJobs>,reqId:number):Observable<any>{
-        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobPosts',jobpost,{responseType:'text' as 'json'});
+    jobPostingSave(jobpost:any,reqId:number):Observable<any>{
+        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId,jobpost,{responseType:'text' as 'json'});
     }
 
 
@@ -76,29 +78,29 @@ export class RecruiterService{
         return this.httpClient.get<Array<JobPosting>>(environment.baseUrl+'co-api/recruiter/jobpost?p='+page);
     }
 
-    jobSearch(search:SearchJob):Observable<Array<JobPosting>>{
-        return this.httpClient.get<Array<JobPosting>>(environment.baseUrl+'co-api/recruiter/jobpost?p=5'+'&sd='+search.from+' 00:00:00' +'&ed='+search.to+' 00:00:00');
-       //return this.httpClient.get<Array<JobPosting>>('http://18.188.204.127:8080/co-api/recruiter/jobpost?page=1&sd=2019-10-01 14:58:00.00&ed=2019-10-15 14:58:00.00')
+    jobSearch(search:SearchJob):Observable<any>{
+        return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/jobs/filter/'+search.reqId+'?reqId='+search.reqId+'&startDate='+search.startDate+'&endDate='+search.endDate);
     }
+    
 
     getJobById(reqId:number):Observable<PostedJobs>{
-        return this.httpClient.get<PostedJobs>(environment.baseUrl+'co-api/recruiter/postedJobs/'+reqId)
+        return this.httpClient.get<PostedJobs>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId)
     }
 
-    publishJob(jobPublish:Array<PostedJobs>,reqId:number):Observable<JobPosting>{
-      return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobs',jobPublish);
+    publishJob(jobPublish:any,reqId:number):Observable<JobPosting>{
+      return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobPosts',jobPublish);
     }
 
     deleteJob(jobDelete:JobOperationModel):Observable<JobPosting>{
         return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/jobpost/de',jobDelete);
       }
 
-    copyJob(jobCopy:JobOperationModel):Observable<JobPosting>{
-        return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/jobpost/co',jobCopy);
+    copyJob(reqId:number,jobCopy:any):Observable<any>{
+        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/jobs/copied/'+reqId,jobCopy,{responseType:'text' as 'json'});
     }
 
-    updateJob(jobUpdate:Array<PostedJobs>,reqId:number):Observable<any>{
-        return this.httpClient.patch<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobs',jobUpdate);
+    updateJob(jobUpdate:any,reqId:number):Observable<any>{
+        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobPosts',jobUpdate);
     }
  
 }

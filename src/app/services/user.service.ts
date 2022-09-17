@@ -18,8 +18,11 @@ export class UserService{
         if(registerType=='recruiter'){
         return this.httpClient.post<any>(environment.baseUrl+'recruiter/register',signUpModel, {headers:headers, responseType: 'text'as 'json'})
         }
-        else{
+        else if(registerType=='seeker'){
             return this.httpClient.post<any>(environment.baseUrl+'seeker/register',signUpModel, {headers:headers, responseType: 'text'as 'json'})
+        }
+        else if(registerType=='admin'){
+
         }
     }
 

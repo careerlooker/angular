@@ -51,24 +51,26 @@ export class SignupComponent implements OnInit {
         this.toastr.error('Passowrd and confirm password not matching');
         return;
       }
-      if(this.registerType=='seeker'){
-      this.jobSeekerModel.email= this.signupModel.email;
-      this.jobSeekerModel.password=this.signupModel.password;
-      this.jobSeekerModel.personalInfo=new PersonalInfo();
-      this.jobSeekerModel.personalInfo.firstName=this.signupModel.firstName;
-      this.jobSeekerModel.personalInfo.lastName=this.signupModel.lastName;
-      this.jobSeekerModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
-      this.signUp(this.jobSeekerModel)
-      }
-      else{
-        this.recruiterModel.email=this.signupModel.email;
-        this.recruiterModel.password=this.signupModel.password;
-        this.recruiterModel.personalInfo=new PersonalInformation();
-        this.recruiterModel.personalInfo.firstName=this.signupModel.firstName;
-        this.recruiterModel.personalInfo.lastName=this.signupModel.lastName;
-        this.recruiterModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
-        this.signUp(this.recruiterModel)
-      }    
+        
+       this.signUp(this.signupModel)
+      //if(this.registerType=='seeker'){
+      // this.jobSeekerModel.email= this.signupModel.email;
+      // this.jobSeekerModel.password=this.signupModel.password;
+      // this.jobSeekerModel.personalInfo=new PersonalInfo();
+      // this.jobSeekerModel.personalInfo.firstName=this.signupModel.firstName;
+      // this.jobSeekerModel.personalInfo.lastName=this.signupModel.lastName;
+      // this.jobSeekerModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
+      // this.signUp(this.jobSeekerModel)
+     // }
+     // else{
+        // this.recruiterModel.email=this.signupModel.email;
+        // this.recruiterModel.password=this.signupModel.password;
+        // this.recruiterModel.personalInfo=new PersonalInformation();
+        // this.recruiterModel.personalInfo.firstName=this.signupModel.firstName;
+        // this.recruiterModel.personalInfo.lastName=this.signupModel.lastName;
+        // this.recruiterModel.personalInfo.phoneNo=this.signupModel.phoneNumber;
+        // this.signUp(this.recruiterModel)
+     // }    
     }
     else {
       this.toastr.error('Please enter all madatory details');
