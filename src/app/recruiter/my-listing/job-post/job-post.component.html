@@ -138,9 +138,9 @@
         <label>Annual CTC</label>
         <input type="text" 
               class="form-control" 
-              id="annualCtc" 
-              name="annualCtc"
-              [(ngModel)]="jobCtcInfo.annualCtc"
+              id="annualCTC" 
+              name="annualCTC"
+              [(ngModel)]="jobCtcInfo.annualCTC"
               required>
       </div>
     </div>
@@ -191,7 +191,7 @@
                   class="form-control" 
                   name="funcArea"
                   list="functionalAreaList" 
-                  [(ngModel)]="jobCtcInfo.functionArea"
+                  [(ngModel)]="jobCtcInfo.functionalArea"
                   (change)="onFunAreaSelect($event.target.value)" 
                   required/>
         <datalist id="functionalAreaList">
@@ -206,8 +206,8 @@
         <input    type="text"
                   class="form-control" 
                   name="industry"
+                  list="industryList"
                   [(ngModel)]="jobCtcInfo.industry"
-                  list="industryList" 
                   (change)="onIndustrySelect($event.target.value)" 
                   required/>
          <datalist id="industryList">
@@ -311,6 +311,8 @@
                id="WalkInTime" 
                name="WalkInTime"
                [(ngModel)]="jobInterviewInfo.walkinTime"
+            
+               (select)="checkWalkDate($event.target.value)"
                >
 
       </div>
@@ -364,13 +366,15 @@
           <input type="radio" 
                   name="contactVisibility" 
                   style="margin: 0px; height: inherit"
-                  (change)="onSelectRadio(postedJob.jobVisibility)"
-                  value="postedJob.jobVisibility"> No
+                  [(ngModel)]="postedJob.jobVisibility"
+                 value="true"
+                 > Yes
           <input type="radio" 
                   name="contactVisibility" 
                   style="margin: 0px; height: inherit"
-                  (change)="onSelectRadio(postedJob.jobVisibility)"
-                  value="postedJob.jobVisibility">Yes 
+                  [(ngModel)]="postedJob.jobVisibility"
+                  value="false"
+                  >No
         </label>
       </div>
     </div>
@@ -386,9 +390,9 @@
   <div class="row">
     <div class="edit-button">
       <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onReset()">Reset</button>
-      <button *ngIf="jobId!=0" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'2')">Update</button>
-      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'3')">Save &amp; Publish</button>
-      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'1')">Save</button>
+      <button *ngIf="isJobUpdate && postedJob.jobStatus!='Active'" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'InActive')">Update</button>
+      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'Active')">Save &amp; Publish</button>
+      <button *ngIf="isJobSave" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'Pending')">Save</button>
     </div>
   </div>
 </form>

@@ -11,8 +11,6 @@ import { MatchingProfileComponent } from './matching-profile/matching-profile.co
 import { MyListingComponent } from './my-listing.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
-//import { NgbCalendar, NgbCalendarHebrew, NgbDatepickerI18n, NgbDatepickerI18nHebrew } from '@ng-bootstrap/ng-bootstrap';
-
 @NgModule({
     declarations:[
         MyListingComponent,
@@ -30,10 +28,6 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
         MyListingRoutingModule
     ],
     exports:[],
-    // providers:[
-    //     {provide: NgbCalendar, useClass: NgbCalendarHebrew},
-    // {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew}
-    //],
     schemas:[
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

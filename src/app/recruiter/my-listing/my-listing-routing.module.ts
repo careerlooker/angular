@@ -10,7 +10,7 @@ const childRoutes:Routes=[
         {path:'',component:MyListingComponent, children:[
         {path:'',redirectTo:'job-post',pathMatch:'full'},
         {path:'job-post',component:JobPostComponent},
-        {path:'job-post/:id',component:JobPostComponent},
+        {path:'job-post/:id/:jobId',component:JobPostComponent},
         {path:'manage-job-post',component:ManageJobPostComponent},
         {path:'candidate-manager',component:CandidateManagerComponent},
         {path:'edit-job-post',component:EditManageJobComponent},

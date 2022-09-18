@@ -9,7 +9,6 @@ import { FunctionalAreaModel } from '../my-listing/models/functional-area.model'
 import { QualificationModel } from '../my-listing/models/qualification.model';
 import { KeySkillsModel } from '../my-listing/models/key-skills.model';
 import { SearchJob } from '../my-listing/models/search-job.model';
-import { JobOperationModel } from '../my-listing/models/job-operation.model';
 import { RecruiterModel } from '../my-account/models/recruiter.model';
 import { SocialNetwork } from '../my-account/models/social-network.model';
 import { PostedJobs } from '../my-account/models/posted-jobs.model';
@@ -91,16 +90,27 @@ export class RecruiterService{
       return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobPosts',jobPublish);
     }
 
-    deleteJob(jobDelete:JobOperationModel):Observable<JobPosting>{
-        return this.httpClient.patch<JobPosting>(environment.baseUrl+'co-api/recruiter/jobpost/de',jobDelete);
+    deleteJob(reqId:number,jobId:Array<number>):Observable<any>{
+        let ids="?jobIds="
+        for(let i=1; i<jobId.length;i++){
+            if(i<jobId.length-1){
+            ids+=jobId[i]+'&jobIds='
+            }
+            else{
+            ids+=jobId[i];
+            }
+        }
+        return this.httpClient.delete<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+ids);
       }
 
     copyJob(reqId:number,jobCopy:any):Observable<any>{
         return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/jobs/copied/'+reqId,jobCopy,{responseType:'text' as 'json'});
     }
 
-    updateJob(jobUpdate:any,reqId:number):Observable<any>{
-        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/jobPosts',jobUpdate);
+    updateJob(reqId:number,jobId:number,jobUpdate:any):Observable<any>{
+        return this.httpClient.patch<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+'/'+jobId,jobUpdate,{responseType:'text' as 'json'});
     }
- 
+    getJobForEdit(reqId:number,jobId:number):Observable<any>{
+        return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+'/'+jobId);
+    }
 }

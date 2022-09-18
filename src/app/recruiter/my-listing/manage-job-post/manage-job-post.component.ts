@@ -41,9 +41,10 @@ export class ManageJobPostComponent implements OnInit {
   }
 
   deleteJob(id:number){
-    this.jobOperation.id=id;
-    this.jobOperation.reqId=+JSON.parse(localStorage.getItem('reqId'));
-    this.recruiterService.deleteJob(this.jobOperation).subscribe((result:any)=>{
+     let array=[]
+     array.push(8);
+     array.push(9)
+    this.recruiterService.deleteJob(this.reqId,array).subscribe((result:any)=>{
       this.toastr.success('Job has been deleted successfully');
       this.getPostedJob();
     },(err: HttpErrorResponse) => {
@@ -74,8 +75,8 @@ private filterJobById(jobId:number,jobType:string){
     postedJob.jobInterviewInfo=job.jobInterviewInfo;
     postedJob.jobStatus="1";
     postedJob.jobVisibility=job.jobVisibility;
-    let postedJobs=new Array<PostedJobs>();
     if(jobType=='copy'){
+      let postedJobs=new Array<PostedJobs>();
     postedJobs.push(postedJob);
     var postedJobList={"postedJobs":postedJobs};
     return postedJobList;
@@ -86,9 +87,7 @@ private filterJobById(jobId:number,jobType:string){
 }
   navigateJobPost(jobId:number){
     if(jobId){
-      let postedJobList=this.filterJobById(jobId,'edit');
-      this.recruiterService.editJobSubject.next(postedJobList);
-      this.router.navigate(['/reqem/my-lising/job-post']);
+      this.router.navigate(['/reqem/my-lising/job-post'],{queryParams:{reqId:this.reqId,jobId:jobId}});
     }
   }
   searchJob(){
