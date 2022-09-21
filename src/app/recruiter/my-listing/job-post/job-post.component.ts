@@ -338,16 +338,16 @@ getJobById(){
         this.postedJob.jobDescription=this.textEditorComponent.description;
         this.postedJob.aboutCompany=this.recruiterModel.companyDetail.description;
         this.postedJob.companyName=this.recruiterModel.personalInfo.companyName;
-        this.postedJob.jobStatus=jobStatus;
+        this.postedJob.jobStatus=this.postedJob.jobStatus=='Active'?'Active':jobStatus;
         this.postedJob.jobInfo=this.jobInfo;
         this.postedJob.jobCtcInfo=this.jobCtcInfo
         this.postedJob.jobInterviewInfo=this.jobInterviewInfo;
         this.postedJobList.push(this.postedJob);
         var postedJobs={'postedJobs':this.postedJobList}
         
-      if(jobStatus=="Pending"){
+      if(jobStatus=="Pending" ||(jobStatus=="Active" && this.jobId==0)){
         this.recruiterService.jobPostingSave(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
-          this.toastr.success(result);
+          this.toastr.success(result).message;
           this.onReset();
           this.router.navigate(['/reqem/my-lising/manage-job-post']);
       },(err: HttpErrorResponse) => {
@@ -361,7 +361,7 @@ getJobById(){
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);})
         this.postedJobList=[];
-      }else if(jobStatus=="Active"){
+      }else if(jobStatus=="Active" && this.jobId>0){
         this.recruiterService.updateJob(this.reqId,this.jobId, postedJobs).subscribe((result:any)=>{
           this.toastr.success(result);
           this.onReset();
@@ -379,6 +379,8 @@ getJobById(){
       this.jobInterviewInfo=new JobInterviewInfo()
       this.textEditorComponent.jobDescription=null;
       this.postedJob.jobDescription=null;
+      this.isJobSave=true;
+      this.isJobUpdate=false;
     } 
 
     setDropdownList(name:string){

@@ -285,7 +285,6 @@
   </div>
   <hr>
   <!-- <h4><strong>Interview</strong></h4><br> -->
-
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
@@ -296,11 +295,6 @@
                name="WalkInDate"
                 [(ngModel)]="jobInterviewInfo.walkinDate"
                >
-               <!-- <input class="form-control" placeholder="yyyy-mm-dd"
-               name="dp" [(ngModel)]="postedJob.jobInterviewInfo.walkinDate" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-        </div> -->
       </div>
     </div>
     <div class="col-sm-4">
@@ -389,11 +383,13 @@
   </div> -->
   <div class="row">
     <div class="edit-button">
-      <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onReset()">Reset</button>
-      <button *ngIf="isJobUpdate && postedJob.jobStatus!='Active'" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'InActive')">Update</button>
+      <button   type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onReset()">Reset</button>
+      <button *ngIf="isJobUpdate" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'InActive')">Update</button>
       <button type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'Active')">Save &amp; Publish</button>
       <button *ngIf="isJobSave" type="button" class="btn btn_form5 pull-right" style="margin-top: 0px" (click)="onSubmit(form,'Pending')">Save</button>
     </div>
+    <p-calendar  [ngModelOptions]="{standalone: true}"
+    ></p-calendar>
   </div>
 </form>
 </div>

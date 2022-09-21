@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { forwardRef, NgModule } from '@angular/core';
 import {RichTextEditorAllModule, RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor'; 
 import { TextEditorComponent } from '../components/text-editor/text-editor.component';
 import { StarRatingComponent } from '../components/star-rating/star-rating.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -18,7 +18,9 @@ import { FileUploadComponent } from '../components/file-upload/file-upload.compo
 import { DropdownDirective } from '../directives/app-dropdown.directive';
 import { RatingModule } from 'ng-starrating';
 import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.directive';
-
+import { PrimengModule } from './primeng.module';
+import { Calendar, CalendarModule } from 'primeng/calendar';
+import {TableModule} from 'primeng/table';
 @NgModule({
     declarations:[
         TextEditorComponent,
@@ -43,7 +45,9 @@ import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.dire
         ReactiveFormsModule,
         ToastrModule.forRoot(),
         RichTextEditorAllModule,
-        RatingModule
+        RatingModule,
+        CalendarModule,
+        TableModule
     ],
     exports:[
         TextEditorComponent,
@@ -60,6 +64,9 @@ import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.dire
         DropdownDirective,
         AllownumbersonlyDirective
 
+    ],
+    providers:[
+        
     ]
 
 })

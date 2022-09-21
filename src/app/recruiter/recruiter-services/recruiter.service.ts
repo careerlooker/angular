@@ -92,15 +92,15 @@ export class RecruiterService{
 
     deleteJob(reqId:number,jobId:Array<number>):Observable<any>{
         let ids="?jobIds="
-        for(let i=1; i<jobId.length;i++){
+        for(let i=0; i<jobId.length;i++){
             if(i<jobId.length-1){
-            ids+=jobId[i]+'&jobIds='
+                ids+=jobId[i]+'&jobIds='
             }
             else{
-            ids+=jobId[i];
+                ids+=jobId[i];
             }
         }
-        return this.httpClient.delete<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+ids);
+        return this.httpClient.delete<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+ids,{responseType:'text' as 'json'});
       }
 
     copyJob(reqId:number,jobCopy:any):Observable<any>{

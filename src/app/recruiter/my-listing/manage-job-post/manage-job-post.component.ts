@@ -23,6 +23,7 @@ export class ManageJobPostComponent implements OnInit {
   paging:boolean= false;
   page:number=0;
   reqId:number;
+  jobIdsForDelete:Array<number>=new Array<number>();
   constructor(private recruiterService:RecruiterService,
               private router:Router,
               private toastr:ToastrService) { }
@@ -40,16 +41,29 @@ export class ManageJobPostComponent implements OnInit {
       this.toastr.error(err.message);})
   }
 
-  deleteJob(id:number){
-     let array=[]
-     array.push(8);
-     array.push(9)
-    this.recruiterService.deleteJob(this.reqId,array).subscribe((result:any)=>{
-      this.toastr.success('Job has been deleted successfully');
-      this.getPostedJob();
+  selectedJobForDelete(selectedJobId:any,event:any){
+    if(event==true){
+     this.jobIdsForDelete.push(selectedJobId);
+    }
+    else{
+      let index=this.jobIdsForDelete.findIndex(x=>x==selectedJobId);
+      this.jobIdsForDelete.splice(index,1);
+    }
+ }
+ deleteJob(){
+  if(this.jobIdsForDelete.length>0){
+  this.recruiterService.deleteJob(this.reqId,this.jobIdsForDelete).subscribe((result:any)=>{
+    this.toastr.success('Job has been deleted successfully');
+    this.jobIdsForDelete=[];
+    this.getPostedJob();
     },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message);})
+    this.toastr.error(err.message);})
   }
+  else{
+    this.toastr.info('Please select the job for delete')
+  }
+ }
+
   copyJob(jobId:number){
     if(jobId){
       let postedJobList=this.filterJobById(jobId,'copy')
