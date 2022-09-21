@@ -56,6 +56,7 @@ export class JobPostComponent implements OnInit {
   isJobPublish:boolean;
   isEdit:boolean;
   isJobSave:boolean;
+  today:any;
   constructor(private sharedService:SharedService, 
               private recruiterService:RecruiterService,
               private toastr:ToastrService,
@@ -128,6 +129,7 @@ export class JobPostComponent implements OnInit {
     this.getQualification();  
     this.editJob();
     this.isJobSave=true;
+    this.today= new Date().toISOString().split('T')[0];
   }
   editJob(){
     if(this.reqId>0){

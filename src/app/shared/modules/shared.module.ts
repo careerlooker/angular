@@ -21,6 +21,7 @@ import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.dire
 import { PrimengModule } from './primeng.module';
 import { Calendar, CalendarModule } from 'primeng/calendar';
 import {TableModule} from 'primeng/table';
+import { FilterPipe } from '../pipes/filter.pipe';
 @NgModule({
     declarations:[
         TextEditorComponent,
@@ -35,7 +36,8 @@ import {TableModule} from 'primeng/table';
         ValidatePhoneNumberDirective,
         FileUploadComponent,
         DropdownDirective,
-        AllownumbersonlyDirective
+        AllownumbersonlyDirective,
+        FilterPipe
     ],
     imports:[
         CommonModule,
@@ -62,7 +64,8 @@ import {TableModule} from 'primeng/table';
         ValidatePhoneNumberDirective,
         FileUploadComponent,
         DropdownDirective,
-        AllownumbersonlyDirective
+        AllownumbersonlyDirective,
+        FilterPipe
 
     ],
     providers:[

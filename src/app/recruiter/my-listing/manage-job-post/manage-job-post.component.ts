@@ -112,7 +112,7 @@ private filterJobById(jobId:number,jobType:string){
       this.recruiterService.jobSearch(this.search).subscribe((result:any)=>{
          if(result){
           this.postedJobList=result;
-          console.log(this.postedJobList);
+          this.setPaging();
          }
          else{
           this.postedJobList=[];
@@ -124,7 +124,7 @@ private filterJobById(jobId:number,jobType:string){
         this.toastr.info('From Date should be less than To Date')
       }
   }
-
+   
 
   nextPage(){
     this.page+=1;
@@ -148,3 +148,4 @@ private filterJobById(jobId:number,jobType:string){
     }
   }
 }
+

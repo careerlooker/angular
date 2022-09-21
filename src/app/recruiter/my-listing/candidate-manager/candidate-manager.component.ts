@@ -6,9 +6,9 @@ import { JobCtcInfo } from '../../my-account/models/job-ctc-info.model';
 import { JobInfo } from '../../my-account/models/job-info.model';
 import { JobInterviewInfo } from '../../my-account/models/job-interview-info.model';
 import { PostedJobsResponse } from '../../my-account/models/posted-jobs-response.model';
-import { PostedJobs } from '../../my-account/models/posted-jobs.model';
 import { RecruiterModel } from '../../my-account/models/recruiter.model';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
+import { SearchJob } from '../models/search-job.model';
 
 @Component({
   selector: 'app-candidate-manager',
@@ -20,20 +20,13 @@ export class CandidateManagerComponent extends BaseModel implements OnInit {
   postedJobs:PostedJobsResponse=new PostedJobsResponse();
   postedJobList:Array<PostedJobsResponse>=new Array<PostedJobsResponse>();
   reqId:number;
+  search:SearchJob=new SearchJob();
   constructor(private recruiterService:RecruiterService,
     private toastr:ToastrService
               ) { super()}
 
   ngOnInit() {
-   // this.getCandidateDetails();
    this.getPostedJob();
-  }
-
-  getCandidateDetails(){
-    this.email=localStorage.getItem('email');
-    this.recruiterService.getRecruiterDetails(this.email).subscribe((result:RecruiterModel)=>{
-      this.recruiterModel=result;
-    });
   }
 
   getPostedJob(){
@@ -62,5 +55,26 @@ export class CandidateManagerComponent extends BaseModel implements OnInit {
       }
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message);})
+  }
+
+  searchJob(){
+    let fromDate=new Date(this.search.startDate);
+    let toDate=new Date(this.search.endDate);
+    if(fromDate <=toDate){
+     this.search.reqId=this.reqId;
+      this.recruiterService.jobSearch(this.search).subscribe((result:any)=>{
+         if(result){
+          this.postedJobList=result;
+          console.log(this.postedJobList);
+         }
+         else{
+          this.postedJobList=[];
+         }
+      },(err: HttpErrorResponse) => {
+        this.toastr.error(err.message);})
+      }
+      else{
+        this.toastr.info('From Date should be less than To Date')
+      }
   }
 }

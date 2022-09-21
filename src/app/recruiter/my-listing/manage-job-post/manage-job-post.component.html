@@ -8,8 +8,9 @@
           <input type="date" 
                   class="form-control" 
                   id="from"
-                  [(ngModel)]="search.startDate">
-          <img src="./assets/img/calender.png">
+                  [(ngModel)]="search.startDate"
+                 >
+          <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
 
@@ -19,8 +20,9 @@
           <input type="date" 
                   class="form-control" 
                   id="to"
-                  [(ngModel)]="search.endDate">
-          <img src="./assets/img/calender.png">
+                  [(ngModel)]="search.endDate"
+                 >
+          <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
 
@@ -32,7 +34,7 @@
   </div>
   <div class="manage-job-post-2">
     <div class="candidate-table">
-      <table class="table">
+      <table class="table" style="border: 1px;">
         <thead>
           <tr>
             <th class="titlle_job">Job Title</th>
@@ -40,7 +42,7 @@
             <th>Matching Profile(S)</th>
           </tr>
         </thead>
-        <tbody style="border: 0px">
+        <tbody style="border: 1px">
           <tr *ngIf="jobIdsForDelete.length>1">
             <button  type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete Selected Job</button>
           </tr>
@@ -59,36 +61,16 @@
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{'color':jobItem.jobStatus=='InActive'?'orange':'green'}">{{jobItem.jobStatus}}</td>
+            <td 
+            [ngStyle]="{'color': (jobItem.jobStatus === 'Pending') ? 'red' : (jobItem.jobStatus === 'InActive') ? 'orange' : (jobItem.jobStatus === 'Active') ? 'green' : ''}">{{jobItem.jobStatus}}</td>
             <td>{{jobItem.matchingPercentage}}</td>
           </tr>
           <tr *ngIf="postedJobList.length<=0">
-              <span>Records not found</span>
+              <td style="text-align:right;">Records not found</td>
           </tr>
-         
-          
-
-         
+          <tr  style="text-align:right;" *ngIf="postedJobList.length>0">{{'All records '+ postedJobList.length}}</tr>
         </tbody>
       </table>
-      <p-table >
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Vin</th>
-                <th>Year</th>
-                <th>Brand</th>
-                <th>Color</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-car>
-            <tr>
-                <!-- <td>{{car.vin}}</td>
-                <td>{{car.year}}</td>
-                <td>{{car.brand}}</td>
-                <td>{{car.color}}</td> -->
-            </tr>
-        </ng-template>
-    </p-table>
       <div class="left_arrow">
         <ul>
           <li><a><i class="fas fa-chevron-left" (click)="previousPage()" disabled="paging"></i></a></li>
