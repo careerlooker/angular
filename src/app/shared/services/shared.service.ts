@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class SharedService {
    
     constructor(private httpClient:HttpClient){}
-   
+    
     getAllCountries():Observable<Array<CountriesModel>>{
         return this.httpClient.get<Array<CountriesModel>>(environment.baseUrl+'co-api/country');
     }
@@ -36,15 +36,13 @@ export class SharedService {
         
     }
 
-    uploadPhoto(selectedFile:File,type:string){
+    uploadPhoto(selectedFile:File,picType:string,reqId:number){
         const formData:FormData=new FormData();
         formData.append('file',selectedFile);
-    
-        return this.httpClient.post(environment.baseUrl+'co-api/uploadfile/'+type,formData,{ reportProgress:true,observe:'events'}); 
-      // return this.httpClient.post('http://localhost:55611/api/Image/UploadImage',formData); 
-
+        return this.httpClient.post(environment.baseUrl+'co-api/uploadfile/'+picType+'/'+reqId,
+        formData,{ responseType:'text' as 'json',reportProgress:true,observe:'events'});  
     }
- 
+
     getAllCities():Observable<Array<CityModel>>{
       return  this.httpClient.get<Array<CityModel>>(environment.baseUrl+'co-api/city')
     }

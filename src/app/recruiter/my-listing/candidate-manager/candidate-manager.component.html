@@ -5,21 +5,29 @@
         <div class="col-sm-5">
           <div class="form-group">
             <label>From</label>
-            <input type="email" class="form-control" id="email" placeholder="e.g. Johan">
-            <img src='./assets/img/calender.png'>
+            <input type="date"
+             class="form-control" 
+            id="date" 
+            placeholder="e.g. Johan"
+            [(ngModel)]="search.startDate">
+            <!-- <img src='./assets/img/calender.png'> -->
           </div>
         </div>
 
         <div class="col-sm-5">
           <div class="form-group">
             <label>From</label>
-            <input type="email" class="form-control" id="email" placeholder="e.g. Johan">
-            <img src='./assets/img/calender.png'>
+            <input type="date" 
+            class="form-control" 
+            id="date"
+             placeholder="e.g. Johan"
+             [(ngModel)]="search.endDate">
+            <!-- <img src='./assets/img/calender.png'> -->
           </div>
         </div>
 
         <div class="col-sm-2">
-          <button type="submit" class="btn btn_form3">Search</button>
+          <button type="button" class="btn btn_form3" (click)="searchJob()">Search</button>
         </div>
       </div>
 
@@ -40,14 +48,18 @@
             <td>{{item.jobInfo.jobTitle}}</td>
             <td> {{item.jobPostedDate|date:'yyyy-MM-dd'}}</td>
             <td>{{item.jobInterviewInfo.validUntil|date:'yyyy-MM-dd'}}</td>
-            <td class="greennnn">{{item.jobStatus}}</td>
+            <td [ngStyle]="{'color': (item.jobStatus === 'Pending') ? 'red' : (item.jobStatus === 'InActive') ? 'orange' : (item.jobStatus === 'Active') ? 'green' : ''}">{{item.jobStatus}}</td>
             <td>{{item.matchingPercentage}}</td>
-          </tr>
-          <tr *ngIf="postedJobList.length<=0">
-              <span>No records available</span>
           </tr>
         </tbody>
       </table>
+      <div class="clearfix"></div>
+      <div *ngIf="postedJobList.length<=0">
+        <span style="text-align:right;">No records available</span>
+    </div>
+    <div>
+      <span style="text-align:right;" *ngIf="postedJobList.length>0">{{'All records '+ postedJobList.length}}</span>
+    </div>
       <div class="left_arrow">
         <ul>
           <li><a href=""><i class="fas fa-chevron-left"></i></a></li>

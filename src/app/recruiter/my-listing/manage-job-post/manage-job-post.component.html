@@ -8,8 +8,9 @@
           <input type="date" 
                   class="form-control" 
                   id="from"
-                  [(ngModel)]="search.startDate">
-          <img src="./assets/img/calender.png">
+                  [(ngModel)]="search.startDate"
+                 >
+          <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
 
@@ -19,8 +20,9 @@
           <input type="date" 
                   class="form-control" 
                   id="to"
-                  [(ngModel)]="search.endDate">
-          <img src="./assets/img/calender.png">
+                  [(ngModel)]="search.endDate"
+                 >
+          <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
 
@@ -32,7 +34,7 @@
   </div>
   <div class="manage-job-post-2">
     <div class="candidate-table">
-      <table class="table">
+      <table class="table" style="border: 1px;">
         <thead>
           <tr>
             <th class="titlle_job">Job Title</th>
@@ -40,76 +42,36 @@
             <th>Matching Profile(S)</th>
           </tr>
         </thead>
-        <tbody style="border: 0px">
+        <tbody style="border: 1px">
+          <tr *ngIf="jobIdsForDelete.length>1">
+            <button  type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete Selected Job</button>
+          </tr>
           <tr class="border-manage" *ngFor="let jobItem of postedJobList">
             <td class="officve-admin">
               <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.jobId)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
               <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On: {{jobItem.jobPostedDate|date:'yyyy-MM-dd'}} 
-                <!-- Expiry Date:{{jobItem.validity}} -->
+              
               </span>
                 <div class="clearfix"></div>
-                <input type="checkbox" [(ngModel)]="jobItem.jobId">
+            
+               
                 <div class="button-managepost">
-                 
-                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob(jobItem.jobId)">Delete</button>
+                  <div class="form-group">
+                  <input ngModel class="btn btn_form5" style="margin-top: 0px" (ngModelChange)="selectedJobForDelete(jobItem.jobId, $event)" type="checkbox">
+                  <button [disabled]="jobIdsForDelete.length>1" type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete</button>
                   <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.jobId)">Copy</button>
                 </div>
               </div>
+              </div>
             </td>
-            <td class="greennnn">{{jobItem.jobStatus}}</td>
+            <td 
+            [ngStyle]="{'color': (jobItem.jobStatus === 'Pending') ? 'red' : (jobItem.jobStatus === 'InActive') ? 'orange' : (jobItem.jobStatus === 'Active') ? 'green' : ''}">{{jobItem.jobStatus}}</td>
             <td>{{jobItem.matchingPercentage}}</td>
           </tr>
           <tr *ngIf="postedJobList.length<=0">
-              <span>Records not found</span>
+              <td style="text-align:right;">Records not found</td>
           </tr>
-          <!-- <tr class="border-manage">
-            <td class="officve-admin">
-              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
-                  31/12/2018</span>
-                <div class="clearfix"></div>
-                <div class="button-managepost">
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
-                </div>
-              </div>
-            </td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
-
-          </tr>
-          <tr class="border-manage">
-            <td class="officve-admin">
-              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
-                  31/12/2018</span>
-                <div class="clearfix"></div>
-                <div class="button-managepost">
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
-                </div>
-              </div>
-            </td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
-
-          </tr>
-          <tr class="border-manage">
-            <td class="officve-admin">
-              <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">office Admin<br><span>Posted On: 03/0/2018 11:10:11 Expiry Date:
-                  31/12/2018</span>
-                <div class="clearfix"></div>
-                <div class="button-managepost">
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Delete</button>
-                  <button type="submit" class="btn btn_form5" style="margin-top: 0px">Copy</button>
-                </div>
-              </div>
-            </td>
-            <td class="greennnn">Active</td>
-            <td>0</td>
-
-          </tr> -->
+          <tr  style="text-align:right;" *ngIf="postedJobList.length>0">{{'All records '+ postedJobList.length}}</tr>
         </tbody>
       </table>
       <div class="left_arrow">

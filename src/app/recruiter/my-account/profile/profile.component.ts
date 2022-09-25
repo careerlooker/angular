@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,10 +9,10 @@ import { StatesModel } from 'src/app/shared/models/states.model';
 import { CityModel } from 'src/app/shared/models/city.model';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { RecruiterModel } from '../models/recruiter.model';
-import { PersonalInfoComponent } from 'src/app/seeker/my-profile/my-resume/personal-info/personal-info.component';
 import { PersonalInformation } from '../models/personal-Information.model';
 import { BaseModel } from 'src/app/shared/models/base.model';
-
+import { environment } from 'src/environments/environment';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -22,16 +22,19 @@ export class ProfileComponent extends BaseModel implements OnInit {
 
   userProfile: UserModel = new UserModel();
   recruiterModel:RecruiterModel=new RecruiterModel();
-  
+  @ViewChild(FileUploadComponent) fileUploadComponent : FileUploadComponent;
   countryList: Array<CountriesModel>;
   stateList: Array<StatesModel>;
   cityList: Array<CityModel>;
   countryname: string;
   statename: string;
   cityname: string;
+
   imgUrl:any={
     'image':'/assets/img/profile.png',
-    'buttonText':'Upload Your Photo'
+    'buttonText':'Upload Your Photo',
+    'id':0,
+    'picType':'req-pics'
   }
 
   constructor(private recruiterService: RecruiterService,
@@ -51,6 +54,9 @@ export class ProfileComponent extends BaseModel implements OnInit {
       this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any) => {
         if(result!=null){
         this.recruiterModel = result;
+        this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+this.recruiterModel.personalInfo.recruiterPhoto;
+        this.imgUrl.id=this.recruiterModel.reqId;
+        this.imgUrl.image=this.recruiterModel.personalInfo.recruiterPhoto;
         localStorage.setItem('reqId',this.recruiterModel.reqId.toString());
         this.getCountries();
       }
@@ -106,6 +112,7 @@ export class ProfileComponent extends BaseModel implements OnInit {
     this.recruiterModel.personalInfo.city='';
   }
   }
+
   onSubmit(form: NgForm) {
     if(form.valid){
     this.recruiterModel.personalInfo=new PersonalInformation();
@@ -118,9 +125,11 @@ export class ProfileComponent extends BaseModel implements OnInit {
     this.recruiterModel.personalInfo.city=form.value.city;
     this.recruiterModel.personalInfo.websiteURL=form.value.websiteURL;
     this.recruiterModel.email=this.email;
-
+    if(this.fileUploadComponent.selectedFile){
+      this.recruiterModel.personalInfo.recruiterPhoto=this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
+    }
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result: any) => {
-      this.toastr.success(JSON.parse(result).message,'Profile Info');
+    this.toastr.success(JSON.parse(result).message,'Profile Info');
       this.getProfile();
     }, (err: HttpErrorResponse) => {
       this.toastr.error(err.message,'Profile Info');

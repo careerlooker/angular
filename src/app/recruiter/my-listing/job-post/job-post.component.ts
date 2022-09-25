@@ -56,6 +56,7 @@ export class JobPostComponent implements OnInit {
   isJobPublish:boolean;
   isEdit:boolean;
   isJobSave:boolean;
+  today:any;
   constructor(private sharedService:SharedService, 
               private recruiterService:RecruiterService,
               private toastr:ToastrService,
@@ -128,6 +129,7 @@ export class JobPostComponent implements OnInit {
     this.getQualification();  
     this.editJob();
     this.isJobSave=true;
+    this.today= new Date().toISOString().split('T')[0];
   }
   editJob(){
     if(this.reqId>0){
@@ -328,50 +330,65 @@ getJobById(){
         })
       }
     
-
-
   onSubmit(form:NgForm,jobStatus:any){
          if(form.valid){
           if(this.postedJob==undefined ){
             this.postedJob=new PostedJobs();
           }
-        this.postedJob.jobDescription=this.textEditorComponent.description;
-        this.postedJob.aboutCompany=this.recruiterModel.companyDetail.description;
-        this.postedJob.companyName=this.recruiterModel.personalInfo.companyName;
-        this.postedJob.jobStatus=jobStatus;
-        this.postedJob.jobInfo=this.jobInfo;
-        this.postedJob.jobCtcInfo=this.jobCtcInfo
-        this.postedJob.jobInterviewInfo=this.jobInterviewInfo;
-        this.postedJobList.push(this.postedJob);
-        var postedJobs={'postedJobs':this.postedJobList}
-        
-      if(jobStatus=="Pending"){
-        this.recruiterService.jobPostingSave(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
-          this.toastr.success(result);
-          this.onReset();
-          this.router.navigate(['/reqem/my-lising/manage-job-post']);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-        this.postedJobList=[];
-      }else if(jobStatus=="InActive"){
-        this.recruiterService.updateJob(this.reqId,this.jobId, postedJobs).subscribe((result:any)=>{
-          this.toastr.success(result);
-          this.onReset();
-          this.router.navigate(['/reqem/my-lising/manage-job-post']);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-        this.postedJobList=[];
-      }else if(jobStatus=="Active"){
-        this.recruiterService.updateJob(this.reqId,this.jobId, postedJobs).subscribe((result:any)=>{
-          this.toastr.success(result);
-          this.onReset();
-          this.router.navigate(['/reqem/my-lising/manage-job-post']);
-      },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message);})
-        this.postedJobList=[];
-      }
+          if(this.jobInterviewInfo.walkinDate && this.jobInterviewInfo.validUntil){
+             if(this.checkDate())
+             {
+                return;
+             }
+             else{
+              this.setFormValue(jobStatus);
+             }
+          }
+          else{
+            this.setFormValue(jobStatus);
+          }
+       
     }
   }
+
+  setFormValue(jobStatus:any){
+    this.postedJob.jobDescription=this.textEditorComponent.description;
+    this.postedJob.aboutCompany=this.recruiterModel.companyDetail.description;
+    this.postedJob.companyName=this.recruiterModel.personalInfo.companyName;
+    this.postedJob.jobStatus=this.postedJob.jobStatus=='Active'?'Active':jobStatus;
+    this.postedJob.jobInfo=this.jobInfo;
+    this.postedJob.jobCtcInfo=this.jobCtcInfo
+    this.postedJob.jobInterviewInfo=this.jobInterviewInfo;
+    this.postedJobList.push(this.postedJob);
+    var postedJobs={'postedJobs':this.postedJobList}
+    
+  if(jobStatus=="Pending" ||(jobStatus=="Active" && this.jobId==0)){
+    this.recruiterService.jobPostingSave(postedJobs,this.recruiterModel.reqId).subscribe((result:any)=>{
+      this.toastr.success(JSON.parse(result).message);
+      this.onReset();
+      this.router.navigate(['/reqem/my-lising/manage-job-post']);
+  },(err: HttpErrorResponse) => {
+    this.toastr.error(err.message);})
+    this.postedJobList=[];
+  }else if(jobStatus=="InActive"){
+    this.recruiterService.updateJob(this.reqId,this.jobId, postedJobs).subscribe((result:any)=>{
+      this.toastr.success(result);
+      this.onReset();
+      this.router.navigate(['/reqem/my-lising/manage-job-post']);
+  },(err: HttpErrorResponse) => {
+    this.toastr.error(err.message);})
+    this.postedJobList=[];
+  }else if(jobStatus=="Active" && this.jobId>0){
+    this.recruiterService.updateJob(this.reqId,this.jobId, postedJobs).subscribe((result:any)=>{
+      this.toastr.success(result);
+      this.onReset();
+      this.router.navigate(['/reqem/my-lising/manage-job-post']);
+  },(err: HttpErrorResponse) => {
+    this.toastr.error(err.message);})
+    this.postedJobList=[];
+  }
+  }
+
     onReset(){
       this.postedJob=new PostedJobs();
       this.jobInfo=new JobInfo();
@@ -379,8 +396,9 @@ getJobById(){
       this.jobInterviewInfo=new JobInterviewInfo()
       this.textEditorComponent.jobDescription=null;
       this.postedJob.jobDescription=null;
+      this.isJobSave=true;
+      this.isJobUpdate=false;
     } 
-
     setDropdownList(name:string){
       let i=0;
       let selectedName='';
@@ -435,13 +453,22 @@ getJobById(){
         this.isExperience=false;
       }
     }
-
-    checkWalkDate(event){
+    checkWalkDate(event:any){
       let todayDate=new Date()
       let walkinDate=new Date(this.jobInterviewInfo.walkinDate);
       if(walkinDate<=todayDate){
         this.jobInterviewInfo.walkinDate=null;
         this.toastr.info('Walkin date should not be past date')
       }
+    }
+    checkDate():boolean{
+      let fromDate=new Date(this.jobInterviewInfo.walkinDate);
+      let toDate=new Date(this.jobInterviewInfo.validUntil);
+      if(fromDate>toDate)
+      {
+        this.toastr.info('Walkin date should not be grater than ValidUntil date');
+        return true;
+      }
+      return false;
     }
 }

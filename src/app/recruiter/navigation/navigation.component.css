@@ -1,4 +1,6 @@
-
+.circular--square{
+  border-radius: 50%;
+}
     .progress-bar{
         background:#ff9934;
         font-size: 20px;

@@ -1,21 +1,20 @@
-import { Component,Input, Output,EventEmitter } from '@angular/core';
+import { Component,Input, Output,EventEmitter, OnInit } from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import { SharedService } from '../../services/shared.service';
 import { RecruiterService } from 'src/app/recruiter/recruiter-services/recruiter.service';
-
-
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css']
 })
-export class FileUploadComponent {
+export class FileUploadComponent{
   message:string='';
   selectedFile=null;
   uploadResponse:any;
   @Input() imgUrl:any;
-
+  id:number=0;
+  picType:string;
   constructor(private sharedService:SharedService,private recService:RecruiterService) { }
   
   onFileSelected(event:any){
@@ -41,7 +40,7 @@ export class FileUploadComponent {
     if(this.selectedFile==null)
       return;
       else{
-    this.sharedService.uploadPhoto(this.selectedFile,'req-pics')
+    this.sharedService.uploadPhoto(this.selectedFile,this.imgUrl.picType,this.imgUrl.id)
     .subscribe(event=>{
        if(event.type===HttpEventType.UploadProgress){
          this.uploadResponse='Upload Progress: '+Math.round(event.loaded/event.total*100)+' %';
@@ -49,12 +48,8 @@ export class FileUploadComponent {
           if(this.imgUrl.buttonText=='Upload Your Photo')
           this.recService.profileSubject.next(this.imgUrl.image);
          }
-
-         //console.log('upload Progress: '+Math.round(event.loaded/event.total*100)+' %');
-        
        }
        else if(event.type===HttpEventType.Response){
-           console.log(event);
        }
      });
     }
