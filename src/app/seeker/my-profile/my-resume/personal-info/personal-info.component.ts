@@ -47,7 +47,9 @@ export class PersonalInfoComponent implements OnInit {
 
   imgUrl:any={
     'image':'/assets/img/profile.png',
-    'buttonText':'Upload Your Photo'
+    'buttonText':'Upload Your Photo',
+    'id':0,
+    'picType':'sek-pics'
   }
   constructor(private seekerrService: SeekerService,
     private toastr: ToastrService,
@@ -77,7 +79,7 @@ export class PersonalInfoComponent implements OnInit {
        this.jobSeekerModel=result;
        this.imgUrl.image=environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
         this.email = this.jobSeekerModel.email;
-       
+        //this.imgUrl.id=this.jobSeekerModel
         if(this.jobSeekerModel.personalInfo){
         this.seekerrService.tickSubject.next('pi');
         }
@@ -160,7 +162,7 @@ export class PersonalInfoComponent implements OnInit {
     if(this.selectedFile==null)
       return;
       else{
-    this.sharedService.uploadPhoto(this.selectedFile,'sek-pics')
+    this.sharedService.uploadPhoto(this.selectedFile,'sek-pics',16)
     .subscribe(event=>{
        if(event.type===HttpEventType.UploadProgress){
          this.uploadResponse='Upload Progress: '+Math.round(event.loaded/event.total*100)+' %';

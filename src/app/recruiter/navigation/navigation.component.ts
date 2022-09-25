@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { RecruiterModel } from '../my-account/models/recruiter.model';
 import { PersonalInformation } from '../my-account/models/personal-Information.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-recruiter-navigation',
@@ -34,6 +35,7 @@ export class RecruiterNavigationComponent implements OnInit {
       this.recruiterService.getRecruiterDetails(localStorage.getItem('email')).subscribe((result: any) => {
        if(result!=null){
        this.recruiterModel=result;
+       this.profileUrl=environment.baseUrl+this.recruiterModel.personalInfo.recruiterPhoto;
        }
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);

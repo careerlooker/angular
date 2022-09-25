@@ -53,12 +53,15 @@
               
               </span>
                 <div class="clearfix"></div>
-                <input ngModel (ngModelChange)="selectedJobForDelete(jobItem.jobId, $event)" type="checkbox">
+            
+               
                 <div class="button-managepost">
-                 
+                  <div class="form-group">
+                  <input ngModel class="btn btn_form5" style="margin-top: 0px" (ngModelChange)="selectedJobForDelete(jobItem.jobId, $event)" type="checkbox">
                   <button [disabled]="jobIdsForDelete.length>1" type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete</button>
                   <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.jobId)">Copy</button>
                 </div>
+              </div>
               </div>
             </td>
             <td 
