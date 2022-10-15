@@ -54,7 +54,14 @@ export class ProfileComponent extends BaseModel implements OnInit {
       this.recruiterService.getRecruiterDetails(this.email).subscribe((result: any) => {
         if(result!=null){
         this.recruiterModel = result;
-        this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+this.recruiterModel.personalInfo.recruiterPhoto;
+        if(this.recruiterModel.personalInfo.recruiterPhoto){
+          this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+this.recruiterModel.personalInfo.recruiterPhoto;
+          this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
+        }
+        // else{
+        //   this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+"images/req-pics/"+this.recruiterModel.personalInfo.recruiterPhoto;
+        //   this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
+        // }
         this.imgUrl.id=this.recruiterModel.reqId;
         this.imgUrl.image=this.recruiterModel.personalInfo.recruiterPhoto;
         localStorage.setItem('reqId',this.recruiterModel.reqId.toString());
@@ -126,7 +133,7 @@ export class ProfileComponent extends BaseModel implements OnInit {
     this.recruiterModel.personalInfo.websiteURL=form.value.websiteURL;
     this.recruiterModel.email=this.email;
     if(this.fileUploadComponent.selectedFile){
-      this.recruiterModel.personalInfo.recruiterPhoto=this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
+      this.recruiterModel.personalInfo.recruiterPhoto="images/req-pics/"+this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
     }
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result: any) => {
     this.toastr.success(JSON.parse(result).message,'Profile Info');

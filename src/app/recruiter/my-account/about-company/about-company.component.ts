@@ -21,7 +21,7 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
     'image':'/assets/img/client/1.png',
     'buttonText':'Upload Company Logo',
     'id':0,
-    'picType':'comp-pic'
+    'picType':'comp-pics'
   }
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   @ViewChild(FileUploadComponent) fileUploadComponent : FileUploadComponent;
@@ -45,10 +45,16 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
         if(result!=null){
           this.recruiterModel=result;
           this.imgUrl.id=this.recruiterModel.reqId;
-          this.recruiterModel.companyDetail.companyLogo=environment.baseUrl+'images/comp-pic/'+this.recruiterModel.companyDetail.companyLogo;
+          if(this.recruiterModel.companyDetail.companyLogo){
+            this.recruiterModel.companyDetail.companyLogo=environment.baseUrl+this.recruiterModel.companyDetail.companyLogo;
+            this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
           }
+          // else{
+          //   this.recruiterModel.companyDetail.companyLogo=environment.baseUrl+'images/comp-pics/'+this.recruiterModel.companyDetail.companyLogo;
+          //   this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
+          // }
           this.recruiterService.recruiterSubject.next(this.recruiterModel);
-      },(err: HttpErrorResponse) => {
+      }},(err: HttpErrorResponse) => {
             this.toastr.error(err.message,'Company Info');
           })
     }
@@ -59,7 +65,7 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
     this.recruiterModel.companyDetail=new CompanyDetail();
     this.recruiterModel.companyDetail.description=this.textEditorComponent.description;
     if(this.fileUploadComponent.selectedFile){
-      this.recruiterModel.companyDetail.companyLogo=this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
+      this.recruiterModel.companyDetail.companyLogo="images/comp-pics/"+this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
     }
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
       this.toastr.success(JSON.parse(result).message,'Company Info');
