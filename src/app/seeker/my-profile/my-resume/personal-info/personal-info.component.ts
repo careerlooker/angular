@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
@@ -21,6 +21,7 @@ import { TrainingModel } from 'src/app/seeker/models/training.model';
 import { SkillsModel } from 'src/app/seeker/models/skills.model';
 import { OthersDetails } from 'src/app/seeker/models/others-details.model';
 import { professionalSummary } from 'src/app/seeker/models/professional-summary';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 
 
@@ -30,6 +31,7 @@ import { professionalSummary } from 'src/app/seeker/models/professional-summary'
   styleUrls: ['./personal-info.component.css']
 })
 export class PersonalInfoComponent implements OnInit {
+  @ViewChild(FileUploadComponent) fileUploadComponent : FileUploadComponent;
   jobSeekerModel:JobSeekerModel=new JobSeekerModel();
   
  credentials:string;
@@ -77,8 +79,15 @@ export class PersonalInfoComponent implements OnInit {
       this.seekerrService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
         if(result!=null){
        this.jobSeekerModel=result;
-       this.imgUrl.image=environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
+
         this.email = this.jobSeekerModel.email;
+        if(this.jobSeekerModel.personalInfo.photo){
+          this.jobSeekerModel.personalInfo.photo=environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
+          this.imgUrl.image=this.jobSeekerModel.personalInfo.photo;
+          this.sharedService.updateApprovalMessage(this.imgUrl.image);
+        }
+        this.imgUrl.id=this.jobSeekerModel.id;
+
         if(this.jobSeekerModel.personalInfo){
         this.seekerrService.tickSubject.next('pi');
         }
@@ -185,20 +194,21 @@ export class PersonalInfoComponent implements OnInit {
         this.jobSeekerModel.personalInfo.lastName=form.value.lastName;
         this.jobSeekerModel.personalInfo.address=form.value.address;
         this.jobSeekerModel.personalInfo.phoneNo=form.value.phoneNo;
-        this.jobSeekerModel.personalInfo.photo=this.selectedFile.name;
         this.jobSeekerModel.personalInfo.country=form.value.country;
         this.jobSeekerModel.personalInfo.state=form.value.state;
         this.jobSeekerModel.personalInfo.city=form.value.city;
         this.jobSeekerModel.personalInfo.zipCode=form.value.zipCode;
-      
+        if(this.fileUploadComponent.selectedFile){
+          this.jobSeekerModel.personalInfo.photo="images/"+this.imgUrl.picType+"/"+this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
+        }
         this.seekerrService.updateSeekerProfile(this.jobSeekerModel).subscribe((result:any)=>{
-          this.toastr.success(JSON.parse(result).message,'Professional Info')
+          this.toastr.success(JSON.parse(result).message)
           if(result){
             this.getSeeker();
             this.seekerrService.tickSubject.next('pi');
           }
         }, (err: HttpErrorResponse) => {
-          this.toastr.error(err.message,'Professional Info');
+          this.toastr.error(err.message);
         }) 
      }
    }

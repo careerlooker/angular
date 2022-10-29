@@ -114,38 +114,7 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Upload Photo</label>
-                    <div >
-                        <div class="form-group">
-                           <input   type="file" 
-                                    class="form-control" 
-                                    name="recruiterPic"
-                                    id="recruiterPic" 
-                                    placeholder="e.g. computer/file/self"
-                              
-                                    (change)="onFileSelected($event)" 
-                                    accept="image/*"  style="    margin-bottom: 12px;"> 
-                                   <div class="clearfix"></div>
-                                   <div *ngIf="message">{{message}}</div>
-                            
-                                   <button type="button"
-                                    class="btn btn_form5" 
-                                    style="margin-top: 0px"
-                                    (click)="onUpload()">
-                                    <i class="fas fa-upload"></i> {{imgUrl.buttonText}}
-                            </button><div>{{uploadResponse}}</div>
-                        </div>
-                    </div>
-                    <!-- <img src="assets/img/icon/upload.png" width="30px"> -->
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                    <img [src]="imgUrl.image"  height="150" width="150"  *ngIf="imgUrl" class="img-responsive">
-                </div>
-              </div>
+              <app-file-upload [imgUrl]="imgUrl"></app-file-upload>
               <br>
               <button type="button" class="btn btn_form4"(click)="next()" >Next</button>
               <button type="button" class="btn btn_form4" (click)="onSubmit(form)">Save</button>
