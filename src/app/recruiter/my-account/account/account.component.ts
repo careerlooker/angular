@@ -33,7 +33,7 @@ export class AccountComponent extends BaseModel implements OnInit {
         }
         this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message,'Account Info');
+            this.toastr.error(err.message);
       })
     }
   }
@@ -41,18 +41,18 @@ export class AccountComponent extends BaseModel implements OnInit {
   onSubmit(form:NgForm){
     if(form.valid){
        if(form.value.newPwd!=form.value.confirmPwd){
-        this.toastr.error('New password and confirm password not matching','Account Info')
+        this.toastr.error('New password and confirm password not matching')
         return;
        }
 
        this.recruiterModel.password=form.value.newPwd;
        this.recruiterModel.newPassword=form.value.newPwd;
        this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
-         this.toastr.success('Password Updated', 'Account Info');
+         this.toastr.success('Password Updated');
          this.router.navigateByUrl('/login');
          localStorage.removeItem('userToken');
        },(err: HttpErrorResponse) => {
-         this.toastr.error(err.message,'Account Info');
+         this.toastr.error(err.message);
         })
     }
   }

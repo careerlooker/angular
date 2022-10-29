@@ -1,28 +1,5 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
   <div class="empoyer-accoun-form">
-  <!-- <div class="row">
-      <div class="col-sm-6">
-          <div class="profile-uplod">
-              <div class="form-group">
-                  <label>File: </label>
-                  <input type="file" 
-                          class="form-control" 
-                          id="logo"
-                          placeholder="e.g. computer/file/self">
-
-                  <div class="clearfix"></div>
-                 
-                  <button type="button" 
-                          class="btn btn_form5" style="margin-top: 0px"> 
-                          <i class="fas fa-upload"></i> Upload Company Logo
-                  </button>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6">
-          <img src='./assets/img/client/1.png' class="img-responsive">
-      </div>
-  </div> -->
   <app-file-upload [imgUrl]="imgUrl"></app-file-upload>
   <div class="row">
     <app-text-editor [description]="recruiterModel.companyDetail?.description"></app-text-editor> 

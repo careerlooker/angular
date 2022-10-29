@@ -4,7 +4,7 @@ import { CountriesModel } from '../models/countries.model';
 import { environment } from 'src/environments/environment';
 import { StatesModel } from '../models/states.model';
 import { CityModel } from '../models/city.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 
@@ -12,9 +12,15 @@ import { Observable } from 'rxjs';
     providedIn:'root'
 })
 export class SharedService {
-   
-    constructor(private httpClient:HttpClient){}
+    private approvalStageMessage = new BehaviorSubject("./assets/img/if_icons_user_.png");
+    currentApprovalStageMessage = this.approvalStageMessage.asObservable();
     
+    constructor(private httpClient:HttpClient){}
+
+    updateApprovalMessage(message: string) {
+        this.approvalStageMessage.next(message)
+    }
+
     getAllCountries():Observable<Array<CountriesModel>>{
         return this.httpClient.get<Array<CountriesModel>>(environment.baseUrl+'co-api/country');
     }

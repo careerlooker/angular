@@ -8,7 +8,6 @@ import { TextEditorComponent } from '../../../shared/components/text-editor/text
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { RecruiterModel } from '../models/recruiter.model';
 import { CompanyDetail } from '../models/company-detail.model';
-import { SharedService } from 'src/app/shared/services/shared.service';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -18,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AboutCompanyComponent extends BaseModel implements OnInit {
   imgUrl:any={
-    'image':'/assets/img/client/1.png',
+    'image':'/assets/img/client/DefaultCompanyLogo.png',
     'buttonText':'Upload Company Logo',
     'id':0,
     'picType':'comp-pics'
@@ -27,9 +26,7 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
   @ViewChild(FileUploadComponent) fileUploadComponent : FileUploadComponent;
   recruiterModel:RecruiterModel=new RecruiterModel();
   constructor(private recruiterService:RecruiterService,
-              private toastr:ToastrService,
-              private router:Router,
-              private sharedService:SharedService) {super();}
+              private toastr:ToastrService) {super();}
 
   ngOnInit() {
     this.recruiterModel.companyDetail=new CompanyDetail();
@@ -49,13 +46,9 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
             this.recruiterModel.companyDetail.companyLogo=environment.baseUrl+this.recruiterModel.companyDetail.companyLogo;
             this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
           }
-          // else{
-          //   this.recruiterModel.companyDetail.companyLogo=environment.baseUrl+'images/comp-pics/'+this.recruiterModel.companyDetail.companyLogo;
-          //   this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
-          // }
           this.recruiterService.recruiterSubject.next(this.recruiterModel);
       }},(err: HttpErrorResponse) => {
-            this.toastr.error(err.message,'Company Info');
+            this.toastr.error(err.message);
           })
     }
   }
@@ -68,9 +61,9 @@ export class AboutCompanyComponent extends BaseModel implements OnInit {
       this.recruiterModel.companyDetail.companyLogo="images/comp-pics/"+this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
     }
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
-      this.toastr.success(JSON.parse(result).message,'Company Info');
+      this.toastr.success(JSON.parse(result).message);
     },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message,'Company Info');
+      this.toastr.error(err.message);
      })
     }
 }

@@ -154,11 +154,7 @@
                   list="expMin" 
                   (change)="onMinExpSelect($event.target.value)" 
                   required/>
-                  <!-- <span style="color: red;" *ngIf="isExperience">Incorrect min experience value</span> -->
-        <!-- <datalist id="expMin">
-            <option [value]=""></option>
-            <option *ngFor="let em of expMin">{{em.minExp}}</option>
-        </datalist> -->
+              
        
       </div>
     </div>
@@ -173,10 +169,7 @@
                   [(ngModel)]="jobCtcInfo.maxExp"
                   (change)="onMaxExpSelect($event.target.value)"
                   required/>
-        <!-- <datalist id="expMax">
-            <option [value]=""></option>
-            <option *ngFor="let em of expMax">{{em.maxExp}}</option>
-        </datalist> -->
+       
       </div>
     </div>
 

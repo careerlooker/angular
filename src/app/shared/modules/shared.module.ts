@@ -1,8 +1,8 @@
-import { forwardRef, NgModule } from '@angular/core';
-import {RichTextEditorAllModule, RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor'; 
+import { NgModule } from '@angular/core';
+import { RichTextEditorAllModule, RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor'; 
 import { TextEditorComponent } from '../components/text-editor/text-editor.component';
 import { StarRatingComponent } from '../components/star-rating/star-rating.component';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -18,9 +18,6 @@ import { FileUploadComponent } from '../components/file-upload/file-upload.compo
 import { DropdownDirective } from '../directives/app-dropdown.directive';
 import { RatingModule } from 'ng-starrating';
 import { AllownumbersonlyDirective } from '../directives/allow-numbers-only.directive';
-import { PrimengModule } from './primeng.module';
-import { Calendar, CalendarModule } from 'primeng/calendar';
-import {TableModule} from 'primeng/table';
 import { FilterPipe } from '../pipes/filter.pipe';
 @NgModule({
     declarations:[
@@ -45,11 +42,15 @@ import { FilterPipe } from '../pipes/filter.pipe';
         FormsModule,
         FileUploadModule,
         ReactiveFormsModule,
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({
+            timeOut: 3500,
+            positionClass: 'toast-center-center',
+            preventDuplicates: true,
+            closeButton: true,
+            progressBar: true,
+            }),
         RichTextEditorAllModule,
         RatingModule,
-        CalendarModule,
-        TableModule
     ],
     exports:[
         TextEditorComponent,

@@ -32,9 +32,9 @@ header {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;
-    background-size: cover;    padding-bottom: 60px;
+    background-size: cover;    padding-bottom:30px;
 }
-.top_head{ padding-top: 60px;}
+.top_head{ padding-top: 30px;}
 .top_head .logo{ padding: 0px 0px;}
 .signiup{ float: right; margin-top: 7px;}
 .signiup ul{ padding: 0px; margin: 0px;}

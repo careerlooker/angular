@@ -4,13 +4,6 @@
 		<div style="padding: 30px 0px;">
 			<div class="text-name">
 				<h3>{{recruiterModel.personalInfo.firstName}} {{recruiterModel.personalInfo.lastName}} </h3>
-				<!-- <div class="icon-box-edit"><a attr.data-toggle="modal" attr.data-target="'#profile-edit'">
-					<i class="fas fa-pen"></i></a>
-				</div> -->
-
-				<!-- <div class="icon-box-edit"><a style="cursor:pointer" (click)="openModal()">
-						<i class="fas fa-pen"></i></a>
-				</div> -->
 				<div class="clearfix"></div><br>
 				<h3 style="color: #626161; font-size: 18px;">{{recruiterModel.personalInfo.designation}}<br><br>{{recruiterModel.personalInfo.companyName}} </h3>
 			</div>
@@ -25,10 +18,6 @@
 			<div class="clearfix"></div>
 			<div class="text-name text-neme-top" style="margin-top: 15px;"><a  class="mail"><strong>Ph:</strong>  {{recruiterModel.personalInfo.phoneNo}}</a>
 				<div class="clearfix"></div>
-				<!-- <a class="verify-green"><i class="fas fa-check"></i><span
-						style="color: #349e39; border-bottom: 1px solid #349e39">Verified </span></a>
-				<div class="icon-box-edit"><a><i class="fas fa-pen"></i></a></div> -->
-
 			</div>
 
 			<div class="clearfix"></div>
@@ -62,77 +51,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
-<div class="profile-popup">
-    <div class="modal backdrop" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" (click)="onCloseHandled()">&times;</button>
-            <h4 class="modal-title">Profile</h4>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="profile-box">
-                  <img src="./assets/img/job-seeker.png">
-                  <div class="profile-uplod">
-                    <div class="form-group">
-                      <label>File: </label>
-                      <input type="text" class="form-control" id="upload" placeholder="e.g. computer/file/self">
-                      <div class="clearfix"></div>
-                      <button type="button" class="btn btn_form5" style="margin-top: 0px">
-                        <i class="fas fa-upload"></i> Upload
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="row profile-edit-form">
-                  <div class="col-sm-12">
-                    <div class="form-group">
-                      <label>First Name</label>
-                      <input type="text" 
-                              class="form-control" 
-                              id="firstName" 
-                              name="firstName"
-                              [(ngModel)]="profile.firstName"
-                              placeholder="e.g. Daniel">
-                    </div>
-                  </div>
-                  <div class="col-sm-12">
-                    <div class="form-group">
-                      <label>Last Name</label>
-                      <input type="text" 
-                              class="form-control" 
-                              id="lastName" 
-                              name="lastName"
-                              [(ngModel)]="profile.lastName"
-                              placeholder="e.g. Wiiliams">
-                    </div>
-                  </div>
-                  <div class="col-sm-12">
-                    <div class="form-group">
-                      <label>Company</label>
-                      <input type="text" 
-                              class="form-control" 
-                              id="company" 
-                              name="companyName"
-                              [(ngModel)]="profile.companyName"
-                              placeholder="e.g. Daniel">
-                    </div>
-                    <div class="col-sm-12">
-                      <button type="submit" class="btn btn_form5 pull-right">Submit</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-</form> -->

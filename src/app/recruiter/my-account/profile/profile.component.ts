@@ -56,20 +56,16 @@ export class ProfileComponent extends BaseModel implements OnInit {
         this.recruiterModel = result;
         if(this.recruiterModel.personalInfo.recruiterPhoto){
           this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+this.recruiterModel.personalInfo.recruiterPhoto;
-          this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
+          this.imgUrl.image=this.recruiterModel.personalInfo.recruiterPhoto;
+          this.sharedService.updateApprovalMessage(this.imgUrl.image);
         }
-        // else{
-        //   this.recruiterModel.personalInfo.recruiterPhoto=environment.baseUrl+"images/req-pics/"+this.recruiterModel.personalInfo.recruiterPhoto;
-        //   this.imgUrl.image=this.recruiterModel.companyDetail.companyLogo;
-        // }
         this.imgUrl.id=this.recruiterModel.reqId;
-        this.imgUrl.image=this.recruiterModel.personalInfo.recruiterPhoto;
         localStorage.setItem('reqId',this.recruiterModel.reqId.toString());
         this.getCountries();
       }
       this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message,'Profile Info');
+        this.toastr.error(err.message);
       })
     }
   }
@@ -136,15 +132,15 @@ export class ProfileComponent extends BaseModel implements OnInit {
       this.recruiterModel.personalInfo.recruiterPhoto="images/req-pics/"+this.imgUrl.id+'.'+this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
     }
     this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result: any) => {
-    this.toastr.success(JSON.parse(result).message,'Profile Info');
+    this.toastr.success(JSON.parse(result).message);
       this.getProfile();
     }, (err: HttpErrorResponse) => {
-      this.toastr.error(err.message,'Profile Info');
+      this.toastr.error(err.message);
      
     }) 
   }
   else{
-    this.toastr.error('Please enter all the mandatory details','Profile Info')
+    this.toastr.error('Please enter all the mandatory details')
   }
   }
 }

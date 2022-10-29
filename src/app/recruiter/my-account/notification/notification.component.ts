@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
 import { ToastrService } from 'ngx-toastr';
-import { UserModel } from '../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/base.model';
@@ -34,16 +33,16 @@ export class NotificationComponent extends BaseModel implements OnInit {
         }
         this.recruiterService.recruiterSubject.next(this.recruiterModel);
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message,'Notification Info');
+            this.toastr.error(err.message);
             console.log(err);})
     }
   }
    updateNotification(form:NgForm){ 
      this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
        this.getNotification(); 
-       this.toastr.success(JSON.parse(result).message,'Notification Info');
+       this.toastr.success(JSON.parse(result).message);
      },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message,'Notification Info');
+      this.toastr.error(err.message);
       })
    }
 

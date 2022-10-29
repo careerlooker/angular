@@ -6,7 +6,6 @@ import { PricingComponent } from './pricing/pricing.component';
 import { ScheduleInterviewComponent } from './schedule-interview/schedule-interview.component';
 import { InterviewStatusComponent } from './interview-status/interview-status.component';
 import { HomeComponent } from './home/home.component';
-import { RecruiterHomeComponent } from './recruiter-home/recruiter-home.component';
 
 const childRoutes:Routes=[
     {path:'',redirectTo:'home',pathMatch:'full'},

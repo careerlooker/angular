@@ -1,6 +1,6 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import {tap, retry, catchError} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import {tap} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor{
 		{
 			const clonedreq=req.clone({
 			headers:req.headers.set('Authorization', 'Bearer '+localStorage.getItem('userToken'))
-							   //.set('Content-Type','application/json')
 			});
 			
 			return next.handle(clonedreq).pipe(tap((err:any)=>{
@@ -35,23 +34,6 @@ export class AuthInterceptor implements HttpInterceptor{
 					
 				}
 		    ));
-		
-
-		// return next.handle(clonedreq)
-		// .pipe(
-		//   retry(1),
-		//   catchError((error: HttpErrorResponse) => {
-		// 	let errorMessage = '';
-		// 	if (error.error instanceof ErrorEvent) {
-		// 	  // client-side error
-		// 	  errorMessage = `Error: ${error.error.message}`;
-		// 	} else {
-		// 	  // server-side error
-		// 	  errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-		// 	}
-		// 	window.alert(errorMessage);
-		// 	return throwError(errorMessage);
-		//   }))
          }
 		 else
 		 {

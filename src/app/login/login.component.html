@@ -53,16 +53,20 @@
             <div class="col-sm-7">
               <div class="log-in-box">
                 <div class="logo-log"><img src="./assets/img/logo-log.png" class="img-responsive"></div>
-                <div class="row form-group"><strong>Login Type&nbsp;&nbsp;</strong>
-                  <div class="clearfix"></div>
-                  <div class="radio col-sm-3">
+                
+                <div class="row form-group">
+                  <label class="col-sm-4">
+                    <strong>Login Type</strong>
+                  </label>
+      
+                  <div class="radio col-sm-4">
                     <input type="radio" class="radio" name="register" value="recruiter" [(ngModel)]="registerType"  (change)="handleChange(registerType)">
                     <label>Recruiter&nbsp;&nbsp;</label>
                   </div>
 
-                  <div class="radio col-sm-5">
+                  <div class="radio col-sm-4">
                     <input type="radio"  class="radio" name="register" value="seeker"    [(ngModel)]="registerType" (change)="handleChange(registerType)">
-                    <label>Job Seeker</label>
+                    <label>Seeker</label>
                   </div>
                   
                   <div class="clearfix"></div>

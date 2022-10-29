@@ -96,7 +96,7 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
         this.recruiterService.recruiterSubject.next(this.recruiterModel);
         }
       },(err: HttpErrorResponse) => {
-            this.toastr.error(err.message,'Social Network Info');
+            this.toastr.error(err.message);
            })
     }
   }
@@ -112,9 +112,9 @@ export class SocialNetworksComponent extends BaseModel implements OnInit {
      this.socialForm.value.socialNetworks=[];
      this.recruiterService.updateReqProfile(this.recruiterModel).subscribe((result:any)=>{
        this.getSocialNetwork(); 
-       this.toastr.success(JSON.parse(result).message,'Social Network Info');
+       this.toastr.success(JSON.parse(result).message);
      },(err: HttpErrorResponse) => {
-      this.toastr.error(err.message,'Social Network Info');
+      this.toastr.error(err.message);
      })
    }
   }

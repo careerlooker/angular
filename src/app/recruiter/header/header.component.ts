@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared/services/shared.service';
+
 
 @Component({
   selector: 'app-header',
@@ -7,10 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(private router:Router) { }
+  imgUrl:any='./assets/img/if_icons_user_.png';
+  constructor(private router:Router,private sharedService:SharedService) { }
 
   ngOnInit() {
+    this.sharedService.currentApprovalStageMessage.subscribe(msg=>{this.imgUrl=msg})
   }
 
     logout(){
