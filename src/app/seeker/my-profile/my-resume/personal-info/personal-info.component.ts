@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
@@ -79,7 +79,6 @@ export class PersonalInfoComponent implements OnInit {
        this.jobSeekerModel=result;
        this.imgUrl.image=environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
         this.email = this.jobSeekerModel.email;
-        //this.imgUrl.id=this.jobSeekerModel
         if(this.jobSeekerModel.personalInfo){
         this.seekerrService.tickSubject.next('pi');
         }
@@ -87,7 +86,7 @@ export class PersonalInfoComponent implements OnInit {
         this.getCountries();
       }
       },(err: HttpErrorResponse) => {
-        this.toastr.error(err.message,'Professional Info');
+        this.toastr.error(err.message);
       })
     }
   }

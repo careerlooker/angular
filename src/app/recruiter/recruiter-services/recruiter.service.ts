@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
