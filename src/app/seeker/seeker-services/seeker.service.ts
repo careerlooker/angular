@@ -22,7 +22,7 @@ export class SeekerService {
     constructor(private httpClient: HttpClient) { }
 
     seekerLogin(email:string): Observable<JobSeekerModel> {
-        return this.httpClient.post<JobSeekerModel>(environment.baseUrl +'co-api/seeker/login/',{email:email});
+        return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/'+email);
     }
 
     updateSeekerProfile(jobSeekerModel: JobSeekerModel): Observable<any> {
