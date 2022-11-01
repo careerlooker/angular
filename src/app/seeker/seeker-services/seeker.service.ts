@@ -90,4 +90,8 @@ export class SeekerService {
     getContactDetailsList(email: string): Observable<JobSeekerModel>{
         return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/' + email)
     }
+
+    getMatchingJob(sekEmail:string,sort:string,pageNo:number):Observable<any>{
+        return this.httpClient.get<any>(environment.baseUrl+'co-api/seeker/'+sekEmail+'/'+sort+'/'+pageNo+'/jobs');
+    }
 }

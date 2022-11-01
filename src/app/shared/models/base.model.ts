@@ -19,7 +19,8 @@ export class BaseModel {
     hideForm:boolean=false;
     hideFormButton:boolean=true;
     isSave:boolean=false;
-   
+    pageNo:number=0;
+    sort:string='Freshness';
 
     joiningMonth = [{"Id":1, "joiningMonth": "January" }, {"Id":2, "joiningMonth": "February" }, { "Id":3,"joiningMonth": "March" }, {"Id":4, "joiningMonth": "April" }, { "Id":5,"joiningMonth": "May" }, { "Id":6,"joiningMonth": "June" },
     {"Id":7, "joiningMonth": "July" }, {"Id":8, "joiningMonth": "August" }, { "Id":9,"joiningMonth": "September" }, {"Id":10, "joiningMonth": "October" }, {"Id":11, "joiningMonth": "November" }, {"Id":12, "joiningMonth": "December" }];

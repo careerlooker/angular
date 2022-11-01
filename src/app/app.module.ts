@@ -25,6 +25,7 @@ import { RecruiterNavigationComponent } from './recruiter/navigation/navigation.
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { RecruiterNavigationComponent } from './recruiter/navigation/navigation.
     ProfilePopupComponent,
     SeekerHomeComponent,
     SeekerNavigationComponent,
+  
   
     
  

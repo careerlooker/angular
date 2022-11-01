@@ -10,6 +10,7 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { BlockCompaniesComponent } from './block-companies/block-companies.component';
 import { MsgBoxComponent } from './msg-box/msg-box.component';
 import { SharedModule } from '../shared/modules/shared.module';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 @NgModule({
     declarations:[
@@ -19,7 +20,8 @@ import { SharedModule } from '../shared/modules/shared.module';
         SettingsComponent,
         MyApplicationsComponent,
         BlockCompaniesComponent,
-        MsgBoxComponent
+        MsgBoxComponent,
+        JobDetailsComponent
     ],
     imports:[
         CommonModule,
