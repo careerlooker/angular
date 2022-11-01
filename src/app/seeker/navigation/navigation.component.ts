@@ -15,6 +15,8 @@ import { ContactDetailsModel } from '../models/contact-details.model';
 import { BlockCompanies } from '../models/block-companies.model';
 import { AwardsModel } from '../models/awards.model';
 import { CertificateModel } from '../models/certificate.model';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-seeker-navigation',
@@ -52,7 +54,10 @@ export class SeekerNavigationComponent   {
    rd: boolean=false;
    ad: boolean=false;
    bc:boolean=false;
-   constructor(private seekerService: SeekerService, private toastr: ToastrService, private router: Router) {
+   constructor(private seekerService: SeekerService, 
+               private toastr: ToastrService, 
+               private router: Router,
+               private sharedService:SharedService) {
      this.profile.personalInfo=new PersonalInfo();
       if(this.router.url == '/seeqem/matching-job'){
         this.isProfileMainPage = true;
@@ -126,15 +131,17 @@ showMenu(){
     if (localStorage.getItem('userToken') != null) {
       this.email=localStorage.getItem('email');
       this.seekerService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
-       if(result!=null){
+       if(result){
         this.profile = result;
+        if(this.profile.personalInfo.photo){
+          this.profileUrl=environment.baseUrl+this.profile.personalInfo.photo
+        }
         this.email = this.profile.email;
         this.progresBar();
         console.log(this.profile);
        }
       }, (err: HttpErrorResponse) => {
         this.toastr.error(err.message);
-        console.log(err);
       })
     }
   }
@@ -237,13 +244,14 @@ showMenu(){
         this.barPercentage=this.profileCompletion;
       }
     });
-     
-
   }
 
   change(){
-    this.seekerService.jobSeekereMessage.subscribe((reuslt:any)=>{
-      this.profileUrl=reuslt;
+    // this.seekerService.jobSeekereMessage.subscribe((reuslt:any)=>{
+    //   this.profileUrl=reuslt;
+    // })
+    this.sharedService.profileMessage.subscribe((result:any)=>{
+      this.profileUrl=result.image;
     })
-  }    
+  }   
 }

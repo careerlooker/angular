@@ -1,124 +1,101 @@
-<!-- <section class="col-sm-12" style="padding: 0px;"> -->
-  <!-- <div class="container">
+<form #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
+  <div class="language-form-right">
     <div class="row">
-      <div class="col-sm-12">
-        <h4 class="head-title-side">Create your own Resume</h4>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.firstName" id="firstName"
+            name="firstName" placeholder="e.g. Johan" required>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.lastName" id="lastName"
+            name="lastName" placeholder="e.g. Williams" required>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.address" id="address"
+            name="address" placeholder="e.g 60,St. Collins" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Country</label>
+          <input type="text" class="form-control" id="country" name="country" placeholder="Select Country"
+            [(ngModel)]="jobSeekerModel.personalInfo.country" list="countryName"
+            (change)="onCountrySelect($event.target.value)" required />
+          <datalist id="countryName">
+            <option [value]=""></option>
+            <option *ngFor="let c of countryList">{{c.name}}</option>
+          </datalist>
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" class="form-control" name="state" placeholder="Select State"
+            (change)="onStateSelect($event.target.value)" [(ngModel)]="jobSeekerModel.personalInfo.state"
+            list="stateName" required />
+          <datalist id="stateName">
+            <option [value]=""></option>
+            <option *ngFor="let c of stateList">{{c.name}}</option>
+          </datalist>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" class="form-control" name="city" placeholder="Select City"
+            [(ngModel)]="jobSeekerModel.personalInfo.city" list="cityName" required />
+          <datalist id="cityName">
+            <option [value]=""></option>
+            <option *ngFor="let c of cityList">{{c.name}}</option>
+          </datalist>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Zip Code</label>
+          <input type="number" class="form-control" pattern="^[1-9][0-9]{5}$"
+            [(ngModel)]="jobSeekerModel.personalInfo.zipCode" id="zipCode" name="zipCode" placeholder="e.g. 60185"
+            required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" readonly disabled [(ngModel)]="jobSeekerModel.email" id="email"
+            name="email" placeholder="e.g. john_wiilams@gmail.com" required>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Phone </label>
+          <input type="tel" pattern="^[1-9][0-9]{9}$" maxlength="10" minlength="10" class="form-control"
+            [(ngModel)]="jobSeekerModel.personalInfo.phoneNo" id="phoneNo" name="phoneNo"
+            placeholder="e.g. 202-555-0145" required>
+        </div>
+      </div>
+    </div>
+
+    <app-file-upload [imgUrl]="imgUrl"></app-file-upload>
+    <br>
+    <button type="button" class="btn btn_form4" (click)="next()">Next</button>
+    <button type="button" class="btn btn_form4" (click)="onSubmit(form)">Save</button>
   </div>
-   -->
-
-          <form  #form=ngForm  (keydown.enter)="$event.preventDefault()" novalidate>
-            <div class="language-form-right">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" 
-                            class="form-control"
-                            [(ngModel)]="jobSeekerModel.personalInfo.firstName" 
-                            id="firstName" 
-                            name="firstName" 
-                            placeholder="e.g. Johan" 
-                            required> 
-                          </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.lastName" id="lastName" name="lastName" placeholder="e.g. Williams" required>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.address" id="address" name="address" placeholder="e.g 60,St. Collins" required>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Country</label>
-                      <input   type="text"
-                               class="form-control" 
-                               id="country"
-                               name="country"
-                               placeholder="Select Country"
-                               [(ngModel)]="jobSeekerModel.personalInfo.country" 
-                               list="countryName"
-                               (change)="onCountrySelect($event.target.value)" required/>
-                              <datalist id="countryName">
-                                  <option [value]=""></option>
-                                  <option  *ngFor="let c of countryList">{{c.name}}</option>
-                              </datalist>
-  
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>State</label>
-                      <input   type="text"
-                      class="form-control" 
-                      name="state"
-                      placeholder="Select State"
-                      (change)="onStateSelect($event.target.value)"
-                      [(ngModel)]="jobSeekerModel.personalInfo.state" 
-                      list="stateName" required/>
-                      <datalist id="stateName">
-                          <option [value]=""></option>
-                          <option *ngFor="let c of stateList">{{c.name}}</option>
-                      </datalist>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-6">
-                      <div class="form-group">
-                          <label>City</label>
-                          <input   type="text"
-                                   class="form-control" 
-                                   name="city"
-                                   placeholder="Select City"
-                                   [(ngModel)]="jobSeekerModel.personalInfo.city" 
-                                   list="cityName" required/>
-                                   <datalist id="cityName">
-                                       <option [value]=""></option>
-                                       <option *ngFor="let c of cityList">{{c.name}}</option>
-                                   </datalist>
-                      </div>
-                    </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Zip Code</label>
-                    <input type="number" class="form-control" pattern="^[1-9][0-9]{5}$" [(ngModel)]="jobSeekerModel.personalInfo.zipCode" id="zipCode" name="zipCode" placeholder="e.g. 60185" required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" readonly disabled  [(ngModel)]="jobSeekerModel.email" id="email" name="email" placeholder="e.g. john_wiilams@gmail.com" required>
-                  </div>
-                </div>
-
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Phone </label>
-                    <input type="tel"  pattern="^[1-9][0-9]{9}$" maxlength="10" minlength="10" class="form-control" [(ngModel)]="jobSeekerModel.personalInfo.phoneNo" id="phoneNo" name="phoneNo" placeholder="e.g. 202-555-0145" required>
-                  </div>
-                </div>
-              </div>
-
-              <app-file-upload [imgUrl]="imgUrl"></app-file-upload>
-              <br>
-              <button type="button" class="btn btn_form4"(click)="next()" >Next</button>
-              <button type="button" class="btn btn_form4" (click)="onSubmit(form)">Save</button>
-            </div>
-          </form>
-
-<!-- </section> -->
+</form>

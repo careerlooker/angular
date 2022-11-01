@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../recruiter-services/recruiter.service';
-import { UserModel } from '../my-account/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { RecruiterModel } from '../my-account/models/recruiter.model';
 import { PersonalInformation } from '../my-account/models/personal-Information.model';
 import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-recruiter-navigation',
@@ -21,7 +21,9 @@ export class RecruiterNavigationComponent implements OnInit {
   credentials:string;
   progressBar:number=10;
   profileUrl='./assets/img/job-seeker.png'
-  constructor(private recruiterService: RecruiterService, private toastr: ToastrService) { }
+  constructor(private recruiterService: RecruiterService, 
+              private toastr: ToastrService,
+              private sharedService:SharedService) { }
 
   ngOnInit() {
     this.recruiterModel.personalInfo=new PersonalInformation();
@@ -67,7 +69,7 @@ export class RecruiterNavigationComponent implements OnInit {
   }
 
   change(){
-    this.recruiterService.profileMessage.subscribe((reuslt:any)=>{
+    this.sharedService.profileMessage.subscribe((reuslt:any)=>{
       this.profileUrl=reuslt;
     })
   }

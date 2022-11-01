@@ -17,4 +17,8 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
+.text-align{
+  text-align: center;
+}
+
 

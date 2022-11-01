@@ -1,7 +1,7 @@
-import { Component,Input, Output,EventEmitter, OnInit } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import { SharedService } from '../../services/shared.service';
-import { RecruiterService } from 'src/app/recruiter/recruiter-services/recruiter.service';
+
 
 @Component({
   selector: 'app-file-upload',
@@ -15,7 +15,7 @@ export class FileUploadComponent{
   @Input() imgUrl:any;
   id:number=0;
   picType:string;
-  constructor(private sharedService:SharedService,private recService:RecruiterService) { }
+  constructor(private sharedService:SharedService) { }
   
   onFileSelected(event:any){
     this.selectedFile=<File>event.target.files[0];
@@ -46,7 +46,7 @@ export class FileUploadComponent{
          this.uploadResponse='Upload Progress: '+Math.round(event.loaded/event.total*100)+' %';
          if(this.uploadResponse=="Upload Progress: 100 %"){
           if(this.imgUrl.buttonText=='Upload Your Photo')
-          this.recService.profileSubject.next(this.imgUrl.image);
+          this.sharedService.profileSubject.next(this.imgUrl.image);
          }
        }
        else if(event.type===HttpEventType.Response){

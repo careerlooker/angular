@@ -1,10 +1,11 @@
 import { Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CountriesModel } from '../models/countries.model';
 import { environment } from 'src/environments/environment';
 import { StatesModel } from '../models/states.model';
 import { CityModel } from '../models/city.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
 
 
 
@@ -14,13 +15,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SharedService {
     private approvalStageMessage = new BehaviorSubject("./assets/img/if_icons_user_.png");
     currentApprovalStageMessage = this.approvalStageMessage.asObservable();
-    
-    constructor(private httpClient:HttpClient){}
+    profileSubject:Subject<UserModel>=new Subject<UserModel>();
+    profileMessage=this.profileSubject.asObservable();
 
+    constructor(private httpClient:HttpClient){}
     updateApprovalMessage(message: string) {
         this.approvalStageMessage.next(message)
     }
-
+   
     getAllCountries():Observable<Array<CountriesModel>>{
         return this.httpClient.get<Array<CountriesModel>>(environment.baseUrl+'co-api/country');
     }

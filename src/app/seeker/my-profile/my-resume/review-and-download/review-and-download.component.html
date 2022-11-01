@@ -1,13 +1,3 @@
- <!-- <section class="col-sm-8" style="padding:0px;">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <h4 class="head-title-side">Create your own Resume</h4>
-        </div>
-      </div>
-    </div>
-    <div class="creat-resume-right" style="padding:10px 25px;">
-      <div class="creat-resume-box"> -->
         <div class="col-sm-12" style="padding: 0px;"  id="pdfTable" #pdfTable>
           <div class="resumeBox">
             
@@ -20,92 +10,78 @@
                 <div class="row">
                   <div class="col-sm-8">
                     <div class="resume-left">
+                      <h4>Summary</h4>
+                      <div class="skill-box"></div>
                       <p class="borderp">{{replaceStrirng(jobSeekerModel.profSummary.summary)}} </p>
 
                       <div class="resume-left-box">
                         <h4>Experience</h4>
-                        <table class="resume-table">
-                          <tr *ngFor="let ex of jobSeekerModel.experience">
-                
-                            <td>{{ex.joiningMonth}}&nbsp;{{ex.joiningYear}}&nbsp;{{ex.resigningMonth}}&nbsp;{{ex.resigningYear}}</td>
-                            <td class="right_space">Employeed at {{ex.employerName}}</td>
-                            <td>Role: &nbsp;{{ex.role}}</td>
-                            <td><i class="fas fa-circle"></i> Responsibilities And Achievements:&nbsp;{{replaceStrirng(ex.responsibilities)}}</td>
-                           
-                          </tr>
-                          <!-- <tr *ngFor="let ex of jobSeekerModel.experience">
-                            <td>{{ex.resigningMonth}}{{ex.resigningYear}}</td>
-                            <td class="right_space">Role: {{ex.role}}</td>
-                          </tr>
-                          <tr *ngFor="let ex of jobSeekerModel.experience">
-                            <td></td>
-                            <td class="right_space"><i class="fas fa-circle"></i> Responsibilities And Achievements</td>
-                            <td></td>
-                          </tr> -->
-                          <!-- <tr>
-                            <td></td>
-                            <td class="right_space"><i class="fas fa-circle"></i> Responsibilities And Achievements</td>
-                          </tr> -->
-                        
-
+                        <table border="1">
+                          <thead>
+                            <th class="text-align">From</th>
+                            <th class="text-align">To</th>
+                            <th class="text-align">EmployerName</th>
+                            <th class="text-align">Role</th>
+                            <th class="text-align">Responsibilities</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let ex of jobSeekerModel.experience">
+                              <td>{{ex.joiningMonth}} &nbsp;{{ex.joiningYear}}</td>
+                              <td>{{ex.resigningMonth}}&nbsp;{{ex.resigningYear}}</td>
+                              <td>{{ex.employerName}}</td>
+                              <td>{{ex.role}}</td>
+                              <td>{{replaceStrirng(ex.responsibilities)}}</td>
+                            </tr>
+                          </tbody>
                         </table>
-
                       </div>
-
                       <div class="resume-left-box">
                         <h4>Education</h4>
-                        <ul class="resume-left-box-list pull-left" *ngFor="let edu of jobSeekerModel.education">
-                          <!-- <li>April 2008</li>
-                          <li>March 2010</li> -->
-                        
-                          <li>{{edu.graduateMonth }}&nbsp;{{edu.graduateYear}}</li>
-                          <li>{{edu.degree}}</li>
-                          <li>{{edu.college}}</li>
-                          
-                        </ul>
-
-                        <ul class="resume-left-box-list2" *ngFor="let edu of jobSeekerModel.education">
-                          <!-- <li>B.Sc IT</li>
-                          <li>College: St.Wilson</li> -->
-                          <!-- <li>{{edu.degree}}</li>
-                          <li>{{edu.college}</li> -->
-
-                        </ul>
+                        <table border="1">
+                          <thead>
+                            <th>Graduate Date</th>
+                            <th>Degree</th>
+                            <th>College</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let edu of jobSeekerModel.education">
+                              <td>{{edu.graduateMonth }}&nbsp;{{edu.graduateYear}}</td>
+                              <td>{{edu.degree}}</td>
+                              <td>{{edu.college}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div class="resume-left-box">
                         <h4>Certification</h4>
-                        <!-- <ul class="resume-left-box-list pull-left">
-                          <li>Aug 2009</li>
-                        </ul>
-
-                        <ul class="resume-left-box-list2">
-                          <li>Oracle DBA</li>
-
-                        </ul> -->
-                        <ul class="resume-left-box-list pull-left" *ngFor="let cert of jobSeekerModel.certification">
-                          <li>{{cert.certMonth}}&nbsp; {{cert.certYear}}</li>&nbsp;
-                          <li>{{cert.certName}}</li>&nbsp;
-                        </ul>
-
-                        <!-- <ul class="resume-left-box-list2" *ngFor="let cert of jobSeekerModel.certification">
-                          <li>Oracle DBA</li>
-                          <li>{{cert.certName}}</li>
-                        </ul> -->
+                        <table border="1">
+                          <thead>
+                            <th>Certification Date</th>
+                            <th>Certification Name</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let cert of jobSeekerModel.certification">
+                                <td>{{cert.certMonth}}&nbsp; {{cert.certYear}}</td>
+                                <td>{{cert.certName}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
 
                       <div class="resume-left-box">
                         <h4>Awards</h4>
-                        <!-- <ul class="resume-left-box-list pull-left">
-                          <li>Aug 2013</li>
-                        </ul> -->
-                        <ul class="resume-left-box-list pull-left" *ngFor="let awd of jobSeekerModel.awards">
-                          <li>{{awd.awardMonth}}&nbsp; {{awd.awardYear}}</li>&nbsp;
-                          <li>{{awd.awardName}}</li>&nbsp;
-                        </ul>
-                        <!-- <ul class="resume-left-box-list2">
-                          <li>Employee Of The Year</li>
-
-                        </ul> -->
+                       <table border="1">
+                        <thead>
+                          <th>Award Date</th>
+                          <th>Award Name</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let awd of jobSeekerModel.awards">
+                              <td>{{awd.awardMonth}}&nbsp; {{awd.awardYear}}</td>
+                              <td>{{awd.awardName}}</td>
+                          </tr>
+                        </tbody>
+                       </table>
                       </div>
                       <div class="resume-left-box" style="border-bottom: 0px">
                         <h4>Other Details</h4>
@@ -127,13 +103,9 @@
                             <td>Vissa Status</td>
                             <td class="right_space">{{jobSeekerModel.otherDetails.visaStatus}}</td>
                           </tr>
-
                         </table>
-
-
-
                       </div>
-                      <a href="#" class="ctc-offer">www.WEBSITENAME.com</a>
+                      <a href="#" class="ctc-offer">www.ctcoffer.com</a>
                     </div>
                   </div>
 
@@ -211,7 +183,7 @@
             </div>
           
 
-            <div class="resume-bg">
+            <!-- <div class="resume-bg">
               <div class="resume-head">
                 <h4>Projects Works</h4>
                 <h5>B.sc IT</h5>
@@ -318,15 +290,10 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
           </div>
           <button class="btn btn_form4" style="margin: 10px 0px" (click)="home()">Home</button>
           <button class="btn btn_form4" style="margin: 10px 0px" (click)="downloadAsPDF()">Download</button>
         </div>
-<!--          
-        </div>
-      </div>
-    </div>
-  </section> -->

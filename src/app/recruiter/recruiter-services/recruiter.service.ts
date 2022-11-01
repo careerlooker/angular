@@ -22,8 +22,6 @@ export class RecruiterService{
     private messageSource = new BehaviorSubject<UserModel>(new UserModel);
     currentMessage = this.messageSource.asObservable();
 
-    profileSubject:Subject<UserModel>=new Subject<UserModel>();
-    profileMessage=this.profileSubject.asObservable();
 
     recruiterSubject:Subject<any>=new Subject<any>();
     recruiterMessage=this.recruiterSubject.asObservable();
