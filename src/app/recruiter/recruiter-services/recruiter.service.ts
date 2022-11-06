@@ -111,4 +111,8 @@ export class RecruiterService{
     getJobForEdit(reqId:number,jobId:number):Observable<any>{
         return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+'/'+jobId);
     }
+
+    getRecruiterMatchingSeeker(reqId:number,jobId:number):Observable<any>{
+        return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/'+jobId);
+    }
 }

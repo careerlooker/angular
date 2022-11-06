@@ -7,8 +7,6 @@ import { CityModel } from '../models/city.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
 
-
-
 @Injectable({
     providedIn:'root'
 })
@@ -19,10 +17,12 @@ export class SharedService {
     profileMessage=this.profileSubject.asObservable();
 
     constructor(private httpClient:HttpClient){}
-    updateApprovalMessage(message: string) {
+   
+    updateApprovalMessage(message: any) {
         this.approvalStageMessage.next(message)
     }
    
+    
     getAllCountries():Observable<Array<CountriesModel>>{
         return this.httpClient.get<Array<CountriesModel>>(environment.baseUrl+'co-api/country');
     }

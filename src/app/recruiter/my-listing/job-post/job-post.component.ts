@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {  Component, OnInit, ViewChild } from '@angular/core';
 import { CountriesModel } from 'src/app/shared/models/countries.model';
 import { StatesModel } from 'src/app/shared/models/states.model';
 import { CityModel } from 'src/app/shared/models/city.model';
@@ -18,12 +18,14 @@ import { JobInterviewInfo } from '../../my-account/models/job-interview-info.mod
 import { JobInfo } from '../../my-account/models/job-info.model';
 import { NgForm } from '@angular/forms';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
+import { BaseModel } from 'src/app/shared/models/base.model';
+import { MyListingComponent } from '../my-listing.component';
 @Component({
   selector: 'app-job-post',
   templateUrl: './job-post.component.html',
   styleUrls: ['./job-post.component.css']
 })
-export class JobPostComponent implements OnInit {
+export class JobPostComponent extends BaseModel implements OnInit {
   @ViewChild(TextEditorComponent) textEditorComponent: TextEditorComponent;
   recruiterModel:RecruiterModel=new RecruiterModel();
   jobInfo:JobInfo=new JobInfo();
@@ -62,6 +64,7 @@ export class JobPostComponent implements OnInit {
               private toastr:ToastrService,
               private router:Router,
               private route:ActivatedRoute) { 
+                super();
                 this.route.queryParamMap.subscribe( params => {
                   this.reqId = +params.get('reqId');
                   this.jobId = +params.get('jobId');
@@ -121,6 +124,7 @@ export class JobPostComponent implements OnInit {
     this.postedJob.jobDescription=null;
     this.selectedCity=new Array<CityModel>();
     this.selectedSkills=new Array<KeySkillsModel>();
+    
     this.getRecruitrerDetails();
     this.getKeySkills();
     this.getCountries();
@@ -131,6 +135,7 @@ export class JobPostComponent implements OnInit {
     this.isJobSave=true;
     this.today= new Date().toISOString().split('T')[0];
   }
+ 
   editJob(){
     if(this.reqId>0){
     this.recruiterService.getJobForEdit(this.reqId,this.jobId).subscribe((result:any)=>{

@@ -11,6 +11,7 @@ import { MatchingProfileComponent } from './matching-profile/matching-profile.co
 import { MyListingComponent } from './my-listing.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
+import { ProfilesComponent } from './profiles/profiles.component';
 @NgModule({
     declarations:[
         MyListingComponent,
@@ -19,6 +20,7 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
         JobPostComponent,
         ManageJobPostComponent,
         MatchingProfileComponent,
+        ProfilesComponent,
     ],
     imports:[
         CommonModule,

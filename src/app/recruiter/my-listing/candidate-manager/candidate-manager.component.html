@@ -49,7 +49,7 @@
             <td> {{item.jobPostedDate|date:'yyyy-MM-dd'}}</td>
             <td>{{item.jobInterviewInfo.validUntil|date:'yyyy-MM-dd'}}</td>
             <td [ngStyle]="{'color': (item.jobStatus === 'Pending') ? 'red' : (item.jobStatus === 'InActive') ? 'orange' : (item.jobStatus === 'Active') ? 'green' : ''}">{{item.jobStatus}}</td>
-            <td>{{item.matchingPercentage}}</td>
+            <td>{{item.matchedSeekerProfile}}</td>
           </tr>
         </tbody>
       </table>

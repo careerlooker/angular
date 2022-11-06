@@ -56,4 +56,15 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
     }
   }
 
+  jobRefresh(refresh:string){
+    this.sort=refresh;
+    this.getMatchingJob();
+  }
+
+  jobDetails(){
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/job-details']));
+       window.open('seeqem/matching-job' + url, '_blank');
+  }
+
 }

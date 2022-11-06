@@ -12,26 +12,28 @@ export class BaseModel {
     cityname: string;
     email: string;
     sekId: number;
-    isChecked:boolean=false;
+    isChecked: boolean = false;
     isAdd: boolean = false;
     isUpdate: boolean = false;
-    isDelete:boolean=false;
-    hideForm:boolean=false;
-    hideFormButton:boolean=true;
-    isSave:boolean=false;
-    pageNo:number=0;
-    sort:string='Freshness';
+    isDelete: boolean = false;
+    hideForm: boolean = false;
+    hideFormButton: boolean = true;
+    isSave: boolean = false;
+    pageNo: number = 0;
+    sort: string = 'Freshness';
+    reqId: number;
+    jobId: number;
+    isEnabled: boolean = false;
+    joiningMonth = [{ "Id": 1, "joiningMonth": "January" }, { "Id": 2, "joiningMonth": "February" }, { "Id": 3, "joiningMonth": "March" }, { "Id": 4, "joiningMonth": "April" }, { "Id": 5, "joiningMonth": "May" }, { "Id": 6, "joiningMonth": "June" },
+    { "Id": 7, "joiningMonth": "July" }, { "Id": 8, "joiningMonth": "August" }, { "Id": 9, "joiningMonth": "September" }, { "Id": 10, "joiningMonth": "October" }, { "Id": 11, "joiningMonth": "November" }, { "Id": 12, "joiningMonth": "December" }];
 
-    joiningMonth = [{"Id":1, "joiningMonth": "January" }, {"Id":2, "joiningMonth": "February" }, { "Id":3,"joiningMonth": "March" }, {"Id":4, "joiningMonth": "April" }, { "Id":5,"joiningMonth": "May" }, { "Id":6,"joiningMonth": "June" },
-    {"Id":7, "joiningMonth": "July" }, {"Id":8, "joiningMonth": "August" }, { "Id":9,"joiningMonth": "September" }, {"Id":10, "joiningMonth": "October" }, {"Id":11, "joiningMonth": "November" }, {"Id":12, "joiningMonth": "December" }];
+    resigningMonth = [{ "Id": 1, "resigningMonth": "January" }, { "Id": 2, "resigningMonth": "February" }, { "Id": 3, "resigningMonth": "March" }, { "Id": 4, "resigningMonth": "April" }, { "Id": 5, "resigningMonth": "May" }, { "Id": 6, "resigningMonth": "June" },
+    { "Id": 7, "resigningMonth": "July" }, { "Id": 8, "resigningMonth": "August" }, { "Id": 9, "resigningMonth": "September" }, { "Id": 10, "resigningMonth": "October" }, { "Id": 11, "resigningMonth": "November" }, { "Id": 12, "resigningMonth": "December" }];;
 
-    resigningMonth = [{"Id":1, "resigningMonth": "January" }, { "Id":2,"resigningMonth": "February" }, { "Id":3,"resigningMonth": "March" }, {"Id":4, "resigningMonth": "April" }, {"Id":5, "resigningMonth": "May" }, {"Id":6, "resigningMonth": "June" },
-    { "Id":7,"resigningMonth": "July" }, { "Id":8,"resigningMonth": "August" }, { "Id":9,"resigningMonth": "September" }, {"Id":10, "resigningMonth": "October" }, {"Id":11, "resigningMonth": "November" }, {"Id":12, "resigningMonth": "December" }];;
-    
-    graduateMonth = [{ "Id":1,"graduateMonth": "January" }, {"Id":2, "graduateMonth": "February" }, {"Id":3, "graduateMonth": "March" }, {"Id":4, "graduateMonth": "April" }, {"Id":5, "graduateMonth": "May" }, { "Id":6,"graduateMonth": "June" },
-    { "Id":7,"graduateMonth": "July" }, {"Id":8, "graduateMonth": "August" }, {"Id":9, "graduateMonth": "September" }, {"Id":10, "graduateMonth": "October" }, {"Id":11, "graduateMonth": "November" }, { "Id":12,"graduateMonth": "December" }];
-  
-  
+    graduateMonth = [{ "Id": 1, "graduateMonth": "January" }, { "Id": 2, "graduateMonth": "February" }, { "Id": 3, "graduateMonth": "March" }, { "Id": 4, "graduateMonth": "April" }, { "Id": 5, "graduateMonth": "May" }, { "Id": 6, "graduateMonth": "June" },
+    { "Id": 7, "graduateMonth": "July" }, { "Id": 8, "graduateMonth": "August" }, { "Id": 9, "graduateMonth": "September" }, { "Id": 10, "graduateMonth": "October" }, { "Id": 11, "graduateMonth": "November" }, { "Id": 12, "graduateMonth": "December" }];
+
+
     joiningYear = [];
     resigningYear = [];
     graduateYear = [];

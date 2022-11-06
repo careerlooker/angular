@@ -12,6 +12,7 @@ import { MsgBoxComponent } from './msg-box/msg-box.component';
 import { SharedModule } from '../shared/modules/shared.module';
 import { JobDetailsComponent } from './job-details/job-details.component';
 
+
 @NgModule({
     declarations:[
         MatchingJobsComponent,
@@ -29,6 +30,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
         ReactiveFormsModule,
         SharedModule,
         SeekerRoutingModule
+     
     ],
     exports:[],
     providers:[],

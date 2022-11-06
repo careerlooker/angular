@@ -15,7 +15,7 @@ const childRoutes:Routes=[
     //   {path:'my-profile',component:MyProfileComponent,loadChildren:'../seeker/my-profile/my-profile.module#MyProfileModule'},
       {path:'',redirectTo:'matching-job',pathMatch:'full'},
       {path:'matching-job',component:MatchingJobsComponent},
-      {path:'job-details',component:JobDetailsComponent},
+      {path:'job-details', component:JobDetailsComponent},
       {path:'to-do',component:ToDoComponent},
       {path:'settings',component:SettingsComponent},
       {path:'my-applications',component:MyApplicationsComponent},

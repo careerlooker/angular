@@ -94,4 +94,8 @@ export class SeekerService {
     getMatchingJob(sekEmail:string,sort:string,pageNo:number):Observable<any>{
         return this.httpClient.get<any>(environment.baseUrl+'co-api/seeker/'+sekEmail+'/'+sort+'/'+pageNo+'/jobs');
     }
+
+    getAppliedJob(sekEmail:string,reqId:number,jobId:number):Observable<any>{
+        return this.httpClient.get<any>(environment.baseUrl+'co-api/seeker/applyJob/'+sekEmail+'/'+reqId+'/'+jobId);
+    }
 }

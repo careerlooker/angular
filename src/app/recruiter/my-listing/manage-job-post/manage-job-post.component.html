@@ -5,11 +5,7 @@
       <div class="col-sm-5">
         <div class="form-group">
           <label>From</label>
-          <input type="date" 
-                  class="form-control" 
-                  id="from"
-                  [(ngModel)]="search.startDate"
-                 >
+          <input type="date" class="form-control" id="from" [(ngModel)]="search.startDate">
           <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
@@ -17,11 +13,7 @@
       <div class="col-sm-5">
         <div class="form-group">
           <label>To</label>
-          <input type="date" 
-                  class="form-control" 
-                  id="to"
-                  [(ngModel)]="search.endDate"
-                 >
+          <input type="date" class="form-control" id="to" [(ngModel)]="search.endDate">
           <!-- <img src="./assets/img/calender.png"> -->
         </div>
       </div>
@@ -44,34 +36,42 @@
         </thead>
         <tbody style="border: 1px">
           <tr *ngIf="jobIdsForDelete.length>1">
-            <button  type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete Selected Job</button>
+            <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete Selected
+              Job</button>
           </tr>
           <tr class="border-manage" *ngFor="let jobItem of postedJobList">
             <td class="officve-admin">
-              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.jobId)" style="cursor: pointer;"><i class="fas fa-pen"></i></a></div>
-              <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On: {{jobItem.jobPostedDate|date:'yyyy-MM-dd'}} 
-              
-              </span>
+              <div class="icon-box-edit"><a (click)="navigateJobPost(jobItem.jobId)" style="cursor: pointer;"><i
+                    class="fas fa-pen"></i></a></div>
+              <div class="office-admin-box">{{jobItem.jobInfo.jobTitle}}<br><span>Posted On:
+                  {{jobItem.jobPostedDate|date:'yyyy-MM-dd'}}
+
+                </span>
                 <div class="clearfix"></div>
-            
-               
+
+
                 <div class="button-managepost">
                   <div class="form-group">
-                  <input ngModel class="btn btn_form5" style="margin-top: 0px" (ngModelChange)="selectedJobForDelete(jobItem.jobId, $event)" type="checkbox">
-                  <button [disabled]="jobIdsForDelete.length>1" type="button" class="btn btn_form5" style="margin-top: 0px" (click)="deleteJob()">Delete</button>
-                  <button type="button" class="btn btn_form5" style="margin-top: 0px" (click)="copyJob(jobItem.jobId)">Copy</button>
+                    <input ngModel class="btn btn_form5" style="margin-top: 0px"
+                      (ngModelChange)="selectedJobForDelete(jobItem.jobId, $event)" type="checkbox">
+                    <button [disabled]="jobIdsForDelete.length>1" type="button" class="btn btn_form5"
+                      style="margin-top: 0px" (click)="deleteJob()">Delete</button>
+                    <button type="button" class="btn btn_form5" style="margin-top: 0px"
+                      (click)="copyJob(jobItem.jobId)">Copy</button>
+                  </div>
                 </div>
               </div>
-              </div>
             </td>
-            <td 
-            [ngStyle]="{'color': (jobItem.jobStatus === 'Pending') ? 'red' : (jobItem.jobStatus === 'InActive') ? 'orange' : (jobItem.jobStatus === 'Active') ? 'green' : ''}">{{jobItem.jobStatus}}</td>
-            <td>{{jobItem.matchingPercentage}}</td>
+            <td
+              [ngStyle]="{'color': (jobItem.jobStatus === 'Pending') ? 'red' : (jobItem.jobStatus === 'InActive') ? 'orange' : (jobItem.jobStatus === 'Active') ? 'green' : ''}">
+              {{jobItem.jobStatus}}</td>
+            <td><button type="button" class="btn btn_form5" (click)="getMatchingSeeker(jobItem.reqId,jobItem.jobId)">  {{jobItem.matchedSeekerProfile}} match found</button>
+            </td>
           </tr>
           <tr *ngIf="postedJobList.length<=0">
-              <td style="text-align:right;">Records not found</td>
+            <td style="text-align:right;">Records not found</td>
           </tr>
-          <tr  style="text-align:right;" *ngIf="postedJobList.length>0">{{'All records '+ postedJobList.length}}</tr>
+          <tr style="text-align:right;" *ngIf="postedJobList.length>0">{{'All records '+ postedJobList.length}}</tr>
         </tbody>
       </table>
       <div class="left_arrow">
@@ -81,7 +81,7 @@
         </ul>
       </div>
       <br><br>
-      
+
     </div>
   </div>
 </div>

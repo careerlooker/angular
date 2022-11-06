@@ -46,6 +46,7 @@ export class CandidateManagerComponent extends BaseModel implements OnInit {
         this.postedJobs.jobInterviewInfo=e.jobInterviewInfo;
         this.postedJobs.jobPostedDate=e.jobPostedDate;
         this.postedJobs.matchingPercentage=e.matchingPercentage;
+        this.postedJobs.matchedSeekerProfile=e.matchedSeekerProfile;
         this.postedJobs.jobStatus=e.jobStatus;
         this.postedJobList.push(this.postedJobs)
        });

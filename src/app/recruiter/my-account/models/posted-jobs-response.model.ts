@@ -14,4 +14,5 @@ export class PostedJobsResponse{
     jobStatus: string;
     jobPostedDate:string;
     matchingPercentage:number;
+    matchedSeekerProfile:number;
 }

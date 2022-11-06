@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../../recruiter-services/recruiter.service';
 import { SearchJob } from '../models/search-job.model';
-import { Router } from '@angular/router';
+import {  ActivatedRoute, Router } from '@angular/router';
 import { JobOperationModel } from '../models/job-operation.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { PostedJobsResponse } from '../../my-account/models/posted-jobs-response
 import { JobCtcInfo } from '../../my-account/models/job-ctc-info.model';
 import { JobInfo } from '../../my-account/models/job-info.model';
 import { JobInterviewInfo } from '../../my-account/models/job-interview-info.model';
+import { MatchingSeekerModel } from '../../models/matching-seeker.model';
 
 @Component({
   selector: 'app-manage-job-post',
@@ -18,6 +19,7 @@ import { JobInterviewInfo } from '../../my-account/models/job-interview-info.mod
 })
 export class ManageJobPostComponent implements OnInit {
   postedJobList:Array<PostedJobsResponse>=new Array<PostedJobsResponse>();
+  matchingSeekerModel:Array<MatchingSeekerModel>=new Array<MatchingSeekerModel>();
   search:SearchJob=new SearchJob();
   jobOperation:JobOperationModel=new JobOperationModel();
   paging:boolean= false;
@@ -26,7 +28,8 @@ export class ManageJobPostComponent implements OnInit {
   jobIdsForDelete:Array<number>=new Array<number>();
   constructor(private recruiterService:RecruiterService,
               private router:Router,
-              private toastr:ToastrService) { }
+              private toastr:ToastrService,
+              private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.reqId=+JSON.parse(localStorage.getItem('reqId'));
@@ -146,6 +149,10 @@ private filterJobById(jobId:number,jobType:string){
     }else{
       this.paging=false;
     }
+  }
+
+  getMatchingSeeker(reqId: number, jobId: number) {
+    this.router.navigate(['/reqem/my-lising/matching-profile',reqId,jobId],{relativeTo:this.route});
   }
 }
 
