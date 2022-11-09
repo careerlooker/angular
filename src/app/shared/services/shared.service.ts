@@ -16,12 +16,21 @@ export class SharedService {
     profileSubject:Subject<UserModel>=new Subject<UserModel>();
     profileMessage=this.profileSubject.asObservable();
 
+    private profilePhotoSubject:Subject<any>=new Subject<any>();
+    profilePhotoMessage=this.profilePhotoSubject.asObservable();
+    private jobDetailsSubject:BehaviorSubject<any>=new BehaviorSubject('');
+    jobDetailsMessage=this.jobDetailsSubject.asObservable();
     constructor(private httpClient:HttpClient){}
    
     updateApprovalMessage(message: any) {
         this.approvalStageMessage.next(message)
     }
-   
+    updateProfilePhoto(message:any){
+        this.profilePhotoSubject.next(message)
+    }
+   updateJobDetails(message:any){
+    this.jobDetailsSubject.next(message);
+   }
     
     getAllCountries():Observable<Array<CountriesModel>>{
         return this.httpClient.get<Array<CountriesModel>>(environment.baseUrl+'co-api/country');

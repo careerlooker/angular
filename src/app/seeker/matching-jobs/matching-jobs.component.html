@@ -43,7 +43,7 @@
   <div class="job-box-left">
 
 
-    <h4 class="job_head"><a routerLink="job-details" routerLinkActive="active">{{job.jobInfo.jobTitle}}</a></h4>
+    <h4 class="job_head"><a [routerLink]="[]"  routerLinkActive="active" (click)="jobDetails(job)">{{job.jobInfo.jobTitle}}</a></h4>
     <h5>{{job.companyName}}</h5>
     <ul class="job_list">
       <li><i class="fas fa-map-marker-alt"></i>{{job.jobInfo.city}}</li>

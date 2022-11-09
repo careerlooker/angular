@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RecruiterService } from 'src/app/recruiter/recruiter-services/recruiter.service';
 import { BaseModel } from 'src/app/shared/models/base.model';
+import { SharedService } from 'src/app/shared/services/shared.service';
+import { environment } from 'src/environments/environment';
 import { JobSeekerModel } from '../models/job-seeker-model';
 import { MatchingJobModel } from '../models/matching-job.model';
 import { SeekerService } from '../seeker-services/seeker.service';
@@ -17,7 +18,7 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
 
   matchingJobModel: Array<MatchingJobModel> = new Array<MatchingJobModel>();
   jobSeekerModel: JobSeekerModel = new JobSeekerModel();
-  constructor(private recruiterService: RecruiterService,
+  constructor(private sharedService:SharedService,
     private seekerService: SeekerService,
     private toastr: ToastrService,
     private router: Router) {
@@ -35,6 +36,7 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
     this.seekerService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
       if (result != null) {
         this.jobSeekerModel = result;
+        this.sharedService.updateApprovalMessage(environment.baseUrl+this.jobSeekerModel.personalInfo.photo);
         this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
         this.getMatchingJob();
       }
@@ -61,10 +63,11 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
     this.getMatchingJob();
   }
 
-  jobDetails(){
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/job-details']));
-       window.open('seeqem/matching-job' + url, '_blank');
+  jobDetails(job:any){
+    if(job){
+      this.router.navigate(['/seeqem/job-details',job.jobId]);
+      this.sharedService.updateJobDetails(job);
+      this.sharedService.updateProfilePhoto(this.jobSeekerModel.personalInfo.photo);
+    }
   }
-
 }

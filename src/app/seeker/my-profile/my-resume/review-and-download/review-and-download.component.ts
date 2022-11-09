@@ -9,7 +9,6 @@ import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { OthersDetails } from 'src/app/seeker/models/others-details.model';
 import { PersonalInfo } from 'src/app/seeker/models/personal-info.model';
 import { professionalSummary } from 'src/app/seeker/models/professional-summary';
-import { StarRating } from 'src/app/seeker/models/start-rating.model';
 import { TrainingModel } from 'src/app/seeker/models/training.model';
 import { SeekerService } from 'src/app/seeker/seeker-services/seeker.service';
 import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
@@ -48,7 +47,6 @@ export class ReviewAndDownloadComponent extends BaseModel implements OnInit {
     this.jobSeekerModel.contactDetails=new Array<ContactDetailsModel>();
     this.jobSeekerModel.otherDetails=new OthersDetails();
     this.getJObSeekerDetails();
-    //this.jobSeekerModel.otherDetails[0].mediaLink;
   }
   replaceStrirng(description:any){
     if(description!=null && description!=undefined){
@@ -82,7 +80,7 @@ export class ReviewAndDownloadComponent extends BaseModel implements OnInit {
     var html = htmlToPdfmake(pdfTable.innerHTML);
      
     const documentDefinition = { content: html };
-    pdfMake.createPdf(documentDefinition).open(); 
+    pdfMake.createPdf(documentDefinition).download(); 
      
   }
 
