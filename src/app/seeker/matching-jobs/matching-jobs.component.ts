@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { SharedService } from 'src/app/shared/services/shared.service';
@@ -21,7 +21,8 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
   constructor(private sharedService:SharedService,
     private seekerService: SeekerService,
     private toastr: ToastrService,
-    private router: Router) {
+    private router: Router,
+    private route:ActivatedRoute) {
     super();
   }
 
@@ -37,7 +38,8 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
       if (result != null) {
         this.jobSeekerModel = result;
         this.sharedService.updateApprovalMessage(environment.baseUrl+this.jobSeekerModel.personalInfo.photo);
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.seekerService.updateSeekerNavigationToggleMessage(true)
         this.getMatchingJob();
       }
     })
@@ -65,9 +67,16 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
 
   jobDetails(job:any){
     if(job){
-      this.router.navigate(['/seeqem/job-details',job.jobId]);
-      this.sharedService.updateJobDetails(job);
-      this.sharedService.updateProfilePhoto(this.jobSeekerModel.personalInfo.photo);
+      let id=job.jobId;
+      let data={
+        'jobDetails':job,
+        'photo':this.jobSeekerModel.personalInfo.photo,
+        'isToggle':false,
+        'jobList':this.matchingJobModel,
+        'jobId':id
+      }
+      localStorage.setItem('object', JSON.stringify(data));
+       window.open('/seeqem/job-details/'+id,'_blank').focus();
     }
   }
 }

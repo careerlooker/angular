@@ -276,6 +276,19 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Employement Type</label>
+        <input type="number"
+                appAllownumbersonly
+               class="form-control" 
+               name="noOfVacancy"
+               [(ngModel)]="jobCtcInfo.noOfVaccancy"
+              required/>
+      </div>
+    </div>
+  </div>
   <hr>
   <!-- <h4><strong>Interview</strong></h4><br> -->
   <div class="row">
@@ -365,7 +378,7 @@
       </div>
     </div>
   </div>
-  <h4><strong>Job Description</strong></h4>
+  <h4><strong>Job Description and Responsibilities</strong></h4>
   <div class="row">
     <app-text-editor [description]="postedJob.jobDescription"></app-text-editor> 
   </div>

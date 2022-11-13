@@ -15,9 +15,9 @@ export class HomeComponent implements OnInit {
     this.recruiterService.getRecruiterDetails(localStorage.getItem('email')).subscribe(result=>{
       if(result){
         this.recruiterModel=result;
+        this.recruiterService.recruiterSubject.next(this.recruiterModel);
       }
     })
-    this.recruiterService.recruiterSubject.next(this.recruiterModel);
   }
 
 }

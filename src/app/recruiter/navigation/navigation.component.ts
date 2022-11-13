@@ -69,14 +69,20 @@ export class RecruiterNavigationComponent implements OnInit {
   }
 
   change(){
-    this.sharedService.profileMessage.subscribe((reuslt:any)=>{
-      this.profileUrl=reuslt;
+    this.sharedService.profileMessage.subscribe((result:any)=>{
+      if(result){
+        this.profileUrl=result;
+      }
     })
   }
 
   profileMessage(){
     this.recruiterService.recruiterMessage.subscribe((result:any)=>{
-      this.recruiterModel=result;
+      if(result){
+        this.recruiterModel=result;
+      }
     });
   }
+
+  
 }

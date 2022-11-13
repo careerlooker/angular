@@ -10,8 +10,11 @@ import { JobSeekerModel } from '../models/job-seeker-model';
 })
 export class SeekerService {
 
-    private messageSource = new BehaviorSubject<PersonalInfo>(new PersonalInfo);
-    currentMessage = this.messageSource.asObservable();
+    private PersonalInfoSubject = new BehaviorSubject<JobSeekerModel>(new JobSeekerModel);
+    PersonalInfoMessage = this.PersonalInfoSubject.asObservable();
+
+    private seekerNavigationToggleSubject = new BehaviorSubject<boolean>(false);
+    seekerNavigationToggleMessage = this.seekerNavigationToggleSubject.asObservable();
 
     jobSeekerSubject:Subject<any>=new Subject<any>();
     jobSeekereMessage=this.jobSeekerSubject.asObservable();
@@ -20,7 +23,13 @@ export class SeekerService {
     tickMessage=this.tickSubject.asObservable();
 
     constructor(private httpClient: HttpClient) { }
-
+     
+    updateSeekerNavigationToggleMessage(message:any){
+        this.seekerNavigationToggleSubject.next(message);
+    }
+    updatePersonalInfoMessage(message:any){
+        this.PersonalInfoSubject.next(message);
+    }
     seekerLogin(email:string): Observable<JobSeekerModel> {
         return this.httpClient.get<JobSeekerModel>(environment.baseUrl+'co-api/seeker/register/'+email);
     }

@@ -12,6 +12,7 @@ import { SearchJob } from '../my-listing/models/search-job.model';
 import { RecruiterModel } from '../my-account/models/recruiter.model';
 import { SocialNetwork } from '../my-account/models/social-network.model';
 import { PostedJobs } from '../my-account/models/posted-jobs.model';
+import { FilterModel } from '../models/filter.model';
 
 
 
@@ -112,7 +113,7 @@ export class RecruiterService{
         return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/jobs/'+reqId+'/'+jobId);
     }
 
-    getRecruiterMatchingSeeker(reqId:number,jobId:number):Observable<any>{
-        return this.httpClient.get<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/'+jobId);
+    getRecruiterMatchingSeeker(reqId:number,jobId:number,pageNo:number,sortType:string,filter:FilterModel):Observable<any>{
+        return this.httpClient.post<any>(environment.baseUrl+'co-api/recruiter/'+reqId+'/'+jobId+'/'+pageNo+'/'+sortType,filter,{responseType:'text' as 'json'});
     }
 }

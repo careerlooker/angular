@@ -111,10 +111,7 @@ export class SeekerNavigationComponent   {
   }
   togg(name:string) {
    this.dropdowns[name] = !this.dropdowns[name];
-   
    let activeUrl = this.router.url;  
-   console.log(activeUrl);
-   console.log(activeUrl.indexOf('/my-profile'));
    if(activeUrl.indexOf('/my-profile') == -1){
      this.showprofilemenu =  false;
    }else{
@@ -123,7 +120,6 @@ export class SeekerNavigationComponent   {
 }
 
 showMenu(){
-  
   this.showprofilemenu = !this.showprofilemenu;
 }
 
@@ -131,7 +127,7 @@ showMenu(){
     if (localStorage.getItem('userToken') != null) {
       this.email=localStorage.getItem('email');
       this.seekerService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
-       if(result){
+       if(Object.keys(result).length>0){
         this.profile = result;
         if(this.profile.personalInfo.photo){
           this.profileUrl=environment.baseUrl+this.profile.personalInfo.photo
@@ -148,8 +144,10 @@ showMenu(){
 
  
   progresBar(){
-    this.seekerService.jobSeekereMessage.subscribe((result:any)=>{
+    this.seekerService.PersonalInfoMessage.subscribe((result:any)=>{
+      if(Object.keys(result).length>0){
       this.profile=result;
+      this.getRole();
       this.profileCompletion=0;
       this.count=0;
       if(this.profile.personalInfo!=null){
@@ -243,15 +241,27 @@ showMenu(){
       {
         this.barPercentage=this.profileCompletion;
       }
+    }
     });
   }
-
   change(){
-    // this.seekerService.jobSeekereMessage.subscribe((reuslt:any)=>{
-    //   this.profileUrl=reuslt;
-    // })
     this.sharedService.profileMessage.subscribe((result:any)=>{
-      this.profileUrl=result.image;
+      if(Object.keys(result).length>0){
+        this.profileUrl=result.image;
+      }
     })
-  }   
+  }  
+  role:string;
+  company:string;
+  getRole(){
+    if(this.profile.experience.length>0){
+    this.profile.experience.forEach((e,i)=>{
+      if(e.presentEmployer){
+        this.role=this.profile.experience.filter(x=>x.presentEmployer==e.presentEmployer)[0].role;
+        this.company=this.profile.experience.filter(x=>x.presentEmployer==e.presentEmployer)[0].employerName;
+      }
+    })
+  }
+  }
+  
 }

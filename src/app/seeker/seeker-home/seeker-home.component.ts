@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { JobDetailsComponent } from '../job-details/job-details.component';
+import { SeekerService } from '../seeker-services/seeker.service';
 
 @Component({
   selector: 'app-seeker-home',
@@ -7,11 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./seeker-home.component.css']
 })
 export class SeekerHomeComponent implements OnInit {
-
+@ViewChild(JobDetailsComponent)jobDetailsComponent:JobDetailsComponent;
   isProfileMainPage:boolean = false;
   isMyProfilePage:boolean = false;
-
-  constructor(private router: Router) {
+  isToggle:boolean=true;
+  constructor(private router: Router,
+    private seekerService:SeekerService) {
     let activeUrl = this.router.url;
     if(activeUrl.indexOf('/my-profile') == -1){
         this.isMyProfilePage = false;
@@ -21,6 +24,17 @@ export class SeekerHomeComponent implements OnInit {
    }
 
   ngOnInit() {
+    let data = JSON.parse(localStorage.getItem('object'));
+    if(data){
+      this.isToggle=data.isToggle;
+      
+    }else{
+    this.seekerService.seekerNavigationToggleMessage.subscribe(toggle=>{
+      if(toggle){
+       this.isToggle=toggle;
+      }
+    })
+  }
   }
 
 }

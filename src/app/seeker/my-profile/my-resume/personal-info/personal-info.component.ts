@@ -53,7 +53,7 @@ export class PersonalInfoComponent implements OnInit {
     'id': 0,
     'picType': 'sek-pics'
   }
-  constructor(private seekerrService: SeekerService,
+  constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
     private sharedService: SharedService,
     private router: Router) { }
@@ -76,7 +76,7 @@ export class PersonalInfoComponent implements OnInit {
   getSeeker() {
     if (localStorage.getItem('email') != null) {
       this.email = localStorage.getItem('email');
-      this.seekerrService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
+      this.seekerService.seekerLogin(this.email).subscribe((result: JobSeekerModel) => {
         if (result != null) {
           this.jobSeekerModel = result;
           this.email = this.jobSeekerModel.email;
@@ -88,9 +88,10 @@ export class PersonalInfoComponent implements OnInit {
           }
           this.imgUrl.id = this.jobSeekerModel.id;
           if (this.jobSeekerModel.personalInfo) {
-            this.seekerrService.tickSubject.next('pi');
+            this.seekerService.tickSubject.next('pi');
           }
-          this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
+          //this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
+          this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
           this.getCountries();
         }
       }, (err: HttpErrorResponse) => {
@@ -179,10 +180,10 @@ export class PersonalInfoComponent implements OnInit {
       if (this.fileUploadComponent.selectedFile) {
         this.jobSeekerModel.personalInfo.photo = "images/" + this.imgUrl.picType + "/" + this.imgUrl.id + '.' + this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
       }
-      this.seekerrService.updateSeekerProfile(this.jobSeekerModel).subscribe((result: any) => {
+      this.seekerService.updateSeekerProfile(this.jobSeekerModel).subscribe((result: any) => {
         if (result) {
           this.getSeeker();
-          this.seekerrService.tickSubject.next('pi');
+          this.seekerService.tickSubject.next('pi');
           this.toastr.success(JSON.parse(result).message)
         }
       }, (err: HttpErrorResponse) => {

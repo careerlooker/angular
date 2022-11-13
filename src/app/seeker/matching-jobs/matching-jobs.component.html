@@ -1,30 +1,40 @@
 <div class="row">
   <div class="fillter-nav-job">
   <ul class="fillter-list">
-  <li  class="dropdown"><a href="#" data-toggle="dropdown">Salary <i class="fas fa-chevron-down"></i></a>
+  <li  class="dropdown"><a  data-toggle="dropdown">Salary <i class="fas fa-chevron-down"></i></a>
   <ul class="dropdown-menu">
-            <li><a href="#"> Up</a></li>
-            <li><a href="#"> Up</a></li>
-            <li><a href="#"> Up</a></li>
-            <li><a href="#"> Up</a></li>
+            <li><a > Up</a></li>
+            <li><a > Up</a></li>
+            <li><a > Up</a></li>
+            <li><a > Up</a></li>
         </ul>        
   </li>   
-<li><a href="#">Location<i class="fas fa-chevron-down"></i></a></li>   
-<li><a href="#">Functional Area<i class="fas fa-chevron-down"></i></a></li>   
-<li><a href="#">Industry<i class="fas fa-chevron-down"></i></a></li>   
-<li><a href="#">Experience<i class="fas fa-chevron-down"></i></a></li>
-<li><a href="#">Company<i class="fas fa-chevron-down"></i></a></li>
-<li><a href="#">Matching %<i class="fas fa-chevron-down"></i></a></li> 
+<li><a >Location<i class="fas fa-chevron-down"></i></a></li>   
+<li><a >Functional Area<i class="fas fa-chevron-down"></i></a></li>   
+<li><a >Industry<i class="fas fa-chevron-down"></i></a></li>   
+<li><a >Experience<i class="fas fa-chevron-down"></i>
+  <ul class="dropdown-menu">
+    <li><a href="">0-1 years</a></li>
+    <li><a href="">1-3 years</a></li>
+    <li><a href="">3-6 years</a></li>
+    <li><a href="">6-10 years</a></li>
+    <li><a href="">10-15 years</a></li>
+    <li><a href="">15 + years</a></li>
+</ul> 
+</a></li>
+<li><a >Company<i class="fas fa-chevron-down"></i></a></li>
+<li><a >Matching %<i class="fas fa-chevron-down"></i></a></li> 
   </ul>
      <div class="icon-box">
-      <a href="#"><i class="fas fa-angle-double-right"></i></a>
+      <a  class="job-button">Apply</a>
+      <a  class="job-button">Reset All</a>
       </div>
   </div>
 </div>
 
 <div class="matching-job">
-  <p>Matching Jobs Based on the key skills mentioned in "Resume Builder" <a href="job-seeker-profile-fillter.html">Click
-      Here </a>to Refine search on matching jobs</p>
+  <!-- <p>Matching Jobs Based on the key skills mentioned in "Resume Builder" <a href="job-seeker-profile-fillter.html">Click
+      Here </a>to Refine search on matching jobs</p> -->
   <div class="matching-job-bottom">
     <h4>Showing {{matchingJobModel.length}} results</h4>
     <div class="freshness-revelance">
@@ -43,7 +53,7 @@
   <div class="job-box-left">
 
 
-    <h4 class="job_head"><a [routerLink]="[]"  routerLinkActive="active" (click)="jobDetails(job)">{{job.jobInfo.jobTitle}}</a></h4>
+    <h4 class="job_head"><a style="cursor:pointer"  (click)="jobDetails(job)">{{job.jobInfo.jobTitle}}</a></h4>
     <h5>{{job.companyName}}</h5>
     <ul class="job_list">
       <li><i class="fas fa-map-marker-alt"></i>{{job.jobInfo.city}}</li>
@@ -57,9 +67,9 @@
   <div class="job-box-right">
     <p class="matching">{{job.matchingPercentage}} % Matching Jobs</p>
     <a href="job-details.html" class="job-button">Apply this Job</a> <br>
-    <a href="#" class="job-button2">Save for letter</a>
+    <!-- <a  class="job-button2">Save for letter</a> -->
     <div class="clearfix"></div>
-    <p class="posted_text">Posted Yesterday</p>
+    <p class="posted_text">Posted On: {{job.jobPostedDate}}</p>
   </div>
   <div class="clearfix"></div>
   <p class="skills aftersearchp"><strong>Job Description:</strong> {{replaceStrirng(job.jobDescription)}}
@@ -88,8 +98,8 @@
 
   <div class="job-box-right">
     <p class="matching">98% Matching Jobs</p>
-    <a href="#" class="job-button">Apply this Job</a> <br>
-    <a href="#" class="job-button2">Save for letter</a>
+    <a  class="job-button">Apply this Job</a> <br>
+    <a  class="job-button2">Save for letter</a>
     <div class="clearfix"></div>
     <p class="posted_text">Posted Yesterday</p>
   </div>
@@ -118,8 +128,8 @@
 
   <div class="job-box-right">
     <p class="matching">98% Matching Jobs</p>
-    <a href="#" class="job-button">Apply this Job</a> <br>
-    <a href="#" class="job-button2">Save for letter</a>
+    <a  class="job-button">Apply this Job</a> <br>
+    <a  class="job-button2">Save for letter</a>
     <div class="clearfix"></div>
     <p class="posted_text">Posted Yesterday</p>
   </div>

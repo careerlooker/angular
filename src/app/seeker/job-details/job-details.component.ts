@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { JobCtcInfo } from 'src/app/recruiter/my-account/models/job-ctc-info.model';
 import { JobInfo } from 'src/app/recruiter/my-account/models/job-info.model';
 import { JobInterviewInfo } from 'src/app/recruiter/my-account/models/job-interview-info.model';
-import { SharedService } from 'src/app/shared/services/shared.service';
-import { environment } from 'src/environments/environment';
 import { MatchingJobModel } from '../models/matching-job.model';
 
 @Component({
@@ -14,31 +12,27 @@ import { MatchingJobModel } from '../models/matching-job.model';
 })
 export class JobDetailsComponent implements OnInit {
   matchingJobModel: MatchingJobModel = new MatchingJobModel();
+  jobList:Array<MatchingJobModel> = new Array<MatchingJobModel>();
   jobInfo:JobInfo=new JobInfo();
   jobCtcInfo:JobCtcInfo=new JobCtcInfo();
   jobInterviewInfo:JobInterviewInfo=new JobInterviewInfo();
-  constructor(private router:Router,private sharedService:SharedService) { }
+  isToggle:boolean=false;
+  constructor(private router:Router) { }
 
   ngOnInit() {
     this.getJobDetails();
   }
 
   getJobDetails(){
-    this.sharedService.jobDetailsMessage.subscribe((result:any)=>{
-      if(result){
-        this.matchingJobModel.jobDescription=result.jobDescription;
-        this.matchingJobModel.companyName=result.companyName;
-        this.jobInfo=result.jobInfo;
-        this.jobCtcInfo=result.jobCtcInfo;
-        this.jobInterviewInfo=result.jobInterviewInfo;
-        this.sharedService.profilePhotoMessage.subscribe(msg=>{
-          this.sharedService.updateApprovalMessage(environment.baseUrl+ msg)
-        })
-      }
-      else if(!result){
-          this.router.navigate(['/seeqem/matching-job'])
-      }
-    })
+    let data = JSON.parse(localStorage.getItem('object'));
+    if(data){
+       this.jobList=data.jobList.filter(x=>x.jobId!=data.jobId);
+      this.matchingJobModel.jobDescription=data.jobDetails.jobDescription;
+        this.matchingJobModel.companyName=data.jobDetails.companyName;
+        this.jobInfo=data.jobDetails.jobInfo;
+        this.jobCtcInfo=data.jobDetails.jobCtcInfo;
+        this.jobInterviewInfo=data.jobDetails.jobInterviewInfo;
+    }
   }
   replaceStrirng(description: any) {
     if (description != null && description != undefined) {
@@ -46,7 +40,10 @@ export class JobDetailsComponent implements OnInit {
       return desc;
     }
   }
-  back(){
-      this.router.navigate(['/seeqem/matching-job'])
-  }
+  // back(){
+  //   this.isToggle=true;
+  //     this.router.navigate(['/seeqem/matching-job'])
+  // }
+
+  
 }

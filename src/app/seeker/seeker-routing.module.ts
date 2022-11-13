@@ -15,12 +15,13 @@ const childRoutes:Routes=[
     //   {path:'my-profile',component:MyProfileComponent,loadChildren:'../seeker/my-profile/my-profile.module#MyProfileModule'},
       {path:'',redirectTo:'matching-job',pathMatch:'full'},
       {path:'matching-job',component:MatchingJobsComponent},
-      {path:'job-details/:jobIb', component:JobDetailsComponent},
+      {path:'job-details/:jobId', component:JobDetailsComponent},
       {path:'to-do',component:ToDoComponent},
       {path:'settings',component:SettingsComponent},
       {path:'my-applications',component:MyApplicationsComponent},
       {path:'block-companies',component:BlockCompaniesComponent},
       {path:'msg-box',component:MsgBoxComponent}
+
       
    
 ]
