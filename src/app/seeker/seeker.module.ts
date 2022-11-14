@@ -11,7 +11,8 @@ import { BlockCompaniesComponent } from './block-companies/block-companies.compo
 import { MsgBoxComponent } from './msg-box/msg-box.component';
 import { SharedModule } from '../shared/modules/shared.module';
 import { JobDetailsComponent } from './job-details/job-details.component';
-import { SeekerHeaderComponent } from './seeker-header/seeker-header.component';
+import { HomeComponent } from './home/home.component';
+
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SeekerHeaderComponent } from './seeker-header/seeker-header.component';
         BlockCompaniesComponent,
         MsgBoxComponent,
         JobDetailsComponent,
-        SeekerHeaderComponent
+        HomeComponent
+      
     ],
     imports:[
         CommonModule,

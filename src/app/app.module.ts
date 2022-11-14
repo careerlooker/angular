@@ -21,6 +21,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { SharedModule } from './shared/modules/shared.module';
 import { SeekerNavigationComponent } from './seeker/navigation/navigation.component';
 import { RecruiterNavigationComponent } from './recruiter/navigation/navigation.component';
+import { SeekerHeaderComponent } from './seeker/seeker-header/seeker-header.component';
 
 
 
@@ -42,6 +43,7 @@ import { RecruiterNavigationComponent } from './recruiter/navigation/navigation.
     ProfilePopupComponent,
     SeekerHomeComponent,
     SeekerNavigationComponent,
+    SeekerHeaderComponent
   
   
     

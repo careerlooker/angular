@@ -26,12 +26,14 @@ export class JobDetailsComponent implements OnInit {
   getJobDetails(){
     let data = JSON.parse(localStorage.getItem('object'));
     if(data){
-       this.jobList=data.jobList.filter(x=>x.jobId!=data.jobId);
+       let jobs=data.jobList.filter(x=>x.jobId!=data.jobId);
+       this.jobList=jobs.slice(0,3);
       this.matchingJobModel.jobDescription=data.jobDetails.jobDescription;
         this.matchingJobModel.companyName=data.jobDetails.companyName;
         this.jobInfo=data.jobDetails.jobInfo;
         this.jobCtcInfo=data.jobDetails.jobCtcInfo;
         this.jobInterviewInfo=data.jobDetails.jobInterviewInfo;
+        localStorage.removeItem('object');
     }
   }
   replaceStrirng(description: any) {

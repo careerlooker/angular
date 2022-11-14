@@ -12,7 +12,7 @@
               <li><i class="fas fa-suitcase"></i>{{jobCtcInfo.minExp}} to {{jobCtcInfo.maxExp}} Years</li>
               <li><i class="fas fa-rupee-sign"></i>{{jobCtcInfo.annualCTC}} Lakhs</li>
             </ul>
-            <p class="posted_text">Posted Yesterday</p>
+            <p class="posted_text">Posted On: {{job.jobPostedDate}}</p>
           </div>
 
           <div class="job-box-right">
@@ -59,7 +59,20 @@
       <div class="col-sm-3">
         <div class="bg_job_color">
           <h5>Similar Jobs</h5>
-          <h4 class="job_head">Java developer</h4>
+          <div *ngFor="let job of jobList">
+          <h4 class="job_head">{{job.jobInfo.jobTitle}}</h4>
+          <h5 class="similar-text">{{job.companyName}}</h5>
+          <ul class="job_list">
+            <li><i class="fas fa-map-marker-alt"></i>{{job.jobInfo.city}}</li>
+            <li><i class="fas fa-suitcase"></i>{{job.jobCtcInfo.minExp}} to {{job.jobCtcInfo.maxExp}} Years</li>
+            <li><i class="fas fa-rupee-sign"></i>{{job.jobCtcInfo.annualCTC}} Lakhs</li>
+          </ul>
+          <p>skills:{{job.jobInfo.keySkills}} </p>
+          <div align="right"> <a href="" class="apply">Apply</a></div>
+          <div class="similar-boredr-bottom"></div>
+        </div>
+
+          <!-- <h4 class="job_head">Java developer</h4>
           <h5 class="similar-text">Trueinfo Solution Pvt</h5>
           <ul class="job_list">
             <li><i class="fas fa-map-marker-alt"></i>Chennai</li>
@@ -70,7 +83,6 @@
           <div align="right"> <a href="" class="apply">Apply</a></div>
           <div class="similar-boredr-bottom"></div>
 
-
           <h4 class="job_head">Java developer</h4>
           <h5 class="similar-text">Trueinfo Solution Pvt</h5>
           <ul class="job_list">
@@ -79,18 +91,7 @@
             <li><i class="fas fa-rupee-sign"></i>Lakhs</li>
           </ul>
           <p>skills:ANSI SQL, <BR> XML,JSON,Java Restful Web </p>
-          <div align="right"> <a href="" class="apply">Apply</a></div>
-          <div class="similar-boredr-bottom"></div>
-
-          <h4 class="job_head">Java developer</h4>
-          <h5 class="similar-text">Trueinfo Solution Pvt</h5>
-          <ul class="job_list">
-            <li><i class="fas fa-map-marker-alt"></i>Chennai</li>
-            <li><i class="fas fa-suitcase"></i>4 to 9 Years</li>
-            <li><i class="fas fa-rupee-sign"></i>Lakhs</li>
-          </ul>
-          <p>skills:ANSI SQL, <BR> XML,JSON,Java Restful Web </p>
-          <div align="right"> <a href="" class="apply">Apply</a></div>
+          <div align="right"> <a href="" class="apply">Apply</a></div> -->
         </div>
       </div>
     </div>

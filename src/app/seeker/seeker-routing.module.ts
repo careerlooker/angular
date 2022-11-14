@@ -9,10 +9,13 @@ import { BlockCompaniesComponent } from './block-companies/block-companies.compo
 import { MsgBoxComponent } from './msg-box/msg-box.component';
 import { ProfileComponent } from '../recruiter/my-account/profile/profile.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { HomeComponent } from './home/home.component';
+
 
 const childRoutes:Routes=[
     //   {path:'',redirectTo:'my-profile',pathMatch:'full'},
     //   {path:'my-profile',component:MyProfileComponent,loadChildren:'../seeker/my-profile/my-profile.module#MyProfileModule'},
+    
       {path:'',redirectTo:'matching-job',pathMatch:'full'},
       {path:'matching-job',component:MatchingJobsComponent},
       {path:'job-details/:jobId', component:JobDetailsComponent},
@@ -20,7 +23,8 @@ const childRoutes:Routes=[
       {path:'settings',component:SettingsComponent},
       {path:'my-applications',component:MyApplicationsComponent},
       {path:'block-companies',component:BlockCompaniesComponent},
-      {path:'msg-box',component:MsgBoxComponent}
+      {path:'msg-box',component:MsgBoxComponent},
+      {path:'home',component:HomeComponent}
 
       
    

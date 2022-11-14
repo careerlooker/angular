@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { SharedService } from 'src/app/shared/services/shared.service';
@@ -20,9 +19,7 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
   jobSeekerModel: JobSeekerModel = new JobSeekerModel();
   constructor(private sharedService:SharedService,
     private seekerService: SeekerService,
-    private toastr: ToastrService,
-    private router: Router,
-    private route:ActivatedRoute) {
+    private toastr: ToastrService) {
     super();
   }
 
