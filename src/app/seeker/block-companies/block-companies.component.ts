@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { environment } from 'src/environments/environment';
 import { BlockCompanies } from '../models/block-companies.model';
 import { BlockCompany } from '../models/block-company.model';
 import { JobSeekerModel } from '../models/job-seeker-model';
@@ -31,6 +32,7 @@ export class BlockCompaniesComponent extends BaseModel implements OnInit {
   this.actionType='add';
   this.jobSeekerModel.blockCompanies=new Array<BlockCompanies>();
   this.blockCompany=new BlockCompanies();
+  this.seekerService.updateSeekerNavigationToggleMessage(true);
   this.email=localStorage.getItem('email');
   this.getCompanyList();
   this.getBlockCompanyList();
@@ -53,7 +55,8 @@ export class BlockCompaniesComponent extends BaseModel implements OnInit {
         this.jobSeekerModel = result;
         if(this.jobSeekerModel.blockCompanies){
         this.seekerService.tickSubject.next('bc'); 
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel); 
+        this.sharedService.updateApprovalMessage(environment.baseUrl+this.jobSeekerModel.personalInfo.photo);
         }  
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);

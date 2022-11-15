@@ -53,10 +53,13 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
   replaceStrirng(description: any) {
     if (description != null && description != undefined) {
       let desc = description.replace(/<[^>]*>/g, '');
-      return desc;
+      let descrip= desc.slice(0,151);
+      return descrip.length>150?descrip+'.....':descrip;
     }
   }
-
+  fixedJobDescriptionLength(){
+    
+  }
   jobRefresh(refresh:string){
     this.sort=refresh;
     this.getMatchingJob();
@@ -68,12 +71,14 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
       let data={
         'jobDetails':job,
         'photo':this.jobSeekerModel.personalInfo.photo,
-        'isToggle':false,
         'jobList':this.matchingJobModel,
         'jobId':id
       }
       localStorage.setItem('object', JSON.stringify(data));
-       window.open('/seeqem/job-details/'+id,'_blank').focus();
+      localStorage.setItem('isToggle',JSON.stringify({'isToggle':false}));
+      window.open('/seeqem/job-details/'+id,'_blank').focus();
     }
   }
+
+
 }

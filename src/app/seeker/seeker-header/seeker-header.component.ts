@@ -20,6 +20,7 @@ export class SeekerHeaderComponent implements OnInit {
       localStorage.removeItem('userToken');
       localStorage.removeItem('credentials');
       localStorage.removeItem('object');
+      localStorage.removeItem('isToggle');
       this.router.navigate(['/']);
     }
 
