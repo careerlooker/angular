@@ -25,7 +25,7 @@
 <li><a >Company<i class="fas fa-chevron-down"></i></a></li>
 <li><a >Matching %<i class="fas fa-chevron-down"></i></a></li> 
   </ul>
-     <div class="icon-box">
+     <div class="job-box-right">
       <a  class="job-button">Apply</a>
       <a  class="job-button">Reset All</a>
       </div>
@@ -39,8 +39,8 @@
     <h4>Showing {{matchingJobModel.length}} results</h4>
     <div class="freshness-revelance">
       <ul>
-        <li class="active"><a [routerLink]="" (click)="jobRefresh('Freshness')">Freshness</a></li>
-        <li><a (click)="jobRefresh('Relevance')">Relevance</a></li>
+        <li  [ngClass]="{'active': activeIndex === 0}"><a style="cursor:pointer" (click)="jobRefresh('Freshness');activeIndex = 0">Freshness</a></li>
+        <li  [ngClass]="{'active': activeIndex === 1}"><a style="cursor:pointer" (click)="jobRefresh('Relevance');activeIndex = 1">Relevance</a></li>
       </ul>
     </div>
   </div>

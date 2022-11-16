@@ -17,6 +17,7 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
 
   matchingJobModel: Array<MatchingJobModel> = new Array<MatchingJobModel>();
   jobSeekerModel: JobSeekerModel = new JobSeekerModel();
+  activeIndex: number = 0;
   constructor(private sharedService:SharedService,
     private seekerService: SeekerService,
     private toastr: ToastrService) {
@@ -57,9 +58,7 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
       return descrip.length>150?descrip+'.....':descrip;
     }
   }
-  fixedJobDescriptionLength(){
-    
-  }
+ 
   jobRefresh(refresh:string){
     this.sort=refresh;
     this.getMatchingJob();
@@ -79,6 +78,4 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
       window.open('/seeqem/job-details/'+id,'_blank').focus();
     }
   }
-
-
 }
