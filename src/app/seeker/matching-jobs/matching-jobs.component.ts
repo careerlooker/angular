@@ -51,6 +51,13 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
     })
 
   }
+  fixLength(skill: any){
+    if(skill){
+      let desc = skill.replace(/<[^>]*>/g, '');
+      let descrip= desc.slice(0,51);
+      return descrip.length>50?descrip+'.....':descrip;
+    }
+  }
   replaceStrirng(description: any) {
     if (description != null && description != undefined) {
       let desc = description.replace(/<[^>]*>/g, '');

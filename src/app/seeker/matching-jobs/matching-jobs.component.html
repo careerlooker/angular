@@ -39,8 +39,8 @@
     <h4>Showing {{matchingJobModel.length}} results</h4>
     <div class="freshness-revelance">
       <ul>
-        <li  [ngClass]="{'active': activeIndex === 0}"><a style="cursor:pointer" (click)="jobRefresh('Freshness');activeIndex = 0">Freshness</a></li>
-        <li  [ngClass]="{'active': activeIndex === 1}"><a style="cursor:pointer" (click)="jobRefresh('Relevance');activeIndex = 1">Relevance</a></li>
+        <li  [ngClass]="{'active': activeIndex === 0}"><a style="cursor: pointer;" (click)="jobRefresh('Freshness'); activeIndex = 0">Freshness</a></li>
+        <li  [ngClass]="{'active': activeIndex === 1}"><a style="cursor: pointer;" (click)="jobRefresh('Relevance'); activeIndex = 1">Relevance</a></li>
       </ul>
     </div>
   </div>
@@ -60,7 +60,7 @@
       <li><i class="fas fa-suitcase"></i>{{job.jobCtcInfo.minExp}} to {{job.jobCtcInfo.maxExp}} Years</li>
       <li><i class="fas fa-rupee-sign"></i>{{job.jobCtcInfo.annualCTC}} Lakhs</li>
     </ul>
-    <p class="skills"><strong>Skills:</strong> {{job.jobInfo.keySkills}}</p>
+    <p class="skills"><strong>Skills:</strong> {{fixLength(job.jobInfo.keySkills)}}</p>
 
   </div>
 
