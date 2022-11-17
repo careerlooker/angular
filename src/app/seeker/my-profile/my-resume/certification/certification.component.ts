@@ -7,6 +7,8 @@ import { BaseModel } from 'src/app/shared/models/base.model';
 import { NgForm } from '@angular/forms';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-certification',
@@ -20,7 +22,8 @@ export class CertificationComponent extends BaseModel implements OnInit {
   
   constructor(private seekerService:SeekerService,
     private toastr:ToastrService,
-    private router:Router) {
+    private router:Router,
+    private sharedService:SharedService) {
       super(); 
       this.actionType='add';
     }
@@ -91,7 +94,9 @@ export class CertificationComponent extends BaseModel implements OnInit {
           this.seekerService.tickSubject.next('ca');
           this.jobSeekerModel.certification.sort((a,b)=>+b.certYear-+a.certYear);
         }
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+        
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

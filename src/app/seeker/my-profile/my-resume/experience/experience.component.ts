@@ -14,6 +14,7 @@ import { BaseModel } from 'src/app/shared/models/base.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { BlockCompanies } from 'src/app/seeker/models/block-companies.model';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-experience',
@@ -56,7 +57,9 @@ export class ExperienceComponent extends BaseModel implements OnInit {
         this.jobSeekerModel.experience.sort((a,b)=>+b.resigningYear-+a.resigningYear)
         
         }  
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+          
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

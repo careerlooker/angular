@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BaseModel } from 'src/app/shared/models/base.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-education',
@@ -193,7 +194,9 @@ export class EducationComponent extends BaseModel implements OnInit {
       this.seekerService.tickSubject.next('ed');
       this.jobSeekerModel.education.sort((a,b)=>+b.graduateYear-+a.graduateYear)
       }
-      this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+      this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+      this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+          
     },(err: HttpErrorResponse) => {
       this.toastr.error(err.message,'Education Info');
     }) 

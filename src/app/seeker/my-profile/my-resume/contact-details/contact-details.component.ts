@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -19,7 +21,8 @@ export class ContactDetailsComponent extends BaseModel implements OnInit {
 
 constructor(private seekerService:SeekerService,
   private toastr:ToastrService,
-  private router:Router) {
+  private router:Router,
+  private sharedService:SharedService) {
     super(); 
   }
 
@@ -82,7 +85,9 @@ constructor(private seekerService:SeekerService,
       if(this.jobSeekerModel.contactDetails){
         this.seekerService.tickSubject.next('cd');
         }  
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+           
     },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

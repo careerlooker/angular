@@ -9,6 +9,8 @@ import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StarRating } from 'src/app/seeker/models/start-rating.model';
 import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-language',
@@ -29,7 +31,8 @@ export class LanguageComponent extends BaseModel implements OnInit {
     ];
   constructor(private seekerService:SeekerService,
     private toastr:ToastrService,
-    private router:Router) {
+    private router:Router,
+    private sharedService:SharedService) {
       super(); 
     }
 
@@ -93,7 +96,9 @@ export class LanguageComponent extends BaseModel implements OnInit {
           this.seekerService.tickSubject.next('lg');
           this.jobSeekerModel.language.sort((a,b)=>+b.rating-+a.rating);
         }
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+          
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

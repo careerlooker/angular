@@ -7,6 +7,8 @@ import { BaseModel } from 'src/app/shared/models/base.model';
 import { AwardsModel } from 'src/app/seeker/models/awards.model';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class AwardsComponent extends BaseModel implements OnInit {
   
   constructor(private seekerService:SeekerService,
     private toastr:ToastrService,
-    private router:Router) {
+    private router:Router,
+    private sharedService:SharedService) {
       super(); 
       this.actionType='add';
     }
@@ -92,7 +95,9 @@ export class AwardsComponent extends BaseModel implements OnInit {
           this.seekerService.tickSubject.next('ad');
           this.jobSeekerModel.awards.sort((a,b)=>+b.awardYear-+a.awardYear);
         }
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+        
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })

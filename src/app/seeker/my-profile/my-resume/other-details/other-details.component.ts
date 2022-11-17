@@ -7,6 +7,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { JobSeekerModel } from 'src/app/seeker/models/job-seeker-model';
 import { OthersDetails } from 'src/app/seeker/models/others-details.model';
 import { BaseModel } from 'src/app/shared/models/base.model';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class OtherDetailsComponent extends BaseModel implements OnInit {
 
   constructor(private seekerService: SeekerService,
     private toastr: ToastrService,
-    private router:Router) {super() }
+    private router:Router,
+    private sharedService:SharedService) {super() }
 
   ngOnInit() {
     this.isSave=true;
@@ -41,7 +44,9 @@ export class OtherDetailsComponent extends BaseModel implements OnInit {
         this.otherDetails=this.jobSeekerModel.otherDetails;
        this.seekerService.tickSubject.next('od');
        }
-       this.seekerService.jobSeekerSubject.next(this.jobSeekerModel);
+       this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+       this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+       
     }, (err: HttpErrorResponse) => {
       this.toastr.error(err.message);
     })

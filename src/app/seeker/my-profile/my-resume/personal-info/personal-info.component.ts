@@ -84,13 +84,12 @@ export class PersonalInfoComponent implements OnInit {
             this.jobSeekerModel.personalInfo.photo = environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
             this.imgUrl.image = this.jobSeekerModel.personalInfo.photo;
             this.sharedService.updateApprovalMessage(this.imgUrl.image);
-            this.sharedService.profileSubject.next(this.imgUrl)
           }
           this.imgUrl.id = this.jobSeekerModel.id;
           if (this.jobSeekerModel.personalInfo) {
             this.seekerService.tickSubject.next('pi');
           }
-          //this.seekerrService.jobSeekerSubject.next(this.jobSeekerModel);
+          
           this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
           this.getCountries();
         }

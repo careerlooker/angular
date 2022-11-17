@@ -19,6 +19,8 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
+import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-review-and-download',
@@ -34,7 +36,8 @@ export class ReviewAndDownloadComponent extends BaseModel implements OnInit {
   
   constructor( private seekerService:SeekerService,   
     private toastr:ToastrService,
-    private router:Router) {
+    private router:Router,
+    private sharedService:SharedService) {
       super()
      }
 
@@ -65,7 +68,9 @@ export class ReviewAndDownloadComponent extends BaseModel implements OnInit {
         this.degree=this.jobSeekerModel.education[0].degree;
         this.seekerService.tickSubject.next('rd'); 
         this.jobSeekerModel.resume='rd';
-        this.seekerService.jobSeekerSubject.next(this.jobSeekerModel); 
+        this.seekerService.updatePersonalInfoMessage(this.jobSeekerModel);
+        this.sharedService.updateApprovalMessage(environment.baseUrl+ this.jobSeekerModel.personalInfo.photo);
+        
       },(err: HttpErrorResponse) => {
         this.toastr.error(err.message);
       })
