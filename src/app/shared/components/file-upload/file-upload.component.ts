@@ -33,6 +33,7 @@ export class FileUploadComponent{
     var reader = new FileReader();
     reader.onload = (event:any) => {
       this.imgUrl.image=event.target.result;
+      this.sharedService.updateApprovalMessage(this.imgUrl.image);
     }
     reader.readAsDataURL(this.selectedFile);
   }
@@ -46,7 +47,7 @@ export class FileUploadComponent{
          this.uploadResponse='Upload Progress: '+Math.round(event.loaded/event.total*100)+' %';
          if(this.uploadResponse=="Upload Progress: 100 %"){
           if(this.imgUrl.buttonText=='Upload Your Photo')
-          this.sharedService.profileSubject.next(this.imgUrl.image);
+          this.sharedService.updateApprovalMessage(this.imgUrl.image);
          }
        }
        else if(event.type===HttpEventType.Response){

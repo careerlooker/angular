@@ -245,10 +245,10 @@ showMenu(){
     });
   }
   change(){
-    this.sharedService.profileMessage.subscribe((result:any)=>{
+    this.sharedService.currentApprovalStageMessage.subscribe((result:any)=>{
       if(Object.keys(result).length>0){
-        this.profileUrl=result.image;
-      }
+             this.profileUrl=result;
+        }
     })
   }  
   role:string;

@@ -128,7 +128,11 @@ export class LanguageComponent extends BaseModel implements OnInit {
      // }
        this.language.rating=clickObj.rating;
    }
-
+   selectDescrition(description){
+    if(description){
+      this.language.langDesc=this.descritionList.filter(x=>x.Name==description)[0].Name;
+    }
+  }
    next(){
     this.router.navigate(['/seeqem/my-profile/contact-details']);
   }

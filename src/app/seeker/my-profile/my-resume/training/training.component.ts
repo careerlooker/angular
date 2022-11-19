@@ -109,6 +109,7 @@ export class TrainingComponent extends BaseModel implements OnInit {
       this.isAdd=true;
       this.isUpdate=false;
       this.isSave=true;
+      this.isDelete=true;
       this.training=new TrainingModel();
     
     }, (err: HttpErrorResponse) => {

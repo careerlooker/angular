@@ -1,6 +1,7 @@
 import { CountriesModel } from './countries.model';
 import { CityModel } from './city.model';
 import { StatesModel } from './states.model';
+import { DescriptionModel } from './description.model';
 
 export class BaseModel {
     actionType: string;
@@ -24,6 +25,13 @@ export class BaseModel {
     reqId: number;
     jobId: number;
     isEnabled: boolean = false;
+    descritionList:DescriptionModel[]=[
+    {Id:1,Name:'Beginner'},
+    {Id:2,Name:'Intermediate'} ,
+    {Id:3,Name:'Proficient'},
+    {Id:4,Name:'Advanced'} ,
+    {Id:5,Name:'Expert'} ]
+    
     joiningMonth = [{ "Id": 1, "joiningMonth": "January" }, { "Id": 2, "joiningMonth": "February" }, { "Id": 3, "joiningMonth": "March" }, { "Id": 4, "joiningMonth": "April" }, { "Id": 5, "joiningMonth": "May" }, { "Id": 6, "joiningMonth": "June" },
     { "Id": 7, "joiningMonth": "July" }, { "Id": 8, "joiningMonth": "August" }, { "Id": 9, "joiningMonth": "September" }, { "Id": 10, "joiningMonth": "October" }, { "Id": 11, "joiningMonth": "November" }, { "Id": 12, "joiningMonth": "December" }];
 

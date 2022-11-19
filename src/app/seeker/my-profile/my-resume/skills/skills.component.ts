@@ -14,6 +14,7 @@ import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-
 import { StarRating } from 'src/app/seeker/models/start-rating.model';
 import { environment } from 'src/environments/environment';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { DescriptionModel } from 'src/app/shared/models/description.model';
 
 @Component({
   selector: 'app-skills',
@@ -38,7 +39,7 @@ export class SkillsComponent extends BaseModel implements OnInit {
     { 'id': 2, 'rating': 2, 'contact': 'Brady Craft', 'company': 'JIMBIES' },
     { 'id': 3, 'rating': 5, 'contact': 'Alvarado Roman', 'company': 'TERRAGO' },
     { 'id': 4, 'rating': 4, 'contact': 'Clark Daugherty', 'company': 'ISOTRONIC' }
-  ];
+  ]
   constructor(private recruiterService:RecruiterService, 
               private seekerService:SeekerService,   
               private toastr:ToastrService,
@@ -74,14 +75,11 @@ export class SkillsComponent extends BaseModel implements OnInit {
     this.actionType='add';
     this.getSkills();
   }
-
   getKeySkills(){
     this.recruiterService.getKeySkills().subscribe((result:Array<KeySkillsModel>)=>{
         this.keySkillsDropdownList=result;
       })
     }
-
-
     getSkills(){
       this.email=localStorage.getItem('email');
       this.seekerService.getSkillList(this.email).subscribe((result:JobSeekerModel)=>{
@@ -97,7 +95,6 @@ export class SkillsComponent extends BaseModel implements OnInit {
         this.toastr.error(err.message,'Skill Info');
        })
     }
-
     update(){
       const targetIdx = this.jobSeekerModel.skills.map(item => item.skillId).indexOf(this.skills.skillId);
       this.jobSeekerModel.skills[targetIdx] = this.skills;
@@ -142,8 +139,11 @@ export class SkillsComponent extends BaseModel implements OnInit {
         this.starRatingComponent.rating=0;
       }
     }
-  
-
+    selectDescrition(description){
+      if(description){
+        this.skills.description=this.descritionList.filter(x=>x.Name==description)[0].Name;
+      }
+    }
     nextPage(){
       this.seekerService.saveSkills(this.jobSeekerModel).subscribe((result:any)=>{
         if(result){

@@ -11,13 +11,13 @@
     <div class="creat-resume-box">
       <div class="col-sm-12" style="padding: 0px;">
         <div class="creat-resume-right"> -->
-          <form  #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="language-form-right">
-                  <div class="form-group">
-                    <label>Skill</label>
-                    <!-- <ng-multiselect-dropdown 
+<form #form=ngForm (keydown.enter)="$event.preventDefault()" novalidate>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="language-form-right">
+        <div class="form-group">
+          <label>Skill</label>
+          <!-- <ng-multiselect-dropdown 
                           class="form-control col-sm-3" style="height: auto; padding: 0%;"
                           name="KeySkill"
                           id="KeySkill"
@@ -27,85 +27,84 @@
                           (onSelect)="onItemSelect($event)"
                           required>
                     </ng-multiselect-dropdown>      -->
-                    <input   type="text"
-                        class="form-control" 
-                        name="keySkillsDropdownList"
-                        placeholder="Skills"
-                        (change)="onSkillChange($event.target.value)"
-                        [(ngModel)]="skills.name" 
-                        list="keySkillsDropdownList"
-                        required/>
-                        <datalist id="keySkillsDropdownList">
-                            <option [value]=""></option>
-                            <option *ngFor="let skill of keySkillsDropdownList">{{skill.name}}</option>
-                        </datalist>
+          <input type="text" class="form-control" name="keySkillsDropdownList" placeholder="Skills"
+            (change)="onSkillChange($event.target.value)" [(ngModel)]="skills.name" list="keySkillsDropdownList"
+            required />
+          <datalist id="keySkillsDropdownList">
+            <option [value]=""></option>
+            <option *ngFor="let skill of keySkillsDropdownList">{{skill.name}}</option>
+          </datalist>
 
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="star-form-box">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="star-form-box">
+        <label>Rating</label>
+        <app-star-rating [rating]="item?.rating" [itemId]="item?.id" (ratingClick)="ratingComponentClick($event)">
+        </app-star-rating>
+        <div class="star-form">
+          <div class="form-group">
+            <label>Description</label>
+            <select class="form-control" 
+                    id="descrioption" 
+                    name="descrioption" 
+                    style="height: 42px;"
+                    [ngModelOptions]="standalone"
+                    [(ngModel)]="skills.description"
+                    (ngModelChange)="selectDescrition($event)"
+                     required>
+                    
+              <option [value]=""></option>
+              <option *ngFor="let c of descritionList">{{c.Name}}
+              </option>
+            </select>
 
-                 <label>Rating</label>
-                 <app-star-rating [rating]="item?.rating" 
-                                  [itemId]="item?.id" 
-                                  (ratingClick)="ratingComponentClick($event)">
-                  </app-star-rating>
-                  <div class="star-form">
-                    <div class="form-group">
-                      <label>Description</label>
-                      <input type="text" 
-                              class="form-control" 
-                              id="descrioption" 
-                              name="descrioption" 
-                              [(ngModel)]="skills.description"
-                              placeholder="e.g. Advance"
-                              required>
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-            </div>  
-              <div class="row">
-                <table  *ngIf="jobSeekerModel.skills">
-                  <thead>
-                    <tr>
-                      <th>Skill</th>
-                      <th>Ratings</th>
-                      <th>Description</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let skill of jobSeekerModel.skills" style="cursor: pointer;"> 
-                      <td>{{skill.name}}</td>
-                      <td>{{skill.rating}}</td>
-                      <td>{{skill.description}}</td>
-                      <td>
-                        <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
-                        <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(skill)">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  </table>
-            </div>
-            <div class="clearfix"></div><br><br>
-            <div style="clear:both"></div>
-              <div class="row">
-                <div class="col-sm-6 col-xs-6"> 
-                  <button type="button" class="btn btn_form3" *ngIf="isAdd"(click)="add(form)">Add Skills</button>
-                  <button type="button" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Skills</button>
-                </div>
-                <div class="col-sm-6 col-xs-6"> 
-                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
-                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="nextPage()">Save</button>
-                  <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
-                </div>
-                <div class="clearfix"></div><br><br>
-              </div>
-          </form>
-        <!-- </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="row">
+    <table *ngIf="jobSeekerModel.skills">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Ratings</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let skill of jobSeekerModel.skills" style="cursor: pointer;">
+          <td>{{skill.name}}</td>
+          <td>{{skill.rating}}</td>
+          <td>{{skill.description}}</td>
+          <td>
+            <button class="btn btn_form3" (click)="edit(skill)">Edit</button>&nbsp;
+            <button class="btn btn_form3" *ngIf="isDelete" (click)="delete(skill)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="clearfix"></div><br><br>
+  <div style="clear:both"></div>
+  <div class="row">
+    <div class="col-sm-6 col-xs-6">
+      <button type="button" class="btn btn_form3" *ngIf="isAdd" (click)="add(form)">Add Skills</button>
+      <button type="button" class="btn btn_form3" *ngIf="isUpdate" (click)="update()">Update Skills</button>
+    </div>
+    <div class="col-sm-6 col-xs-6">
+      <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="next()">Next</button>
+      <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="nextPage()">Save</button>
+      <button type="button" class="btn btn_form4" *ngIf="isSave" (click)="back()">Back</button>
+    </div>
+    <div class="clearfix"></div><br><br>
+  </div>
+</form>
+<!-- </div>
       </div>
     </div>
   </div>

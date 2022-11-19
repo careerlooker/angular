@@ -82,8 +82,8 @@ export class PersonalInfoComponent implements OnInit {
           this.email = this.jobSeekerModel.email;
           if (this.jobSeekerModel.personalInfo.photo) {
             this.jobSeekerModel.personalInfo.photo = environment.baseUrl+this.jobSeekerModel.personalInfo.photo;
-            this.imgUrl.image = this.jobSeekerModel.personalInfo.photo;
-            this.sharedService.updateApprovalMessage(this.imgUrl.image);
+            this.imgUrl.image=this.jobSeekerModel.personalInfo.photo;
+            this.sharedService.updateApprovalMessage(this.jobSeekerModel.personalInfo.photo);
           }
           this.imgUrl.id = this.jobSeekerModel.id;
           if (this.jobSeekerModel.personalInfo) {
@@ -145,26 +145,6 @@ export class PersonalInfoComponent implements OnInit {
       });
     }
   }
-
-  onFileSelected(event: any) {
-    this.selectedFile = <File>event.target.files[0];
-    if (this.selectedFile.length === 0)
-      return;
-    var mimeType = this.selectedFile.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      this.selectedFile = null;
-      return;
-    }
-    else {
-      this.message = '';
-    }
-    var reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imgUrl.image = event.target.result;
-    }
-    reader.readAsDataURL(this.selectedFile);
-  }
   
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -178,6 +158,11 @@ export class PersonalInfoComponent implements OnInit {
       this.jobSeekerModel.personalInfo.zipCode = form.value.zipCode;
       if (this.fileUploadComponent.selectedFile) {
         this.jobSeekerModel.personalInfo.photo = "images/" + this.imgUrl.picType + "/" + this.imgUrl.id + '.' + this.fileUploadComponent.selectedFile.name.split('.')[1].toLowerCase();
+      }
+      else{
+        if(this.jobSeekerModel.personalInfo.photo){
+          this.jobSeekerModel.personalInfo.photo=this.jobSeekerModel.personalInfo.photo.slice(environment.baseUrl.length);
+        }
       }
       this.seekerService.updateSeekerProfile(this.jobSeekerModel).subscribe((result: any) => {
         if (result) {

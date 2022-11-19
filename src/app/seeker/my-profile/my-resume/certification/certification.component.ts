@@ -108,6 +108,7 @@ export class CertificationComponent extends BaseModel implements OnInit {
         this.isAdd=true;
         this.isUpdate=false;
         this.isSave=true;
+        this.isDelete=true;
         this.certificate=new CertificateModel();
     
       }, (err: HttpErrorResponse) => {

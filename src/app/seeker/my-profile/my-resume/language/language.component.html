@@ -31,14 +31,28 @@
                   <app-star-rating [rating]="item?.rating" [itemId]="item?.id" (ratingClick)="ratingComponentClick($event)"></app-star-rating>
                 <div class="star-form">
                   <div class="form-group">
-                    <label>Descriptional <span>(Optional)</span></label>
-                    <input type="text" 
+                    <label>Description <span>(Optional)</span></label>
+                    <!-- <input type="text" 
                             class="form-control" 
                             id="langDesc" 
                             name="langDesc" 
                             [(ngModel)]="language.langDesc" 
                             placeholder="e.g. English"
-                            required>
+                            required> -->
+
+                    <select class="form-control" 
+                    id="descrioption" 
+                    name="descrioption" 
+                    style="height: 42px;"
+                    [ngModelOptions]="standalone"
+                    [(ngModel)]="language.langDesc"
+                    (ngModelChange)="selectDescrition($event)"
+                     required>
+                    
+              <option [value]=""></option>
+              <option *ngFor="let c of descritionList">{{c.Name}}
+              </option>
+            </select>
                   </div>
                 </div>
               </div>
