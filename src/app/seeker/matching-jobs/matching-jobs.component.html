@@ -1,34 +1,103 @@
 <div class="row">
   <div class="fillter-nav-job">
-  <ul class="fillter-list">
-  <li  class="dropdown"><a  data-toggle="dropdown">Salary <i class="fas fa-chevron-down"></i></a>
+    <ul class="fillter-list">
+      <!-- <li  class="dropdown"><a  data-toggle="dropdown">Salary <i class="fas fa-chevron-down"></i></a>
   <ul class="dropdown-menu">
             <li><a > Up</a></li>
             <li><a > Up</a></li>
             <li><a > Up</a></li>
             <li><a > Up</a></li>
-        </ul>        
-  </li>   
-<li><a >Location<i class="fas fa-chevron-down"></i></a></li>   
-<li><a >Functional Area<i class="fas fa-chevron-down"></i></a></li>   
-<li><a >Industry<i class="fas fa-chevron-down"></i></a></li>   
-<li><a >Experience<i class="fas fa-chevron-down"></i>
-  <ul class="dropdown-menu">
-    <li><a href="">0-1 years</a></li>
-    <li><a href="">1-3 years</a></li>
-    <li><a href="">3-6 years</a></li>
-    <li><a href="">6-10 years</a></li>
-    <li><a href="">10-15 years</a></li>
-    <li><a href="">15 + years</a></li>
-</ul> 
-</a></li>
-<li><a >Company<i class="fas fa-chevron-down"></i></a></li>
-<li><a >Matching %<i class="fas fa-chevron-down"></i></a></li> 
-  </ul>
-     <div class="job-box-right">
-      <a  class="job-button">Apply</a>
-      <a  class="job-button">Reset All</a>
-      </div>
+        </ul>
+  </li> -->
+      <li><a>Salary (in lakhs)</a>
+        <input type="text"
+        class="form-control"
+        style="height: 34px;"
+        id="salary"
+        name="salary"
+        appAllownumbersonly
+        [(ngModel)]="filterModel.salary">
+      </li>
+      <li><a>Location</a>
+        <select class="form-control"
+        id="location"
+        name="location"
+        style="height: 34px;"
+        [(ngModel)]="filterModel.location"
+        (ngModelChange)="selectLocation($event)">
+          <option></option>
+          <option *ngFor="let c of cityDropdownList">{{c.name}}
+          </option>
+        </select>
+      </li>
+      <!-- <li><a>Functional Area<i class="fas fa-chevron-down"></i></a></li>    -->
+      <li><a>Functional Area</a>
+        <select
+        class="form-control"
+        id="functionalArea"
+        name="functionalArea"
+        style="height: 34px;"
+        [(ngModel)]="filterModel.functinalArea"
+        (ngModelChange)="onFunAreaSelect($event)">
+  <option></option>
+  <option *ngFor="let c of functionalAreaList">{{c.name}}
+  </option>
+</select>
+      </li>
+      <!-- <li><a>Industry<i class="fas fa-chevron-down"></i></a></li> -->
+      <li><a>Industry</a>
+        <select
+        class="form-control"
+        id="industry"
+        name="industry"
+        style="height: 34px;"
+        [(ngModel)]="filterModel.industries"
+        (ngModelChange)="onIndustrySelect($event)">
+        <option></option>
+        <option *ngFor="let c of industryList">{{c.industryName}}</option>
+        </select>
+      </li>
+      <!-- <li><a>Experience<i class="fas fa-chevron-down"></i>
+          <ul class="dropdown-menu">
+            <li><a href="">0-1 years</a></li>
+            <li><a href="">1-3 years</a></li>
+            <li><a href="">3-6 years</a></li>
+            <li><a href="">6-10 years</a></li>
+            <li><a href="">10-15 years</a></li>
+            <li><a href="">15 + years</a></li>
+          </ul>
+        </a></li> -->
+      <li><a>Experience</a>
+        <select
+        class="form-control"
+        id="experience"
+        name="experience"
+        style="height: 34px;"
+        [(ngModel)]="filterModel.experience"
+        (ngModelChange)="onExperienceSelect($event)">
+        <option></option>
+        <option *ngFor="let c of experienceList">{{c.minMaxExp}} years</option>
+        </select>
+      </li>
+      <li><a>Company<i class="fas fa-chevron-down"></i></a></li>
+      <!-- <li><a>Matching %<i class="fas fa-chevron-down"></i></a></li> -->
+      <li><a>Matching %</a>
+        <select
+        class="form-control"
+        id="match"
+        name="match"
+        style="height: 34px;"
+        [(ngModel)]="matchingPercentage"
+        (ngModelChange)="onSelectMatching($event)">
+        <option></option>
+        <option *ngFor="let c of matchingPercentageList">{{c.match}} %</option>
+        </select>
+      </li>
+    </ul>
+    <div class="job-box-right">
+      <a class="job-button" style="cursor: pointer;" (click)="getMatchingJob()">Apply</a>
+      <a class="job-button" style="cursor: pointer;"(click)="resetAll()">Reset All</a>
+    </div>
   </div>
 </div>
 
@@ -39,8 +108,10 @@
     <h4>Showing {{matchingJobModel.length}} results</h4>
     <div class="freshness-revelance">
       <ul>
-        <li  [ngClass]="{'active': activeIndex === 0}"><a style="cursor: pointer;" (click)="jobRefresh('Freshness'); activeIndex = 0">Freshness</a></li>
-        <li  [ngClass]="{'active': activeIndex === 1}"><a style="cursor: pointer;" (click)="jobRefresh('Relevance'); activeIndex = 1">Relevance</a></li>
+        <li [ngClass]="{'active': activeIndex === 0}"><a style="cursor: pointer;"
+            (click)="jobRefresh('Freshness'); activeIndex = 0">Freshness</a></li>
+        <li [ngClass]="{'active': activeIndex === 1}"><a style="cursor: pointer;"
+            (click)="jobRefresh('Relevance'); activeIndex = 1">Relevance</a></li>
       </ul>
     </div>
   </div>
@@ -53,7 +124,8 @@
   <div class="job-box-left">
 
 
-    <h4 class="job_head"><a style="cursor:pointer"  (click)="jobDetails(job)">{{fixLength(job.jobInfo.jobTitle)}}</a></h4>
+    <h4 class="job_head"><a style="cursor:pointer" (click)="jobDetails(job)">{{fixLength(job.jobInfo.jobTitle)}}</a>
+    </h4>
     <h5>{{job.companyName}}</h5>
     <ul class="job_list">
       <li><i class="fas fa-map-marker-alt"></i>{{job.jobInfo.city}}</li>
@@ -66,7 +138,7 @@
 
   <div class="job-box-right">
     <p class="matching">{{job.matchingPercentage}} % Matching Jobs</p>
-    <a href="job-details.html" class="job-button">Apply this Job</a> <br>
+    <a (click)="applyJob(job)" style="cursor: pointer;" class="job-button">Apply this Job</a> <br>
     <!-- <a  class="job-button2">Save for letter</a> -->
     <div class="clearfix"></div>
     <p class="posted_text">Posted On: {{job.jobPostedDate}}</p>
@@ -77,7 +149,7 @@
 </div>
 
 
-<!-- 
+<!--
 <div class="job-seeker-right">
 
   <div class="icon-boc"><i class="fas fa-business-time"></i></div>

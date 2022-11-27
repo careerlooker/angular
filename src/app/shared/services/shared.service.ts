@@ -6,6 +6,8 @@ import { StatesModel } from '../models/states.model';
 import { CityModel } from '../models/city.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserModel } from 'src/app/recruiter/my-account/models/user.model';
+import { FunctionalAreaModel } from 'src/app/recruiter/my-listing/models/functional-area.model';
+import { IndustryModel } from 'src/app/recruiter/my-listing/models/industry.model';
 
 @Injectable({
     providedIn:'root'
@@ -63,4 +65,11 @@ export class SharedService {
     getAllCities():Observable<Array<CityModel>>{
       return  this.httpClient.get<Array<CityModel>>(environment.baseUrl+'co-api/city')
     }
+
+    getfunctionalAreaList():Observable<Array<FunctionalAreaModel>>{ 
+        return this.httpClient.get<Array<FunctionalAreaModel>>(environment.baseUrl+'co-api/funtional-area');
+    }
+    getIndustryList():Observable<Array<IndustryModel>>{
+        return this.httpClient.get<Array<IndustryModel>>(environment.baseUrl+'co-api/industry')
+     }
 }

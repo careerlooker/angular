@@ -56,13 +56,6 @@ export class RecruiterService{
     }
 
 
-    getIndustryList():Observable<Array<IndustryModel>>{
-       return this.httpClient.get<Array<IndustryModel>>(environment.baseUrl+'co-api/industry')
-    }
-
-    getfunctionalAreaList():Observable<Array<FunctionalAreaModel>>{ 
-        return this.httpClient.get<Array<FunctionalAreaModel>>(environment.baseUrl+'co-api/funtional-area');
-    }
 
     getQualificationList():Observable<Array<QualificationModel>>{
         return this.httpClient.get<Array<QualificationModel>>(environment.baseUrl+'co-api/qualification')

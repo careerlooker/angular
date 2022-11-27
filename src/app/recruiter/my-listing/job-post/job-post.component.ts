@@ -299,13 +299,13 @@ getJobById(){
     }
 
     getIndustryList(){
-      this.recruiterService.getIndustryList().subscribe((result:Array<IndustryModel>)=>{
+      this.sharedService.getIndustryList().subscribe((result:Array<IndustryModel>)=>{
         this.industryList=result;
       })
     }
     
     getfunctionalArea(){
-      this.recruiterService.getfunctionalAreaList().subscribe((result:Array<FunctionalAreaModel>)=>{
+      this.sharedService.getfunctionalAreaList().subscribe((result:Array<FunctionalAreaModel>)=>{
           this.functionalAreaList=result;
       })
     }
