@@ -5,6 +5,7 @@ import { PersonalInfo } from '../models/personal-info.model';
 import { environment } from 'src/environments/environment';
 import { JobSeekerModel } from '../models/job-seeker-model';
 import { FilterModel } from 'src/app/recruiter/models/filter.model';
+import { SettingsModel } from '../models/settings.model';
 
 @Injectable({
     providedIn: 'root'
@@ -107,5 +108,9 @@ export class SeekerService {
 
     applyJob(sekEmail:string,reqId:number,jobId:number):Observable<any>{
         return this.httpClient.patch<any>(environment.baseUrl+'co-api/seeker/applyJob/'+sekEmail+'/'+reqId+'/'+jobId,{},{responseType:'text' as 'json'});
+    }
+
+    updateSettings(sekEmail:string,settingsModel:SettingsModel):Observable<any>{
+       return this.httpClient.patch<any>(environment.baseUrl+'co-api/seeker/applyJob/'+sekEmail,settingsModel,{responseType:'text' as 'json'});  
     }
 }

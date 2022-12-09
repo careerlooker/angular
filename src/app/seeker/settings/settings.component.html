@@ -6,10 +6,15 @@
           <div class="setting-main">
             <div class="setting-inner">
               <div class="row">
+                <div class="col-sm-4">
+                  <h4>Name</h4>
+                </div>
                 <div class="col-sm-8">
                   <div class="text-name">
-                    <h3>John Williams </h3>
-                    <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
+                    <h3 *ngIf="isNameLabel">{{jobSeekerModel.personalInfo.firstName}} {{jobSeekerModel.personalInfo.lastName}}</h3>
+                    <h3 *ngIf="isName"><input type="text"  class="form-control" style="height: 34px;"/></h3>
+                    <div *ngIf="isNameLabel" class="icon-box-edit"><a style="cursor: pointer;" (click)="onNameChange()"><i class="fas fa-pen"></i></a></div>
+                    <div *ngIf="isName" class="icon-box-edit"><a style="cursor: pointer;" (click)="onNameCancel()"><i class="fas fa-trash-alt" style="color:red;"></i></a></div>
                   </div>
                 </div>
               </div>
@@ -21,7 +26,7 @@
                 </div>
                 <div class="col-sm-8">
                   <div class="text-name"><a class="verify" href="#"><i
-                        class="fas fa-exclamation"></i><span>johnwilliams@example.com </span></a>
+                        class="fas fa-exclamation"></i><span>{{email}}</span></a>
                     <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
                   </div>
                 </div>
@@ -33,7 +38,7 @@
                   <h4>Phone Number</h4>
                 </div>
                 <div class="col-sm-8">
-                  <div class="text-name"><a class="verify-green" href="#"><i class="fas fa-check"></i><span>202-555-0145
+                  <div class="text-name"><a class="verify-green" href="#"><i class="fas fa-check"></i><span>{{jobSeekerModel.personalInfo.phoneNo}}
                       </span></a>
                     <div class="icon-box-edit"><a href="#"><i class="fas fa-pen"></i></a></div>
                   </div>
