@@ -112,6 +112,8 @@
             (click)="jobRefresh('Freshness'); activeIndex = 0">Freshness</a></li>
         <li [ngClass]="{'active': activeIndex === 1}"><a style="cursor: pointer;"
             (click)="jobRefresh('Relevance'); activeIndex = 1">Relevance</a></li>
+        <li [ngClass]="{'active': activeIndex === 2}"><a style="cursor: pointer;"
+              (click)="appliedJob(); activeIndex = 2">Applied Jobs</a></li>
       </ul>
     </div>
   </div>
