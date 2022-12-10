@@ -97,8 +97,9 @@ export class MatchingJobsComponent extends BaseModel implements OnInit {
   }
   applyJob(matchingJob:MatchingJobModel){
     this.seekerService.applyJob(this.email,matchingJob.reqId,matchingJob.jobId).subscribe((result:any)=>{
-      if(result){
-        console.log(result)
+      if(result=="True"){
+        this.matchingJobModel.filter(x=>x.jobId==matchingJob.jobId)[0].jobsAppliedBySeeker=result=='True'?true:false;
+      
       }
     })
   }

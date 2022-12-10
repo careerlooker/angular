@@ -17,5 +17,6 @@ export class MatchingJobModel {
     jobUpdatedDate : string;
     jobStatus : string;
     isJobDeleted : boolean;
-    matchingPercentage : number
+    matchingPercentage : number;
+    jobsAppliedBySeeker:boolean;
 }
