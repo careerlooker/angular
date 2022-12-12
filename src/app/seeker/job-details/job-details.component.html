@@ -18,7 +18,8 @@
           <div class="job-box-right">
             <button type="button" class="job-button">All jobs By this recuiter</button> <br>
             <!-- <button type="button" class="job-button" (click)="back()">Back</button><br> -->
-            <button type="button" class="job-button">Apply</button>
+            <!-- <button type="button" class="job-button">Apply</button> -->
+            <button type="button" (click)="applyJob(matchingJobModel);" class="btn job-button"  [disabled]="matchingJobModel.jobsAppliedBySeeker">{{matchingJobModel.jobsAppliedBySeeker==true ?'Applied':'Apply'}}</button>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -68,30 +69,9 @@
             <li><i class="fas fa-rupee-sign"></i>{{job.jobCtcInfo.annualCTC}} Lakhs</li>
           </ul>
           <p>skills:{{job.jobInfo.keySkills}} </p>
-          <div align="right"> <a href="" class="apply">Apply</a></div>
+          <div align="right"> <button type="button" (click)="applyJob(job);" class="btn job-button"  [disabled]="job.jobsAppliedBySeeker">{{job.jobsAppliedBySeeker==true ?'Applied':'Apply'}}</button></div>
           <div class="similar-boredr-bottom"></div>
-        </div>
-
-          <!-- <h4 class="job_head">Java developer</h4>
-          <h5 class="similar-text">Trueinfo Solution Pvt</h5>
-          <ul class="job_list">
-            <li><i class="fas fa-map-marker-alt"></i>Chennai</li>
-            <li><i class="fas fa-suitcase"></i>4 to 9 Years</li>
-            <li><i class="fas fa-rupee-sign"></i>Lakhs</li>
-          </ul>
-          <p>skills:ANSI SQL, <BR> XML,JSON,Java Restful Web </p>
-          <div align="right"> <a href="" class="apply">Apply</a></div>
-          <div class="similar-boredr-bottom"></div>
-
-          <h4 class="job_head">Java developer</h4>
-          <h5 class="similar-text">Trueinfo Solution Pvt</h5>
-          <ul class="job_list">
-            <li><i class="fas fa-map-marker-alt"></i>Chennai</li>
-            <li><i class="fas fa-suitcase"></i>4 to 9 Years</li>
-            <li><i class="fas fa-rupee-sign"></i>Lakhs</li>
-          </ul>
-          <p>skills:ANSI SQL, <BR> XML,JSON,Java Restful Web </p>
-          <div align="right"> <a href="" class="apply">Apply</a></div> -->
+        </div>    
         </div>
       </div>
     </div>

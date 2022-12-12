@@ -31,11 +31,13 @@ export class JobDetailsComponent implements OnInit {
     let data = JSON.parse(localStorage.getItem('object'));
     if(data){
        let jobs=data.jobList.filter(x=>x.jobId!=data.jobId);
-        this.jobList=jobs.slice(0,3);
+        this.jobList=jobs.filter(x=>x.jobsAppliedBySeeker!=true).slice(0,3);
         this.matchingJobModel.jobDescription=data.jobDetails.jobDescription;
         this.matchingJobModel.companyName=data.jobDetails.companyName;
         this.matchingJobModel.jobPostedDate=data.jobDetails.jobPostedDate;
-        console.log(this.matchingJobModel);
+        this.matchingJobModel.jobsAppliedBySeeker=data.jobDetails.jobsAppliedBySeeker;
+        this.matchingJobModel.reqId=data.jobDetails.reqId;
+        this.matchingJobModel.jobId=data.jobDetails.jobId;
         this.jobInfo=data.jobDetails.jobInfo;
         this.jobCtcInfo=data.jobDetails.jobCtcInfo;
         this.jobInterviewInfo=data.jobDetails.jobInterviewInfo;
@@ -48,5 +50,16 @@ export class JobDetailsComponent implements OnInit {
       let desc = description.replace(/<[^>]*>/g, '');
       return desc;
     }
-  }  
+  } 
+
+   applyJob(matchingJob:MatchingJobModel){
+    this.seekerService.applyJob(localStorage.getItem('email'),matchingJob.reqId,matchingJob.jobId).subscribe((result:any)=>{
+      if(result=="True"){
+        this.jobList.filter(x=>x.jobId==matchingJob.jobId)[0].jobsAppliedBySeeker=result=='True'?true:false;
+      }
+    })
+  }
+  appliedJob(){
+    this.jobList=this.jobList.filter(x=>x.jobsAppliedBySeeker==true);
+  } 
 }
